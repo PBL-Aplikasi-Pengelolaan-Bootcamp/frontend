@@ -1122,6 +1122,12 @@ video {
   opacity: 0.9;
 }
 
+@media (min-width: 640px){
+  .sm\:flex-col{
+    flex-direction: column;
+  }
+}
+
 @media (min-width: 768px){
   .md\:top-0{
     top: 0px;
