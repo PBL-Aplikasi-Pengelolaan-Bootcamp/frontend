@@ -10,11 +10,11 @@
   <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 </head>
 
-<body style="height: 99vh;">
-  <div class="container m-auto">
+<body>
+  <div class=" m-auto">
     <!-- NAVBAR -->
 
-    <nav
+    <nav id="top"
       class="flex z-10 shadow-lg opacity-95 justify-between mx-10 bg-white rounded-full p-3 fixed left-0 top-3 right-0 font-poppins md:rounded-none md:top-0 md:mx-0 md:py-7">
 
       <div class="flex gap-4">
@@ -30,9 +30,9 @@
 
         <ul class="gap-4 hidden md:flex font-semibold relative top-2">
           <li><a href="" class="hover:text-slate-700">Home</a></li>
-          <li><a href="" class="hover:text-slate-700">Langganan</a></li>
-          <li><a href="" class="hover:text-slate-700">Program</a></li>
-          <li><a href="" class="hover:text-slate-700">Lainnya</a></li>
+          <li><a href="" class="hover:text-slate-700">Course</a></li>
+          <li><a href="" class="hover:text-slate-700">About</a></li>
+          <li><a href="" class="hover:text-slate-700">Contact</a></li>
         </ul>
       </div>
 
@@ -46,12 +46,16 @@
     </nav>
 
     <!-- HEADER -->
-    <header class="relative top-40 text-center px-4 flex flex-col gap-5 md:gap-6 md:width-header m-auto md:top-56">
-      <h1 class="font-bold font-poppins text-3xl md:text-6xl md:-tracking-wide">Jawaban bagi Anda Yang Bingung <span
-          class="text-slate-700">
+    <header
+      class="relative top-40 text-center px-4 flex flex-col gap-5 md:gap-6 md:width-header m-auto md:w-5/6 md:top-56 lg:w-2/3">
+      <h1 class="font-bold font-poppins text-3xl md:text-5xl lg:text-6xl lg:-tracking-wide">Jawaban bagi Anda Yang
+        Bingung
+        <span class="text-slate-700">
           Memulai
-          Pemrograman.</span></h1>
-      <p class="font-poppins text-slate-500 text-lg md:text-xl">Kami akan bantu anda menggapai mimpi anda dengan ter
+          Pemrograman.</span>
+      </h1>
+      <p class="font-poppins text-slate-500 text-lg lg:text-xl">Kami akan bantu anda menggapai mimpi anda dengan
+        ter
         struktur,
         menyenangkan dan
         tentunya simpel. Tunggu apa lagi? daftar sekarang.</p>
@@ -64,10 +68,10 @@
 
     <!-- PROSPEK KERJA -->
     <div
-      class="flex relative mt-60 md:mt-80 justify-between py-4 px-10 text-center flex-col-reverse gap-4 bg-slate-100 md:flex-row">
-      <div class="flex flex-col gap-5 md:w-1/2 md:gap-5">
-        <h1 class="font-poppins font-semibold text-3xl hidden md:flex text-slate-700">Prospek Kerja</h1>
-        <p class="md:text-left md:w-4/5 font-quicksand text-slate-600">Programmer adalah orang yang bertugas untuk
+      class="flex relative mt-60 lg:mt-80 justify-between py-4 px-10 text-center flex-col-reverse gap-4 bg-gray-100 lg:flex-row">
+      <div class="flex flex-col gap-5 lg:w-1/2 lg:gap-5">
+        <h1 class="font-poppins font-semibold text-3xl hidden lg:flex text-slate-700">Prospek Kerja</h1>
+        <p class="lg:text-left lg:w-4/5 font-quicksand text-slate-600">Programmer adalah orang yang bertugas untuk
           mengembangkan
           perangkat
           lunak atau
@@ -76,51 +80,52 @@
           program, ada bagan alur yang harus diperhatikan kemudian diterjemahkan ke dalam bahasa komputer menggunakan
           kode tertentu sehingga menjadi sebuah perintah kepada komputer untuk menjalankan tugas tertentu.</p>
         <a href="#"
-          class="bg-slate-700 text-white border border-skytext-slate-700 rounded-sm w-max hover:bg-white hover:text-slate-700 border-slate-700 py-2 px-3 m-auto font-poppins font-semibold md:ml-0 md:mt-0">Selengkapnya</a>
+          class="bg-slate-700 text-white border border-skytext-slate-700 rounded-sm w-max hover:bg-white hover:text-slate-700 border-slate-700 py-2 px-3 m-auto font-poppins font-semibold lg:ml-0 lg:mt-0">Selengkapnya</a>
       </div>
 
-      <div class="flex flex-wrap gap-5 m-auto justify-around md:justify-normal md:w-1/2">
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52">
+      <div class="flex flex-wrap gap-5 m-auto justify-around md:justify-between lg:justify-normal lg:m-0 md:w-1/2">
+        <div class="flex flex-col w-32 md:h-48 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
           <ion-icon name="git-branch" class="text-3xl bg-white text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Software Engineer</h1>
-          <p class="hidden md:flex">Merancang dan memelihara sistem perangkat lunak dengan benar.</p>
+          <p class="hidden lg:flex">Design and maintain software system properly.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
           <ion-icon name="settings" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">IT <br class="md:hidden">Support</h1>
-          <p class="hidden md:flex">Merancang dan memelihara sistem perangkat lunak dengan benar.</p>
+          <p class="hidden lg:flex">Help solve various technology problems that companies have.</p>
         </div>
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
           <ion-icon name="brush" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Graphic Designer</h1>
-          <p class="hidden md:flex">Merancang dan memelihara sistem perangkat lunak dengan benar.</p>
+          <p class="hidden lg:flex">A form of communication carried out visually.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
           <ion-icon name="stats" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Analyst Data</h1>
-          <p class="hidden md:flex">Merancang dan memelihara sistem perangkat lunak dengan benar.</p>
+          <p class="hidden lg:flex">Explore and develop big data to help make better decisions.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
           <ion-icon name="trending-up" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Digital Marketing</h1>
-          <p class="hidden md:flex">Merancang dan memelihara sistem perangkat lunak dengan benar.</p>
+          <p class="hidden lg:flex">promotion of a brand or brand of product or service carried out through digital
+            media.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
           <ion-icon name="school" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-          <h1 class="font-poppins font-semibold tracking-wide">Tenaga Pengajar</h1>
-          <p class="hidden md:flex">Merancang dan memelihara sistem perangkat lunak dengan benar.</p>
+          <h1 class="font-poppins font-semibold tracking-wide">Teacher</h1>
+          <p class="hidden lg:flex">Become a school, course or personal teacher</p>
         </div>
       </div>
 
-      <h1 class="font-poppins font-semibold text-3xl mb-5 md:hidden">Prospek Kerja</h1>
+      <h1 class="font-poppins font-semibold text-3xl mb-5 lg:hidden">Job Relation</h1>
     </div>
 
     <!-- POPULAR COURSE -->
-    <h1 class="mt-10 font-semibold font-poppins text-xl text-center">Langganan Kursus Terpopuler</h1>
+    <h1 class="mt-10 font-semibold font-poppins text-xl text-center">Our Popular Class</h1>
 
     <div class="flex flex-wrap gap-5 m-auto justify-between text-center mt-10 px-10">
       <a href="login.html" class="flex flex-col w-36 shadow-xl rounded-lg md:w-80 overflow-hidden">
@@ -157,11 +162,8 @@
         </div>
       </a>
 
-      <a href="login.html" class="flex flex-col w-36 shadow-xl rounded-lg md:w-80 overflow-hidden md:transition-all">
-        <div class="w-full h-10">
-          <img src="img/mysql.jpg" alt="" class="object-left">
-        </div>
-
+      <a href="login.html" class="flex flex-col w-36 shadow-xl rounded-lg md:w-80 overflow-hidden">
+        <img src="img/mysql.jpg" alt="" class="object-center">
         <div class="px-3 py-3 flex flex-col gap-2">
           <h1 class="font-poppins font-semibold text-sm md:text-xl md:mb-2">Pembuatan Aplikasi Database MYSQL</h1>
           <p class="hidden md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat iusto nemo
@@ -170,7 +172,86 @@
             suscipit quam sapiente voluptatibus molestias.</p>
         </div>
       </a>
+
     </div>
+
+    <!-- INFORMATION -->
+    <h1 class=" text-xl text-center font-semibold font-poppins mt-20">More Information About Us</h1>
+    <div
+      class="m-auto bg-gray-100 text-white flex-col text-left flex justify-between font-poppins px-10 py-3 pb-10 mt-10 rounded-md overflow-hidden md:flex-row">
+      <div class="flex md:w-2/5">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15956.231225080577!2d104.0484566!3d1.1187205!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921856ddfab%3A0xf9d9fc65ca00c9d!2sPoliteknik%20Negeri%20Batam!5e0!3m2!1sen!2sid!4v1726510103054!5m2!1sen!2sid"
+          width="600" height="350" style="border:0;" allowfullscreen="" loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade" class="rounded-md"></iframe>
+      </div>
+
+      <div class="flex flex-col gap-5 md:w-1/2">
+        <h1 class="text-black">Contact Us</h1>
+        <form action="" class="flex flex-col gap-5 text-black">
+          <input type="text" placeholder="Email" class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
+          <input type="text" placeholder="Name" class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
+          <textarea name="" id="" placeholder="Massage"
+            class="w-full bg-white h-32 px-1 py-2 border border-slate-400 rounded-md"></textarea>
+          <button class="px-4 py-3 bg-slate-700 m-auto w-28 rounded-sm md:m-0 hover:opacity-90 text-white">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <footer class="flex flex-col md:flex-row gap-10">
+      <div class="flex flex-col gap-3 text-white bg-slate-700 p-3 md:px-7 md:py-4">
+        <div class="flex gap-3 font-quicksand">
+          <img src="img/logo2.png" alt="" width="50px">
+          <h1 class="relative top-3 font-poppins text-lg font-semibold">SIMPLIFY</h1>
+        </div>
+        <p class="font-semibold">Politeknik Negeri Batam</p>
+        <p>Jl. Ahmad Yani, Tlk. Tering, Kec. Batam Kota, Kota Batam, Kepulauan Riau.</p>
+        <div class="flex gap-4">
+          <a href="#" class="w-max"><ion-icon name="logo-instagram" class="text-3xl"></ion-icon></a>
+          <a href="#" class="w-max"><ion-icon name="logo-youtube" class="text-3xl"></ion-icon></a>
+          <a href="#" class="w-max"><ion-icon name="logo-facebook" class="text-3xl"></ion-icon></a>
+          <a href="#" class="w-max"><ion-icon name="logo-github" class="text-3xl"></ion-icon></a>
+        </div>
+      </div>
+
+      <div class=" text-slate-700 font-poppins p-3 flex flex-wrap gap-10 justify-between md:w-1/2 md:gap-20">
+        <div class="flex flex-col gap-4">
+          <h1 class="text-black font-semibold">COMPANY</h1>
+          <header
+            class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
+          </header>
+          <ul class="flex flex-col gap-2">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Help Center</a></li>
+            <li><a href="#">Copyright</a></li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h1 class="text-black font-semibold">LEARN</h1>
+          <header
+            class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
+          </header>
+          <ul class="flex flex-col gap-2">
+            <li><a href="#">Online Class</a></li>
+            <li><a href="#">Offline Class</a></li>
+            <li><a href="#">All Course</a></li>
+          </ul>
+        </div>
+
+        <div class="flex flex-col gap-4">
+          <h1 class="text-black font-semibold">COMUNITY</h1>
+          <header
+            class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
+          </header>
+          <ul class="flex flex-col gap-2">
+            <li><a href="#">Check Certificate</a></li>
+            <li><a href="#">Telegram Group</a></li>
+            <li><a href="#">Discord</a></li>
+          </ul>
+        </div>
+      </div>
+    </footer>
   </div>
 
 
@@ -178,15 +259,6 @@
 
 
 
-
-
-
 </body>
-<script>
-  let menu = document.getElementById('hamburger');
-  function show() {
-    menu.classList.toggle('hidden');
-  }
-</script>
 
 </html>
