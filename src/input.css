@@ -18,9 +18,16 @@
     width: 350px;
   }
 
-  .width-header {
-    width: 900px;
+  .width-600 {
+    width: 600px;
   }
+
+  .iframe-youtube{
+    max-width: 600px;
+    max-height: 500px;
+    min-height: 250px;
+  }
+
 
   .nav-width {
     width: 390px;
