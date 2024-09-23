@@ -1184,6 +1184,10 @@ video {
 }
 
 @media (min-width: 640px){
+  .sm\:top-1{
+    top: 0.25rem;
+  }
+
   .sm\:flex-col{
     flex-direction: column;
   }
