@@ -5,9 +5,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Simplify | Kursus</title>
-    <link href="output.css" rel="stylesheet" />
+    <link href="../output.css" rel="stylesheet" />
     <link href="img/logo.png" rel="shortcut icon" />
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
 </head>
 
 <body>
@@ -20,7 +21,7 @@
             <div class="flex gap-4">
                 <div class="flex gap-2">
                     <div class="">
-                        <img src="img/logo.png" width="35px" alt="">
+                        <img src="../img/logo.png" width="35px" alt="">
                     </div>
 
                     <h1 class="font-poppins font-semibold relative top-2 sm:top-1 md:hidden">Simplify
@@ -29,32 +30,66 @@
 
 
                 <ul class="gap-4 hidden md:flex font-semibold relative top-2">
-                    <li><a href="" class="hover:text-blue-700">Beranda</a></li>
+                    <li><a href="../index.html" class="hover:text-blue-700">Beranda</a></li>
                     <li><a href="courses.html" class="hover:text-blue-700">Kursus</a></li>
                     <li><a href="" class="hover:text-blue-700">Tentang</a></li>
                     <li><a href="" class="hover:text-blue-700">Kontak</a></li>
                 </ul>
             </div>
 
-            <div class="flex gap-5 font-semibold">
-                <a href="kursus-section.html"
+            <div class="flex gap-3 font-normal">
+                <!-- <a href="kursus-section.html"
                     class="border rounded-full  py-2 px-6 bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Sign
                     In</a>
                 <a href="#"
                     class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Sign
-                    Up</a>
+                    Up</a> -->
+                <h1 class="relative top-2">Admin1</h1>
+                <img src="../img/user.png" alt="" width="40px" height="40px">
             </div>
 
         </nav>
 
-        <div class="w-5/6 m-auto relative top-36 flex flex-col gap-6 py-5 bg-white p-10 rounded-sm">
+        <div class="w-5/6 m-auto mt-40 mb-10">
+            <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
+                <button @click="open = !open"
+                    class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
+                    <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                    <span>Tambah Kursus</span>
+                </button>
+                <div x-show="open" class="px-4 py-2 border-t">
+                    <form action="" class="flex flex-col gap-5 my-2">
+                        <div class="flex flex-col gap-2">
+                            <label for="nama-mentor">Nama Mentor</label>
+                            <input type="text" name="nama-mentor" class="border-slate-700 border rounded-sm py-1 px-1">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label for="judul-kursus">Judul Kursus</label>
+                            <input type="text" name="judul-kursus" class="border-slate-700 border rounded-sm py-1 px-1">
+                        </div>
+                        <div class="flex flex-col gap-2">
+                            <label for="deskripsi">Deskripsi</label>
+                            <input type="text" name="deskripsi" class="border-slate-700 border rounded-sm py-1 px-1">
+                        </div>
+                        <div class="flex flex-col gap-2 w-56">
+                            <label for="img">Upload Gambar</label>
+                            <input type="file" src="" alt="" name="img">
+                        </div>
+
+                        <button type="submit"
+                            class="p-2 text-white bg-blue-700 font-semibold w-32 text-center rounded-sm">Tambahkan</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="w-5/6 m-auto relative flex flex-col gap-6 py-5 bg-white p-10 rounded-sm">
             <div class="flex gap-5 flex-col">
                 <h1 class="text-2xl font-poppins font-semibold">Program Kursus Tersedia</h1>
-                <div class="flex gap-2">
+                <div class="flex flex-col sm:flex-row gap-2">
                     <input type="search" placeholder="Cari Kursus.."
-                        class="w-72 py-1 px-2 border-slate-700 outline-none border rounded-md">
-                    <select name="sort" id="sort"
-                        class="border border-black rounded-md py-1 px-2 hover:bg-slate-700 hover:text-white">
+                        class="max-w-72 py-1 px-2 border-slate-700 outline-none border rounded-md">
+                    <select name="sort" id="sort" class="border  border-black rounded-md py-1 px-2">
                         <option value="semua">Semua Kursus</option>
                         <option value="yang-anda-ikuti">Kursus yang anda ikuti</option>
                     </select>
@@ -65,9 +100,15 @@
 
 
             <div class="flex flex-wrap gap-10 m-auto text-center justify-between">
-                <a href="kursus-section.html"
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all hover:scale-105">
-                    <img src="img/social.jpg" alt="" class="object-center md:h-40">
+                <div
+                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
+                    <div class="flex p-3 absolute gap-1">
+                        <a href="#"><ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#"><ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                    </div>
+                    <img src="../img/social.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Frontend Pemula:
                             Dasar-Dasar HTML dan CSS</h1>
@@ -80,11 +121,17 @@
                             cupiditate nobis at
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
-                </a>
+                </div>
 
-                <a href="kursus-section.html"
-                    class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all hover:scale-105">
-                    <img src="img/smartphoneio.jpg" alt="" class="object-center md:h-40">
+                <div
+                    class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
+                    <div class="flex p-3 absolute gap-1">
+                        <a href="#"><ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#"><ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                    </div>
+                    <img src="../img/smartphoneio.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Backend Pemula:
                             Dasar-Dasar PHP dan MySQL</h1>
@@ -97,11 +144,17 @@
                             cupiditate nobis at
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
-                </a>
+                </div>
 
-                <a href="kursus-section.html"
-                    class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all hover:scale-105">
-                    <img src="img/dashboard.jpg" alt="" class="object-center md:h-40">
+                <div
+                    class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
+                    <div class="flex p-3 absolute gap-1">
+                        <a href="#"><ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#"><ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                    </div>
+                    <img src="../img/dashboard.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Frontend Framework:
                             Dasar-Dasar Boostrap</h1>
@@ -113,14 +166,20 @@
                             cupiditate nobis at
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
-                </a>
+                </div>
 
-                <a href="kursus-section.html"
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all hover:scale-105">
-                    <img src="img/mysql.jpg" alt="" class="object-center md:h-40">
+                <div
+                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
+                    <div class="flex p-3 absolute gap-1">
+                        <a href="#"><ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#"><ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                    </div>
+                    <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Backend Framework:
-                            Dasar-Dasar LaravelL</h1>
+                            Dasar-Dasar Laravel</h1>
                         <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira</h3>
                         <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
                             Repellat iusto
@@ -129,11 +188,17 @@
                             cupiditate nobis at
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
-                </a>
+                </div>
 
-                <a href="kursus-section.html"
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all hover:scale-105">
-                    <img src="img/mysql.jpg" alt="" class="object-center md:h-40">
+                <div
+                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
+                    <div class="flex p-3 absolute gap-1">
+                        <a href="#"><ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#"><ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                    </div>
+                    <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base text-left border-slate-600">Fullstack
                             Developer: Pembuatan Aplikasi Database</h1>
@@ -146,11 +211,17 @@
                             cupiditate nobis at
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
-                </a>
+                </div>
 
-                <a href="kursus-section.html"
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all hover:scale-105">
-                    <img src="img/mysql.jpg" alt="" class="object-center md:h-40">
+                <div
+                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
+                    <div class="flex p-3 absolute gap-1">
+                        <a href="#"><ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#"><ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                    </div>
+                    <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Bangun Rancang UI/UX
                             Design Menggunakan Figma</h1>
@@ -163,15 +234,15 @@
                             cupiditate nobis at
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
-                </a>
+                </div>
 
             </div>
         </div>
 
-        <footer class="flex flex-col sm:flex-col mt-52 md:flex-row gap-10 bg-white">
+        <footer class="flex flex-col sm:flex-col mt-40 md:flex-row gap-10 bg-white">
             <div class="flex flex-col gap-3 text-white bg-blue-700 px-5 py-10 md:px-7 md:py-4">
                 <div class="flex gap-3 font-quicksand">
-                    <img src="img/letter-s.png" alt="" width="50px">
+                    <img src="../img/letter-s.png" alt="" width="50px">
                     <h1 class="relative top-3 font-poppins text-lg font-semibold">SIMPLIFY</h1>
                 </div>
                 <p class="font-semibold">Politeknik Negeri Batam</p>
