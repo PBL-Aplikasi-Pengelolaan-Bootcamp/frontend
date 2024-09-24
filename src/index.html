@@ -198,7 +198,7 @@
       <h1 class=" text-2xl text-center font-semibold font-poppins mt-5">Informasi dan Pesan</h1>
 
       <div
-        class=" text-white flex-col text-left flex justify-between font-poppins px-10 rounded-md overflow-hidden md:flex-row">
+        class=" text-white flex-col gap-5 sm:gap-0 text-left flex justify-between font-poppins px-10 rounded-md overflow-hidden md:flex-row">
         <div class="flex md:w-2/5">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15956.231225080577!2d104.0484566!3d1.1187205!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921856ddfab%3A0xf9d9fc65ca00c9d!2sPoliteknik%20Negeri%20Batam!5e0!3m2!1sen!2sid!4v1726510103054!5m2!1sen!2sid"
@@ -207,15 +207,19 @@
         </div>
 
         <div class="flex flex-col gap-5 md:w-1/2">
-          <h1 class="text-black font-semibold">Kirim Pesan pada Kami</h1>
-          <form action="" class="flex flex-col gap-5 text-black">
-            <input type="text" placeholder="Email" class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
-            <input type="text" placeholder="Nama Pengirim"
+          <h1 class="text-black font-semibold">Kirim Kami Sebuah Pesan</h1>
+          <form action="https://api.web3forms.com/submit" method="POST" id="form"
+            class="flex flex-col gap-5 text-black">
+            <input type="hidden" name="access_key" value="cf954a3d-6467-4083-a28c-34270b0b304c" />
+            <input type="hidden" name="subject" value="New Submission from your Website" />
+            <input type="text" name="email" placeholder="Email"
               class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
-            <textarea name="" id="" placeholder="Pesan"
+            <input type="text" name="nama" placeholder="Nama Pengirim"
+              class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
+            <textarea name="pesan" id="" placeholder="Pesan"
               class="w-full bg-white h-32 px-1 py-2 border border-slate-400 rounded-md"></textarea>
-            <button
-              class="px-4 py-3 bg-blue-700 m-auto w-28 rounded-sm md:m-0 hover:opacity-90 text-white">Kirim</button>
+            <button class="px-4 py-3 bg-blue-700 m-auto w-28 rounded-sm md:m-0 hover:opacity-90 text-white"
+              type="submit">Kirim</button>
           </form>
         </div>
       </div>

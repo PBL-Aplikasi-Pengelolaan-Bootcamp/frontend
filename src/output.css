@@ -603,7 +603,7 @@ video {
 .iframe-youtube{
   max-width: 600px;
   max-height: 500px;
-  min-height: 250px;
+  min-height: 350px;
 }
 
 .fixed{
@@ -710,6 +710,10 @@ video {
 
 .h-32{
   height: 8rem;
+}
+
+.h-40{
+  height: 10rem;
 }
 
 .h-max{
@@ -897,11 +901,6 @@ video {
 .bg-slate-50{
   --tw-bg-opacity: 1;
   background-color: rgb(248 250 252 / var(--tw-bg-opacity));
-}
-
-.bg-slate-700{
-  --tw-bg-opacity: 1;
-  background-color: rgb(51 65 85 / var(--tw-bg-opacity));
 }
 
 .bg-white{
@@ -1179,8 +1178,16 @@ video {
     top: 0.25rem;
   }
 
+  .sm\:h-60{
+    height: 15rem;
+  }
+
   .sm\:flex-col{
     flex-direction: column;
+  }
+
+  .sm\:gap-0{
+    gap: 0px;
   }
 }
 
