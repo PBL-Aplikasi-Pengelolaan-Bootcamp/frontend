@@ -1,3 +1,11 @@
+<?php 
+  include 'function.php';
+
+  $course = getAll_Course();
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -127,22 +135,23 @@
     <h1 class="mt-10 font-semibold font-poppins text-2xl text-center">Program Kursus Terpopuler</h1>
 
     <div class="flex flex-wrap gap-5 m-auto justify-between text-center mt-10 px-10">
-      <a href="login.html"
-        class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
-        <img src="img/social.jpg" alt="" class="object-center md:h-40">
-        <div class="px-3 py-3 flex flex-col gap-2">
-          <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left">Frontend Pemula: Dasar-Dasar
-            HTML dan CSS
-          </h1>
-          <p class="hidden text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Repellat iusto
-            nemo
-            provident
-            cupiditate nobis at
-            suscipit quam sapiente voluptatibus molestias.</p>
-        </div>
-      </a>
+      
+    <?php
+    foreach ($course as $get) { ?>
 
       <a href="login.html"
+        class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
+        <img src="foto_cover_course/<?= $get['course_picture']?>" alt="" class="object-center md:h-40">
+        <div class="px-3 py-3 flex flex-col gap-2">
+          <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left">
+            <?= $get['title']?>
+          </h1>
+          <p class="hidden text-left md:flex"><?= $get['description']?></p>
+        </div>
+      </a>
+      <?php } ?>
+
+      <!-- <a href="login.html"
         class="flex flex-col w-36 h-max  shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/smartphoneio.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -182,7 +191,7 @@
             cupiditate nobis at
             suscipit quam sapiente voluptatibus molestias.</p>
         </div>
-      </a>
+      </a> -->
 
     </div>
     <div class="m-auto w-max mt-10">

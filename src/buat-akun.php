@@ -1,3 +1,12 @@
+<?php 
+
+include("function.php");
+if (isset($_POST["register"])) {
+  register($_POST);
+}
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -16,15 +25,20 @@
       <div class="hero m-auto mb-5">
         <img src="img/logo.png" alt="" />
       </div>
-      <h1 class="font-poppins font-medium md:font-semibold text-3xl text-slate-700">Masuk</h1>
+      <h1 class="font-poppins font-medium text-3xl md:font-semibold text-slate-700">Daftar</h1>
+
+      <form method="post">
       <div class="flex flex-col gap-5">
-        <input type="text" placeholder="Username" class="border border-slate-300 py-2 px-2 rounded-sm" />
-        <input type="password" placeholder="Password" class="border border-slate-300 py-2 px-2 rounded-sm" />
-        <a href="#" class="text-right font-poppins text-sm">Lupa Password?</a>
-        <button class="bg-blue-700 rounded-sm text-white font-poppins font-semibold py-4 px-6">
-          Masuk
+        <input type="text" name="nama" placeholder="Nama Lengkap" class="border border-slate-300 py-2 px-2 rounded-sm" />
+        <input type="text" name="username" placeholder="Username" class="border border-slate-300 py-2 px-2 rounded-sm" />
+        <input type="email" name="email" placeholder="Email" class="border border-slate-300 py-2 px-2 rounded-sm" />
+        <input type="password" name="password" placeholder="Password" class="border border-slate-300 py-2 px-2 rounded-sm" />
+        <input type="password" name="password2" placeholder="Confirmation Password" class="border border-slate-300 py-2 px-2 rounded-sm" />
+        <button type="submit" name="register" class="bg-blue-700 rounded-sm text-white font-poppins font-semibold py-4 px-6">
+          Daftar
         </button>
       </div>
+      </form>
 
       <div class="flex gap-4 my-2">
         <header
@@ -37,8 +51,8 @@
       </div>
 
       <p class="font-quicksand font-normal text-center text-slate-500">
-        Belum punya akun? Ayo
-        <a href="buat-akun.html" class="text-slate-700 font-semibold">daftar</a>
+        Sudah punya akun? Ayo
+        <a href="login.html" class="text-slate-700 font-semibold">masuk</a>
       </p>
     </div>
     <!-- FORM END -->
