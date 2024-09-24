@@ -93,7 +93,7 @@ function login($data)
             if ($data_from_username['role'] == 'student') {
                 echo"<script>
                         alert('Login success !');
-                        window.location.href= 'index.html'
+                        window.location.href= 'index.php'
                     </script>"; 
             exit;
 

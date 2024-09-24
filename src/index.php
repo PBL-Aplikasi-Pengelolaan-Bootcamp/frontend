@@ -7,7 +7,7 @@
 
 
 <!DOCTYPE html>
-<html lang="en">
+<php lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -45,7 +45,7 @@
       </div>
 
       <div class="flex gap-5 font-semibold">
-        <a href="login.html"
+        <a href="login.php"
           class="border rounded-full  py-2 px-6 bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Sign
           In</a>
         <a href="#"
@@ -67,10 +67,14 @@
       <p class="font-poppins text-slate-500 text-lg lg:text-xl">Kami akan membantu anda untuk mencapai tujuan anda
         dengan terstruktur,
         tentunya dengan mudah dan simpel. Tunggu apalagi? Daftar Sekarang.</p>
-      <a href="login.html"
+
+      <?php if (!isset($_SESSION['id_user'])) :?>
+      
+      <a href="buat-akun.php"
         class=" text-white transition-all py-3 px-5 rounded-sm w-max m-auto font-poppins font-semibold 
         tracking-wide border bg-blue-700 border-slatetext-blue-700 hover:bg-white hover:border hover:text-blue-700 hover:border-blue-700">Daftar
         Sekarang</a>
+        <?php endif ?>
     </header>
 
 
@@ -139,7 +143,7 @@
     <?php
     foreach ($course as $get) { ?>
 
-      <a href="login.html"
+      <a href="login.php"
         class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="foto_cover_course/<?= $get['course_picture']?>" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -151,7 +155,7 @@
       </a>
       <?php } ?>
 
-      <!-- <a href="login.html"
+      <!-- <a href="login.php"
         class="flex flex-col w-36 h-max  shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/smartphoneio.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -165,7 +169,7 @@
         </div>
       </a>
 
-      <a href="login.html"
+      <a href="login.php"
         class="flex flex-col w-36 h-max  shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/dashboard.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -179,7 +183,7 @@
         </div>
       </a>
 
-      <a href="login.html"
+      <a href="login.php"
         class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/mysql.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -195,7 +199,7 @@
 
     </div>
     <div class="m-auto w-max mt-10">
-      <a href="kursus.html" class="text-white transition-all py-3 px-5 rounded-sm w-max font-poppins font-semibold 
+      <a href="kursus.php" class="text-white transition-all py-3 px-5 rounded-sm w-max font-poppins font-semibold 
     tracking-tight border bg-blue-700 border-blue-700 hover:bg-white hover:border hover:text-blue-700 m-auto">Program
         Lainnya</a>
     </div>
