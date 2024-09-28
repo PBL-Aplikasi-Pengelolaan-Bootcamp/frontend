@@ -12,7 +12,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Simplify | Studying with fun</title>
+  <title>Simplify | Kejar impianmu</title>
   <link href="output.css" rel="stylesheet" />
   <link href="img/logo.png" rel="shortcut icon" />
   <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -45,13 +45,27 @@
       </div>
 
       <div class="flex gap-5 font-semibold">
+        <?php if (!isset($_SESSION['id_user'])) : ?>
         <a href="login.php"
           class="border rounded-full  py-2 px-6 bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Sign
           In</a>
         <a href="#"
           class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Sign
           Up</a>
+          <?php endif ?>
+        <a href="all-access.html"
+          class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">
+          Access</a>
+          
       </div>
+
+    
+      <select name="" id=""> 
+        <option value=""><?= $data?></option>
+        
+      </select>
+
+
 
     </nav>
 
@@ -80,8 +94,8 @@
 
     <!-- PROSPEK KERJA -->
     <div
-      class="flex relative bg-slate-50 mt-60 lg:mt-80 justify-between p-10 text-center flex-col-reverse gap-4  lg:flex-row">
-      <div class="flex flex-col gap-5 lg:w-1/2 lg:gap-5 md:my-auto">
+      class="flex relative bg-slate-50 mt-60 lg:mt-80 justify-between sm:justify-center text-center flex-col-reverse gap-4 p-10 lg:flex-row">
+      <div class="flex flex-col m-auto gap-5 md:w-1/2 lg:gap-5 md:my-auto">
         <h1 class="font-poppins font-semibold text-3xl hidden lg:flex text-slate-700">Prospek Kerja Impian</h1>
         <p class="lg:text-left lg:w-4/5 font-quicksand text-slate-600">TPerkembangan teknologi dapat membuka peluang
           kerja bagi seseorang. Apalagi di era digital saat ini. Pemrograman merupakan salah satu profesi yang banyak
@@ -94,38 +108,39 @@
           class="bg-blue-700 hidden text-white border border-skytext-blue-700 rounded-sm w-max hover:bg-white hover:text-blue-700 border-blue-700 py-2 px-3 m-auto font-poppins font-semibold lg:ml-0 lg:mt-0">Selengkapnya</a>
       </div>
 
-      <div class="flex flex-wrap gap-5 m-auto justify-around md:justify-between lg:justify-normal lg:m-0 md:w-1/2">
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
+      <div class="flex flex-wrap gap-5 m-auto justify-around md:justify-between lg:justify-normal md:w-1/2">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
           <ion-icon name="git-branch" class="text-3xl bg-white text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Software Engineer</h1>
           <p class="hidden lg:flex">Merancang dan memelihara perangkat lunak sistem dengan benar.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
           <ion-icon name="settings" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">IT <br class="md:hidden">Support</h1>
           <p class="hidden lg:flex">Membantu menyelesaikan berbagai permasalahan teknologi yang dimiliki perusahaan.</p>
         </div>
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
+
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
           <ion-icon name="brush" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Graphic Designer</h1>
           <p class="hidden lg:flex">Suatu bentuk komunikasi yang dilakukan secara visual.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
           <ion-icon name="stats" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Analyst Data</h1>
           <p class="hidden lg:flex">Jelajahi dan kembangkan data besar untuk membantu membuat keputusan yang lebih baik.
           </p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
           <ion-icon name="trending-up" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Digital Marketing</h1>
           <p class="hidden lg:flex">promosi suatu merek atau merek produk atau jasa dilakukan melalui media digital.</p>
         </div>
 
-        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 lg:w-52">
+        <div class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
           <ion-icon name="school" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
           <h1 class="font-poppins font-semibold tracking-wide">Tenaga Pengajar</h1>
           <p class="hidden lg:flex">Menjadi sekolah, kursus atau guru pribadi</p>
@@ -139,13 +154,11 @@
     <h1 class="mt-10 font-semibold font-poppins text-2xl text-center">Program Kursus Terpopuler</h1>
 
     <div class="flex flex-wrap gap-5 m-auto justify-between text-center mt-10 px-10">
-      
-    <?php
-    foreach ($course as $get) { ?>
-
+      <?php
+      foreach ($course as $get) { ?>
       <a href="login.php"
         class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
-        <img src="foto_cover_course/<?= $get['course_picture']?>" alt="" class="object-center md:h-40">
+        <img src="img/social.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
           <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left">
             <?= $get['title']?>
@@ -155,7 +168,7 @@
       </a>
       <?php } ?>
 
-      <!-- <a href="login.php"
+      <a href="login.html"
         class="flex flex-col w-36 h-max  shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/smartphoneio.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -169,7 +182,7 @@
         </div>
       </a>
 
-      <a href="login.php"
+      <a href="login.html"
         class="flex flex-col w-36 h-max  shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/dashboard.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -183,7 +196,7 @@
         </div>
       </a>
 
-      <a href="login.php"
+      <a href="login.html"
         class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
         <img src="img/mysql.jpg" alt="" class="object-center md:h-40">
         <div class="px-3 py-3 flex flex-col gap-2">
@@ -211,7 +224,7 @@
       <h1 class=" text-2xl text-center font-semibold font-poppins mt-5">Informasi dan Pesan</h1>
 
       <div
-        class=" text-white flex-col text-left flex justify-between font-poppins px-10 rounded-md overflow-hidden md:flex-row">
+        class=" text-white flex-col gap-5 sm:gap-0 text-left flex justify-between font-poppins px-10 rounded-md overflow-hidden md:flex-row">
         <div class="flex md:w-2/5">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15956.231225080577!2d104.0484566!3d1.1187205!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921856ddfab%3A0xf9d9fc65ca00c9d!2sPoliteknik%20Negeri%20Batam!5e0!3m2!1sen!2sid!4v1726510103054!5m2!1sen!2sid"
@@ -220,15 +233,19 @@
         </div>
 
         <div class="flex flex-col gap-5 md:w-1/2">
-          <h1 class="text-black font-semibold">Kirim Pesan pada Kami</h1>
-          <form action="" class="flex flex-col gap-5 text-black">
-            <input type="text" placeholder="Email" class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
-            <input type="text" placeholder="Nama Pengirim"
+          <h1 class="text-black font-semibold">Kirim Kami Sebuah Pesan</h1>
+          <form action="https://api.web3forms.com/submit" method="POST" id="form"
+            class="flex flex-col gap-5 text-black">
+            <input type="hidden" name="access_key" value="05b50342-3b02-4a75-8f99-8d263e295bed" />
+            <input type="hidden" name="subject" value="New Submission from your Website" />
+            <input type="text" name="email" placeholder="Email" required
               class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
-            <textarea name="" id="" placeholder="Pesan"
+            <input type="text" name="nama" placeholder="Nama Pengirim" required
+              class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
+            <textarea name="pesan" id="" placeholder="Pesan" required
               class="w-full bg-white h-32 px-1 py-2 border border-slate-400 rounded-md"></textarea>
-            <button
-              class="px-4 py-3 bg-blue-700 m-auto w-28 rounded-sm md:m-0 hover:opacity-90 text-white">Kirim</button>
+            <button class="px-4 py-3 bg-blue-700 m-auto w-28 rounded-sm md:m-0 hover:opacity-90 text-white"
+              type="submit">Kirim</button>
           </form>
         </div>
       </div>
