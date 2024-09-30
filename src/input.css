@@ -28,6 +28,9 @@
     min-height: 350px;
   }
 
+  .w-45persen {
+    width: 45%;
+  }
 
   .nav-width {
     width: 390px;
