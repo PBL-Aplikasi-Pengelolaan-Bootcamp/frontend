@@ -69,9 +69,46 @@
             <header class="flex justify-between items-center">
                 <h2 class="text-3xl font-semibold">Dashboard</h2>
 
-                <div class="flex gap-2 w-max">
-                    <h1 class="font-bold relative top-2">Admin1</h1>
-                    <img src="../img/user.png" alt="" class="w-10 h-10">
+                <button id="open-modal-btn">
+                    <div class="flex gap-2 w-max">
+                        <h1 class="font-bold relative top-2">Admin1</h1>
+                        <img src="../img/user.png" alt="" class="w-10 h-10">
+                    </div>
+                </button>
+
+                <!-- MODAL WRAPPER -->
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                    <div class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all">
+                        <!-- MODAL BOX -->
+                        <div class="flex flex-col items-center justify-between bg-white p-10 gap-5 rounded w-2/3">
+                            <form action="" class="flex flex-col gap-5 my-2 w-full">
+                                <div class="flex flex-col gap-2 w-56">
+                                    <label for="img">Upload Gambar</label>
+                                    <input type="file" src="" alt="" name="img">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="nama-mentor">Nama</label>
+                                    <input type="text" name="nama-mentor"
+                                        class="border-slate-700 border rounded-sm py-1 px-1">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="judul-kursus">Lulusan</label>
+                                    <input type="text" name="judul-kursus"
+                                        class="border-slate-700 border rounded-sm py-1 px-1">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="deskripsi">Alamat</label>
+                                    <input type="text" name="deskripsi"
+                                        class="border-slate-700 border rounded-sm py-1 px-1">
+                                </div>
+
+                                <button type="submit"
+                                    class="p-2 text-white bg-blue-700 font-semibold w-32 text-center rounded-sm">Simpan</button>
+                            </form>
+
+                            <button id="close-modal-btn" class="bg-red-500 text-white py-3 px-10 rounded">Close</button>
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -200,6 +237,15 @@
         closeSidebar.addEventListener('click', () => {
             sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
         });
+
+        // Modal PopUp
+        document.getElementById("open-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.remove("hidden")
+        })
+
+        document.getElementById("close-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.add("hidden")
+        })
     </script>
 </body>
 
