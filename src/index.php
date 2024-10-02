@@ -166,7 +166,7 @@
 
             <div class="flex flex-wrap gap-5 m-auto justify-between text-center mt-10 px-10">
                 <?php
-      foreach ($course as $get) { ?>
+                foreach ($course as $get) { ?>
                 <a href="login.php"
                     class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
                     <img src="foto_cover_course/<?= $get['course_picture']?>" alt="" class="object-center md:h-40">
@@ -177,7 +177,7 @@
                         <p class="hidden text-left md:flex"><?= $get['description']?></p>
                     </div>
                 </a>
-                <?php } ?>  
+                <?php } ?>
 
 
 
