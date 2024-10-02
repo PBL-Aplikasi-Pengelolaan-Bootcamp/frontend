@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modal Form with TailwindCSS</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Modal background overlay */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+
+        /* Hide modal by default */
+        .modal {
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100 flex items-center justify-center min-h-screen">
+
+    <!-- Button to open the modal -->
+    <button id="openModalButton" class="px-4 py-2 bg-blue-500 text-white rounded">Open Modal</button>
+
+    <!-- Modal structure -->
+    <div id="modal" class="modal fixed inset-0 flex items-center justify-center z-50">
+        <div class="modal-overlay absolute inset-0"></div>
+        <div class="bg-white rounded-lg shadow-lg w-1/2 z-10 p-6">
+            <h2 class="text-2xl font-bold mb-4">Form Title</h2>
+            <form>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="name">
+                        Name
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="name" type="text" placeholder="Enter your name">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                        Email
+                    </label>
+                    <input
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="email" type="email" placeholder="Enter your email">
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="message">
+                        Message
+                    </label>
+                    <textarea
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                        id="message" rows="4" placeholder="Enter your message"></textarea>
+                </div>
+                <div class="flex items-center justify-between">
+                    <button
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                        type="button">
+                        Submit
+                    </button>
+                    <button id="closeModalButton"
+                        class="text-red-500 hover:text-red-700 font-bold py-2 px-4 focus:outline-none focus:shadow-outline"
+                        type="button">
+                        Close
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Get the modal element
+        const modal = document.getElementById('modal');
+        // Get the button that opens the modal
+        const openModalButton = document.getElementById('openModalButton');
+        // Get the button that closes the modal
+        const closeModalButton = document.getElementById('closeModalButton');
+        // Get the modal overlay element
+        const modalOverlay = document.querySelector('.modal-overlay');
+
+        // Function to open the modal
+        openModalButton.addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        // Function to close the modal
+        closeModalButton.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+
+        // Close the modal when clicking on the overlay
+        modalOverlay.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+    </script>
+
+</body>
+
+</html>

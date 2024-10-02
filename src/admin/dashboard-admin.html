@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="../output.css" rel="stylesheet" />
+    <link href="../img/logo.png" rel="shortcut icon" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <title>Simplify | Dashboard Admin</title>
+    <style>
+        /* Tambahkan gaya untuk transisi sidebar */
+        .sidebar {
+            transition: transform 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-100">
+    <div class="flex">
+        <!-- Sidebar -->
+        <aside id="sidebar"
+            class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
+            <div class="flex justify-between p-6">
+                <div class="flex gap-2">
+                    <img src="../img/logo1.png" alt="" class="w-10 h-10">
+                    <h1 class="text-2xl font-bold text-gray-700">Simplify</h1>
+                </div>
+
+
+                <button id="close-sidebar" class="text-gray-700 focus:outline-none md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12">
+                        </path>
+                    </svg>
+                </button>
+            </div>
+            <nav>
+                <ul>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="grid"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="school"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Tambah Mentor</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="bulb"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Profile</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Konten Utama -->
+        <div class="flex-1 p-6 ml-0 md:ml-64">
+            <!-- Tombol Hamburger -->
+            <button id="hamburger" class="block justify-between md:hidden p-4 text-gray-700">
+                <div class=""></div>
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
+                    </path>
+                </svg>
+            </button>
+
+            <header class="flex justify-between items-center">
+                <h2 class="text-3xl font-semibold">Dashboard</h2>
+
+                <button id="open-modal-btn">
+                    <div class="flex gap-2 w-max">
+                        <h1 class="font-bold relative top-2">Admin1</h1>
+                        <img src="../img/user.png" alt="" class="w-10 h-10">
+                    </div>
+                </button>
+
+                <!-- MODAL WRAPPER -->
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                    <div
+                        class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                        <!-- MODAL BOX -->
+                        <div
+                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
+                            <form action="" class="flex flex-col gap-5 my-2 w-full">
+                                <div class="flex flex-col gap-2">
+                                    <img src="../img/user.png" alt="" class="w-12 h-12">
+                                    <label for="img">Upload Gambar</label>
+                                    <input type="file" src="" alt="" name="img"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="nama-mentor">Nama</label>
+                                    <input
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="nama-mentor" type="text" placeholder="Enter your name">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="expertiser">Expertise</label>
+                                    <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="deskripsi">Bio</label>
+                                    <textarea name="deskripsi"
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                </div>
+
+                                <div class="flex justify-between">
+                                    <button type="submit"
+                                        class="px-7 py-1 text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                    <button id="close-modal-btn"
+                                        class="text-red-600 font-bold tracking-wide text-lg py-3 px-10 rounded">Close</button>
+                                </div>
+
+                            </form>
+
+
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Konten -->
+            <!-- ANALISTIK -->
+            <div class=" flex mt-10 font-poppins justify-between flex-wrap gap-5">
+                <div
+                    class="flex gap-5 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
+                    <ion-icon name="build" class="rounded-full bg-green-500 p-3 text-4xl my-auto"></ion-icon>
+                    <div class="flex flex-col">
+                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">ADMIN</h1>
+                        <h1 class="font-bold text-lg">Admin in total.</h1>
+                        <p class="text-xl">1</p>
+                    </div>
+                </div>
+                <div
+                    class="flex gap-3 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
+                    <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
+                    <div class="flex flex-col">
+                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
+                        <h1 class="font-bold text-lg">Mentor in total.</h1>
+                        <p class="text-xl">10</p>
+                    </div>
+                </div>
+                <div
+                    class="flex gap-3 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
+                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
+                    <div class="flex flex-col">
+                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
+                        <h1 class="font-bold text-lg">Siswa in total.</h1>
+                        <p class="text-xl">156</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- LIST -->
+            <div class="flex flex-wrap gap-5 justify-between mt-10">
+                <!-- LIST ADMIN -->
+                <div class="overflow-x-autow-full w-full shadow-sm">
+                    <h1 class="font-bold tracking-wide text-xl mb-2">Admin</h1>
+                    <table class="min-w-full bg-white shadow-md rounded-lg">
+                        <thead class="bg-blue-700 text-white">
+                            <tr>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Expertise</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="">
+                                <td class="text-left py-3 px-4">Veronl</td>
+                                <td class="text-left py-3 px-4">Profesional Front End Developer</td>
+                            </tr>
+                            <tr class="">
+                                <td class="text-left py-3 px-4">Rafael Setya</td>
+                                <td class="text-left py-3 px-4">Profesional Backend End Developer</td>
+                            </tr>
+                            <tr class="">
+                                <td class="text-left py-3 px-4">Ghiyats</td>
+                                <td class="text-left py-3 px-4">Profesional Front End Developer</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- LIST MENTOR -->
+                <div class="overflow-x-autow-full w-full shadow-sm">
+                    <h1 class="font-bold tracking-wide text-xl mb-2">Mentor</h1>
+                    <table class="min-w-full bg-white shadow-md rounded-lg">
+                        <thead class="bg-blue-700 text-white">
+                            <tr>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
+                                    Expertise</th>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Pengampu</th>
+                            </tr>
+                        </thead>
+                        <tbody class="bg-white">
+                            <tr class="">
+                                <td class="text-left py-3 px-4">Rafael Setya</td>
+                                <td class="text-left py-3 px-4">Profesional Front End Developer</td>
+                                <td class="text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
+                            </tr>
+                            <tr class="">
+                                <td class="text-left py-3 px-4">Nasyit</td>
+                                <td class="text-left py-3 px-4">Profesional Backend End Developer</td>
+                                <td class="text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
+                            </tr>
+                            <tr class="">
+                                <td class="text-left py-3 px-4">Ghiyats</td>
+                                <td class="text-left py-3 px-4">Profesional Front End Developer</td>
+                                <td class="text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk toggle sidebar
+        const hamburger = document.getElementById('hamburger');
+        const sidebar = document.getElementById('sidebar');
+        const closeSidebar = document.getElementById('close-sidebar');
+
+        hamburger.addEventListener('click', () => {
+            sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+        });
+
+        closeSidebar.addEventListener('click', () => {
+            sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
+        });
+
+        // Modal PopUp
+        document.getElementById("open-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.remove("hidden")
+        })
+
+        document.getElementById("close-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.add("hidden")
+        })
+    </script>
+</body>
+
+</html>
