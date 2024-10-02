@@ -9,7 +9,7 @@
     <link href="img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <title>Responsive Dashboard</title>
+    <title>Simplify | Dashboard Mentor</title>
     <style>
         /* Tambahkan gaya untuk transisi sidebar */
         .sidebar {
@@ -72,9 +72,57 @@
             <header class="flex justify-between items-center">
                 <h2 class="text-3xl font-semibold">Dashboard</h2>
 
-                <div class="flex gap-2 w-max">
-                    <h1 class="font-bold relative top-2">Mentor1</h1>
-                    <img src="../img/user.png" alt="" class="w-10 h-10">
+                <button id="open-modal-btn">
+                    <div class="flex gap-2 w-max">
+                        <h1 class="font-bold relative top-2">Mentor1</h1>
+                        <img src="../img/user.png" alt="" class="w-10 h-10">
+                    </div>
+                </button>
+
+                <!-- MODAL WRAPPER -->
+                <!-- MODAL WRAPPER -->
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                    <div
+                        class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                        <!-- MODAL BOX -->
+                        <div
+                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
+                            <form action="" class="flex flex-col gap-5 my-2 w-full">
+                                <div class="flex flex-col gap-2">
+                                    <img src="../img/user.png" alt="" class="w-12 h-12">
+                                    <label for="img">Upload Gambar</label>
+                                    <input type="file" src="" alt="" name="img"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="nama-mentor">Nama</label>
+                                    <input
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="nama-mentor" type="text" placeholder="Masukkan nama anda">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="expertiser">Expertise</label>
+                                    <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="deskripsi">Bio</label>
+                                    <textarea name="deskripsi"
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                </div>
+
+                                <div class="flex justify-between">
+                                    <button type="submit"
+                                        class="px-7 py-1 text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                    <button id="close-modal-btn"
+                                        class="text-red-600 font-bold tracking-wide text-lg py-3 px-10 rounded">Close</button>
+                                </div>
+
+                            </form>
+
+
+                        </div>
+                    </div>
                 </div>
             </header>
 
@@ -119,33 +167,30 @@
                         <thead class="bg-blue-700 text-white">
                             <tr>
                                 <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
-                                <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Pendidikan</th>
+                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Expertise</th>
                                 <th class="w-1/4 text-left py-3 px-4 uppercase font-semibold text-sm">Pengampu</th>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Umur</th>
-                                <th class="w-1/3 text-left py-3 px-4 uppercase font-semibold text-sm">Alamat</th>
+                                <th class="w-max text-left py-3 px-4 uppercase font-semibold text-sm hidden md:block">
+                                    Email</th>
                             </tr>
                         </thead>
                         <tbody class="bg-white">
                             <tr class="">
                                 <td class="w-1/4 text-left py-3 px-4">John Doe</td>
-                                <td class="w-1/4 text-left py-3 px-4">Sarjana</td>
+                                <td class="w-1/4 text-left py-3 px-4">Profesional Back End Developer</td>
                                 <td class="w-1/4 text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
-                                <td class="text-left py-3 px-4">30</td>
-                                <td class="w-1/3 text-left py-3 px-4">Jl. Matahari No. 20</td>
+                                <td class="w-max text-left py-3 px-4 hidden md:block">john0doe@gmail.com</td>
                             </tr>
                             <tr>
                                 <td class="w-1/4 text-left py-3 px-4">El Dear God</td>
-                                <td class="w-1/4 text-left py-3 px-4">Sarjana</td>
+                                <td class="w-1/4 text-left py-3 px-4">Profesional Full Stack Developer</td>
                                 <td class="w-1/4 text-left py-3 px-4">UI/UX Design.</td>
-                                <td class="text-left py-3 px-4">30</td>
-                                <td class="w-1/3 text-left py-3 px-4">Jl. Melati No. 20</td>
+                                <td class="w-max text-left py-3 px-4 hidden md:block selection:">mudryk@gmail.com</td>
                             </tr>
                             <tr class="">
                                 <td class="w-1/4 text-left py-3 px-4">Antony Santos</td>
-                                <td class="w-1/4 text-left py-3 px-4">Sarjana</td>
+                                <td class="w-1/4 text-left py-3 px-4">Profesional Front End End Developer</td>
                                 <td class="w-1/4 text-left py-3 px-4">Backend Framework, Fullstack Developer.</td>
-                                <td class="text-left py-3 px-4">30</td>
-                                <td class="w-1/3 text-left py-3 px-4">Jl. Mawar No. 20</td>
+                                <td class="w-max text-left py-3 px-4 hidden md:block">anstonysantos@gmail.com</td>
                             </tr>
                         </tbody>
                     </table>
@@ -168,6 +213,15 @@
         closeSidebar.addEventListener('click', () => {
             sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
         });
+
+        // Modal PopUp
+        document.getElementById("open-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.remove("hidden")
+        })
+
+        document.getElementById("close-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.add("hidden")
+        })
     </script>
 </body>
 
