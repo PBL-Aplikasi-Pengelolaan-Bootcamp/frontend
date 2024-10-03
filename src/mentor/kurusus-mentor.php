@@ -1,3 +1,16 @@
+<?php
+
+include 'function.php';
+
+if (isset($_POST['create_course'])) {
+    create_course($_POST);
+}
+
+
+
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,7 +28,7 @@
     <div class=" m-auto bg-slate-50">
         <!-- NAVBAR -->
 
-        <nav id="top"
+        <!-- <nav id="top"
             class="flex z-10 shadow-lg opacity-95 justify-between mx-10 bg-white rounded-full p-3 fixed left-0 top-3 right-0 font-poppins md:rounded-none md:top-0 md:mx-0 md:py-7">
 
             <div class="flex gap-4">
@@ -38,17 +51,14 @@
             </div>
 
             <div class="flex gap-3 font-normal">
-                <!-- <a href="kursus-section.html"
-                    class="border rounded-full  py-2 px-6 bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Sign
-                    In</a>
                 <a href="#"
-                    class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Sign
-                    Up</a> -->
+                    class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Logout
+                </a>
                 <h1 class="relative top-2 font-semibold font-poppins">Admin1</h1>
                 <img src="../img/user.png" alt="" width="40px" height="40px">
             </div>
 
-        </nav>
+        </nav> -->
 
         <div class="w-5/6 m-auto mt-40 mb-10">
             <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -58,25 +68,21 @@
                     <span>Tambah Kursus</span>
                 </button>
                 <div x-show="open" class="px-4 py-2 border-t">
-                    <form action="" class="flex flex-col gap-5 my-2">
+                    <form method="post" enctype="multipart/form-data" class="flex flex-col gap-5 my-2">
                         <div class="flex flex-col gap-2">
-                            <label for="nama-mentor">Nama Mentor</label>
-                            <input type="text" name="nama-mentor" class="border-slate-700 border rounded-sm py-1 px-1">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" class="border-slate-700 border rounded-sm py-1 px-1">
                         </div>
                         <div class="flex flex-col gap-2">
-                            <label for="judul-kursus">Judul Kursus</label>
-                            <input type="text" name="judul-kursus" class="border-slate-700 border rounded-sm py-1 px-1">
-                        </div>
-                        <div class="flex flex-col gap-2">
-                            <label for="deskripsi">Deskripsi</label>
-                            <input type="text" name="deskripsi" class="border-slate-700 border rounded-sm py-1 px-1">
+                            <label for="description">Description</label>
+                            <input type="text" name="description" class="border-slate-700 border rounded-sm py-1 px-1">
                         </div>
                         <div class="flex flex-col gap-2 w-56">
-                            <label for="img">Upload Gambar</label>
-                            <input type="file" src="" alt="" name="img">
+                            <label for="course_picture">Image Cover</label>
+                            <input type="file" src="" alt="" name="course_picture">
                         </div>
 
-                        <button type="submit"
+                        <button type="submit" name="create_course"
                             class="p-2 text-white bg-blue-700 font-semibold w-32 text-center rounded-sm">Tambahkan</button>
                     </form>
                 </div>
@@ -103,10 +109,15 @@
                 <div
                     class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="tambah-materi.html"><ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        <a href="#"><ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="tambah-materi.html">
+                            <ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                            </ion-icon>
+                        </a>
                     </div>
                     <img src="../img/social.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -126,10 +137,15 @@
                 <div
                     class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="#"><ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        <a href="#"><ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#">
+                            <ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                            </ion-icon>
+                        </a>
                     </div>
                     <img src="../img/smartphoneio.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -149,10 +165,15 @@
                 <div
                     class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="#"><ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        <a href="#"><ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#">
+                            <ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                            </ion-icon>
+                        </a>
                     </div>
                     <img src="../img/dashboard.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -171,10 +192,15 @@
                 <div
                     class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="#"><ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        <a href="#"><ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#">
+                            <ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                            </ion-icon>
+                        </a>
                     </div>
                     <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -193,10 +219,15 @@
                 <div
                     class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="#"><ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        <a href="#"><ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#">
+                            <ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                            </ion-icon>
+                        </a>
                     </div>
                     <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -216,10 +247,15 @@
                 <div
                     class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="#"><ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        <a href="#"><ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                        <a href="#">
+                            <ion-icon name="brush"
+                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
+                        </a>
+                        <a href="#">
+                            <ion-icon name="trash"
+                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                            </ion-icon>
+                        </a>
                     </div>
                     <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -248,10 +284,18 @@
                 <p class="font-semibold">Politeknik Negeri Batam</p>
                 <p>Jalan Ahmad Yani, Batam Kota, Kota Batam, Kepulauan Riau.</p>
                 <div class="flex gap-4">
-                    <a href="#" class="w-max"><ion-icon name="logo-instagram" class="text-3xl"></ion-icon></a>
-                    <a href="#" class="w-max"><ion-icon name="logo-youtube" class="text-3xl"></ion-icon></a>
-                    <a href="#" class="w-max"><ion-icon name="logo-facebook" class="text-3xl"></ion-icon></a>
-                    <a href="#" class="w-max"><ion-icon name="logo-github" class="text-3xl"></ion-icon></a>
+                    <a href="#" class="w-max">
+                        <ion-icon name="logo-instagram" class="text-3xl"></ion-icon>
+                    </a>
+                    <a href="#" class="w-max">
+                        <ion-icon name="logo-youtube" class="text-3xl"></ion-icon>
+                    </a>
+                    <a href="#" class="w-max">
+                        <ion-icon name="logo-facebook" class="text-3xl"></ion-icon>
+                    </a>
+                    <a href="#" class="w-max">
+                        <ion-icon name="logo-github" class="text-3xl"></ion-icon>
+                    </a>
                 </div>
             </div>
 

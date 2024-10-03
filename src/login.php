@@ -49,7 +49,7 @@
 
       <p class="font-quicksand font-normal text-center text-slate-500">
         Belum punya akun? Ayo
-        <a href="buat-akun.html" class="text-slate-700 font-semibold">daftar</a>
+        <a href="buat-akun.php" class="text-slate-700 font-semibold">daftar</a>
       </p>
     </div>
     <!-- FORM END -->

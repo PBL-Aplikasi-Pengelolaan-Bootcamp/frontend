@@ -1,3 +1,10 @@
+<?php 
+include 'function.php';
+
+$total_course_mentor = get_total_course_mentor();
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,10 +18,10 @@
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <title>Simplify | Dashboard Mentor</title>
     <style>
-        /* Tambahkan gaya untuk transisi sidebar */
-        .sidebar {
-            transition: transform 0.3s ease;
-        }
+    /* Tambahkan gaya untuk transisi sidebar */
+    .sidebar {
+        transition: transform 0.3s ease;
+    }
     </style>
 </head>
 
@@ -40,19 +47,28 @@
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="grid"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="bulb"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Profile</a></li>
-                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Pengguna
+                        </a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="grid" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List
+                        </a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="bulb" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Profile
+                        </a></li>
+                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.html" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Kursus
+                        </a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Materi
+                        </a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
+                            Out
+                        </a></li>
                 </ul>
             </nav>
         </aside>
@@ -74,7 +90,7 @@
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-bold relative top-2">Mentor1</h1>
+                        <h1 class="font-bold relative top-2"><?= $_SESSION['username']?></h1>
                         <img src="../img/user.png" alt="" class="w-10 h-10">
                     </div>
                 </button>
@@ -152,8 +168,8 @@
                     <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
                         <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
-                        <h1 class="font-bold text-lg">Siswa in total.</h1>
-                        <p class="text-xl">156</p>
+                        <h1 class="font-bold text-lg">Course Total</h1>
+                        <p class="text-xl"><?= $total_course_mentor?></p>
                     </div>
                 </div>
             </div>
@@ -197,27 +213,27 @@
     </div>
 
     <script>
-        // Fungsi untuk toggle sidebar
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('close-sidebar');
+    // Fungsi untuk toggle sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
 
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
-        });
+    hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+    });
 
-        closeSidebar.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
-        });
+    closeSidebar.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
+    });
 
-        // Modal PopUp
-        document.getElementById("open-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.remove("hidden")
-        })
+    // Modal PopUp
+    document.getElementById("open-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.remove("hidden")
+    })
 
-        document.getElementById("close-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.add("hidden")
-        })
+    document.getElementById("close-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.add("hidden")
+    })
     </script>
 </body>
 

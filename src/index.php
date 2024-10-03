@@ -3,6 +3,9 @@
 
   $course = getAll_Course();
 
+  if (isset($_POST['logout'])) {
+    logout();
+  }
 ?>
 
 
@@ -53,9 +56,19 @@
                         class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Sign
                         Up</a>
                     <?php endif ?>
+
                     <a href="all-access.html"
                         class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">
                         Access</a>
+
+                        <form method="post">
+                        <button  type="submit" name="logout" href="#"
+                        class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Logout
+                        </button>
+                        </form>
+
+                    <h1 class="relative top-2 font-semibold font-poppins"><?=$_SESSION['username'] ?></h1>
+                    <img src="img/user.png" alt="" width="40px" height="40px">
 
                 </div>
 
@@ -81,7 +94,7 @@
 
                 <a href="buat-akun.php"
                     class=" text-white transition-all py-3 px-5 rounded-sm w-max m-auto font-poppins font-semibold 
-        tracking-wide border bg-blue-700 border-slatetext-blue-700 hover:bg-white hover:border hover:text-blue-700 hover:border-blue-700">Daftar
+                    tracking-wide border bg-blue-700 border-slatetext-blue-700 hover:bg-white hover:border hover:text-blue-700 hover:border-blue-700">Daftar
                     Sekarang</a>
                 <?php endif ?>
             </header>
@@ -167,7 +180,8 @@
             <div class="flex flex-wrap gap-5 m-auto justify-between text-center mt-10 px-10">
                 <?php
                 foreach ($course as $get) { ?>
-                <a href="login.php"
+
+                <a href="<?php echo !isset($_SESSION['id_user']) ? 'login.php' : 'enroll.php';?>"
                     class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
                     <img src="foto_cover_course/<?= $get['course_picture']?>" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">

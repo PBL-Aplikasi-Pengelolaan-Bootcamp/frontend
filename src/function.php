@@ -100,7 +100,7 @@ function login($data)
             } else if ($data_from_username['role'] == 'mentor'){
                 echo"<script>
                         alert('Login success !');
-                        window.location.href= 'mentor/index.php'
+                        window.location.href= 'mentor/dashboard-mentor.php'
                     </script>";
             exit;
             } else {
@@ -123,7 +123,12 @@ function login($data)
 
 
 
-
+// logout function
+function logout(){
+    session_unset();
+    session_destroy();
+    echo "<script>alert('Logout'); window.location.href='login.php'</script>";
+}
 
 
 
