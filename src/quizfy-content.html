@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quiz.fy | Dasar-dasar pemrograman.</title>
+    <link href="output.css" rel="stylesheet" />
+    <link href="img/logo.png" rel="shortcut icon" />
+    <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+
+<body class="sm:bg-slate-50">
+    <div
+        class=" m-auto quiz flex flex-col gap-8 sm:border sm:bg-white py-5 mt-16 sm:px-6 sm:py-10 sm:shadow-lg rounded-md">
+        <h1 class="text-xl font-semibold font-poppins text-center">Quiz: "Dasar-dasar pemrograman."</h1>
+        <!-- SOAL 1 -->
+        <div class="flex flex-col gap-3 p-6">
+            <h1 class="font-semibold font-poppins tracking-wide">1. Ada banyak bahasa pemrograman, sebutkan 4 bahasa
+                pemrograman.</h1>
+            <div class="flex flex-col gap-2">
+                <!-- A -->
+                <button onclick="selectAnswer(this)"
+                    class="w-full inline-flex overflow-hidden gap-2 rounded-md border border-gray-300 shadow-sm bg-white text-base font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                    <p class="bg-blue-500 px-5 py-3 my-auto h-full text-white">A</p>
+                    <p class="my-auto tracking-wide">HTML, CSS, Javascript, PHP</p>
+                </button>
+                <!-- B -->
+                <button onclick="selectAnswer(this)"
+                    class="w-full inline-flex overflow-hidden gap-2 rounded-md border border-gray-300 shadow-sm bg-white text-base font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                    <p class="bg-blue-500 px-5 py-3 my-auto h-full text-white">B</p>
+                    <p class="my-auto tracking-wide">Laravel dan ReactJS</p>
+                </button>
+                <!-- C -->
+                <button onclick="selectAnswer(this)"
+                    class="w-full inline-flex overflow-hidden gap-2 rounded-md border border-gray-300 shadow-sm bg-white text-base font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                    <p class="bg-blue-500 px-5 py-3 my-auto h-full text-white">C</p>
+                    <p class="my-auto tracking-wide">TailwindCSS dan Bootstrap</p>
+                </button>
+                <!-- D -->
+                <button onclick="selectAnswer(this)"
+                    class="w-full inline-flex overflow-hidden gap-2 rounded-md border border-gray-300 shadow-sm bg-white text-base font-medium hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:w-auto sm:text-sm">
+                    <p class="bg-blue-500 px-5 py-3 my-auto h-full text-white">D</p>
+                    <p class="my-auto tracking-wide">HTML dan ReactJS</p>
+                </button>
+            </div>
+        </div>
+
+        <div class="flex gap-3 justify-end px-5">
+            <a href="#" class="bg-blue-600 font-semibold tracking-wide text-white px-1 pr-5 py-1 rounded-md flex">
+                <ion-icon name="arrow-dropleft" class="text-white text-xl my-auto"></ion-icon>
+                <p class="relative hidden sm:block">Previous</p>
+                <p class="relative sm:hidden">Prev..</p>
+            </a>
+            <a href="#" class="bg-blue-600 font-semibold tracking-wide text-white px-1 py-1 pl-3 rounded-md flex">
+                <p>Next</p>
+                <ion-icon name="arrow-dropright" class="text-white text-xl my-auto"></ion-icon>
+            </a>
+        </div>
+
+        <div class="flex gap-1 m-auto">
+            <p class="bg-blue-600 font-semibold text-white px-3 py-1 my-auto h-full border border-blue-600 rounded-lg">1
+            </p>
+            <p class="bg-white font-semibold text-black px-3 py-1 my-auto h-full border border-black rounded-lg">2</p>
+            <p class="bg-blue-600 font-semibold text-white px-3 py-1 my-auto h-full border border-blue-600 rounded-lg">3
+            </p>
+            <p class="bg-blue-600 font-semibold text-white px-3 py-1 my-auto h-full border border-blue-600 rounded-lg">4
+            </p>
+            <p class="bg-blue-600 font-semibold text-white px-3 py-1 my-auto h-full border border-blue-600 rounded-lg">5
+            </p>
+
+        </div>
+        <!-- SOAL 2 -->
+
+    </div>
+</body>
+<script>
+    function selectAnswer(button) {
+        // Reset all buttons
+        document.querySelectorAll('button').forEach(btn => {
+            btn.querySelector('p').classList.remove('selected');
+            btn.querySelector('p').classList.add('bg-blue-500');
+        });
+
+        // Add selected class to clicked button
+        button.querySelector('p').classList.remove('bg-blue-500');
+        button.querySelector('p').classList.add('bg-orange-400');
+    }
+</script>
+
+</html>

@@ -14,6 +14,11 @@
     width: 400px;
   }
 
+  .quiz {
+    max-width: 450px;
+    min-width: 300px;
+  }
+
   .courses {
     width: 350px;
   }
