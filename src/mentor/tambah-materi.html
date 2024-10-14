@@ -89,30 +89,26 @@
             </div>
         </nav>
 
-        <div class="w-4/5 m-auto relative top-36 flex flex-col gap-6 py-5">
+        <div class="w-4/5 m-auto relative top-36 flex flex-col">
+            <div class="space-y-4">
 
-            <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                <button @click="open = !open"
-                    class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                    <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                    <span>INPUT: JUDUL </span>
-                </button>
-                <div x-show="open"
-                    class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                    <div class="flex gap-5">
-                        <h1 class="font-semibold text-xl">Judul:</h1>
-                        <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
-                            class="border-slate-700 border rounded-sm py-1 px-1 w-full">
+                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <button @click="open = !open"
+                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
+                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                        <span>INPUT: JUDUL </span>
+                    </button>
+                    <div x-show="open"
+                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
+                        <div class="flex gap-5">
+                            <h1 class="font-semibold text-xl">Judul:</h1>
+                            <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
+                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
+                        </div>
+                        <button type="submit"
+                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
                     </div>
-                    <button type="submit"
-                        class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
                 </div>
-            </div>
-            <h1 class="text-2xl font-poppins font-semibold">Frontend Pemula: Dasar-Dasar HTML & CSS</h1>
-
-
-
-            <div class="space-y-4 mt-5">
                 <!-- SECTION -->
                 <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
                     <button @click="open = !open"
@@ -130,61 +126,22 @@
                             class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
                     </div>
                 </div>
-                <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden mb-10">
-                    <img src="../img/smartphoneio.jpg" alt="">
-                </div>
 
                 <!-- SECTION 1 -->
                 <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: PENDAHULUAN</span>
+                        <span>TAMBAH SECTION</span>
                     </button>
                     <div x-show="open"
                         class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
                         <div class="flex gap-5">
-                            <h1 class="font-semibold text-xl">Judul Section:</h1>
+                            <h1 class="font-semibold text-xl">Link Youtube:</h1>
                             <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
                                 class="border-slate-700 border rounded-sm py-1 px-1 w-full">
                         </div>
                         <textarea id="editor1"
-                            class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
-                        <button type="submit"
-                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
-                    </div>
-                </div>
-
-                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>PENDAHULUAN</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat eum provident sint quaerat
-                            consequuntur veniam soluta totam dolorem at. Beatae amet neque provident, nam inventore
-                            itaque, ratione quam sequi quidem eum dolorem quis. Nam explicabo illo sapiente totam
-                            nostrum magni sed commodi suscipit veritatis minima. Distinctio corrupti sed praesentium
-                            obcaecati.</p>
-                    </div>
-                </div>
-
-                <!-- SECTION 2 -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: PERTEMUAN 1 </span>
-                    </button>
-                    <div x-show="open"
-                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                        <div class="flex gap-5">
-                            <h1 class="font-semibold text-xl">Judul Section:</h1>
-                            <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
-                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
-                        </div>
-                        <textarea id="editor2"
                             class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
                         <button type="submit"
                             class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
@@ -200,7 +157,6 @@
                     <div x-show="open" class="px-4 py-2 border-t flex flex-col gap-4">
                         <!-- INNER SECTION 1 -->
                         <div class="flex flex-col gap-4">
-                            <h1 class="text-2xl font-semibold">Pengenalan HTML</h1>
                             <iframe class="iframe-youtube"
                                 src="https://www.youtube.com/embed/Q2VqCG13ejA?si=UEQsKOXVmAhX0mli"
                                 title="YouTube video player" frameborder="0"
@@ -247,245 +203,66 @@
                     </div>
                 </div>
 
-                <!-- SECTION 3 -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: PERTEMUAN 2 </span>
-                    </button>
-                    <div x-show="open"
-                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                        <div class="flex gap-5">
-                            <h1 class="font-semibold text-xl">Judul Section:</h1>
-                            <input type="text" placeholder="PERTEMUAN 2 - PERKENALAN CSS"
-                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
-                        </div>
-                        <textarea id="editor3"
-                            class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
-                        <button type="submit"
-                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
-                    </div>
-                </div>
-
-                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>PERTEMUAN 2 - PERKENALAN CSS</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t flex flex-col gap-4">
-                        <!-- INNER SECTION 1 -->
-                        <div class="flex flex-col gap-4">
-                            <h1 class="text-2xl font-semibold">Pengenalan CSS</h1>
-                            <iframe class="iframe-youtube"
-                                src="https://www.youtube.com/embed/CleFk3BZB3g?si=BzYBzTRZ-EZdgDXq"
-                                title="YouTube video player" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                            <p>CSS adalah bahasa gaya yang digunakan untuk mendesain dan mengatur tampilan halaman web.
-                                CSS memungkinkan pemisahan konten (HTML) dari presentasi (desain).</p>
-                        </div>
-                        <hr>
-                        <!-- INNER SECTION 2 -->
-                        <div class="flex flex-col gap-2">
-                            <h1 class="text-2xl font-semibold">2. Selektor CSS</h1>
-                            <p>Selektor digunakan untuk memilih elemen HTML yang ingin diberi gaya. Jenis-jenis
-                                selektor:
-                            </p>
-                            <ul class="list-decimal relative left-4">
-                                <li>selector Elemen: Memilih semua elemen tertentu.</li>
-                                <li>Selector Kelas: Memilih elemen berdasarkan kelas.</li>
-                                <li>Selector ID: Memilih elemen berdasarkan ID.</li>
-                                <li>Selector Atribut: Memilih elemen berdasarkan atribut tertentu.</li>
-                            </ul>
-
-                        </div>
-                        <hr>
-                        <!-- INNER SECTION 3 -->
-                        <div class="flex flex-col gap-2">
-                            <h1 class="text-2xl font-semibold">3. Properti CSS</h1>
-                            <p>CSS memiliki berbagai properti untuk mengatur gaya elemen, termasuk:</p>
-                            <ul class="list-decimal relative left-4">
-                                <li>Warna dan Latar Belakang: color, background-color, background-image.</li>
-                                <li>Teks: font-family, font-size, font-weight, text-align.</li>
-                                <li>Margin dan Padding: margin, padding.</li>
-                                <li>Batas: border, border-radius</li>
-                            </ul>
-                        </div>
-                        <hr>
-                        <!-- INNER SECTION 4 -->
-                        <div class="flex flex-col gap-2">
-                            <h1 class="text-2xl font-semibold">Struktur Dasar CSS</h1>
-                            <p>HTML, atau HyperText Markup Language, adalah bahasa markup yang digunakan untuk membuat
-                                dan
-                                menyusun struktur halaman web. HTML menggunakan elemen-elemen atau tag untuk menentukan
-                                berbagai bagian dari sebuah halaman web, seperti paragraf, gambar, tautan, dan lainnya.
-                                Setiap elemen HTML biasanya terdiri dari tag pembuka, isi, dan tag penutup.</p>
-                        </div>
-                        <hr>
-                        <!-- QUIZ SECTION -->
-                        <div class="flex flex-col gap-2">
-                            <div class="flex gap-2">
-                                <!-- <ion-icon name="alarm" class="text-2xl relative top-1"></ion-icon> -->
-                                <h1 class="font-semibold text-2xl">Quiz: Dasar-dasar CSS</h1>
-                            </div>
-
-                            <a href="#" class="text-blue-700">https://youtu.be/Q2VqCG13ejA?si=F8Du2oHxMqFSmGlM</a>
-
-                        </div>
-                        <hr>
-                    </div>
-                </div>
-
-                <!-- SECTION 4 -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: PERTEMUAN 3 </span>
-                    </button>
-                    <div x-show="open"
-                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                        <div class="flex gap-5">
-                            <h1 class="font-semibold text-xl">Judul Section:</h1>
-                            <input type="text" placeholder="PERTEMUAN 3 - HTML STYLES - CSS"
-                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
-                        </div>
-                        <textarea id="editor4"
-                            class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
-                        <button type="submit"
-                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
-                    </div>
-                </div>
-
-                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>PERTEMUAN 3 - HTML STYLES - CSS</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t flex flex-col gap-4">
-                        <!-- SECTION 1 -->
-                        <div class="flex flex-col gap-4">
-                            <h1 class="text-2xl font-semibold">Cara Penggunaan CSS pada HTML</h1>
-                            <iframe class="iframe-youtube"
-                                src="https://www.youtube.com/embed/6xgLY8kSXO8?si=aS--D2EGCB3bxSTq"
-                                title="YouTube video player" frameborder="0"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                            <p>HTML, atau HyperText Markup Language, adalah bahasa markup yang digunakan untuk membuat
-                                dan
-                                menyusun struktur halaman web. HTML menggunakan elemen-elemen atau tag untuk menentukan
-                                berbagai bagian dari sebuah halaman web, seperti paragraf, gambar, tautan, dan lainnya.
-                                Setiap elemen HTML biasanya terdiri dari tag pembuka, isi, dan tag penutup.</p>
-                        </div>
-                        <hr>
-                        <!-- SECTION 2 -->
-                        <div class="flex flex-col gap-2">
-                            <h1 class="text-2xl font-semibold">Struktur Dasar HTML</h1>
-                            <p>HTML, atau HyperText Markup Language, adalah bahasa markup yang digunakan untuk membuat
-                                dan
-                                menyusun struktur halaman web. HTML menggunakan elemen-elemen atau tag untuk menentukan
-                                berbagai bagian dari sebuah halaman web, seperti paragraf, gambar, tautan, dan lainnya.
-                                Setiap elemen HTML biasanya terdiri dari tag pembuka, isi, dan tag penutup.</p>
-                        </div>
-                        <hr>
-                        <!-- SECTION 3 -->
-                        <div class="flex flex-col gap-2">
-                            <h1 class="text-2xl font-semibold">Elemen HTML Penting</h1>
-                            <p>HTML, atau HyperText Markup Language, adalah bahasa markup yang digunakan untuk membuat
-                                dan
-                                menyusun struktur halaman web. HTML menggunakan elemen-elemen atau tag untuk menentukan
-                                berbagai bagian dari sebuah halaman web, seperti paragraf, gambar, tautan, dan lainnya.
-                                Setiap elemen HTML biasanya terdiri dari tag pembuka, isi, dan tag penutup.</p>
-                        </div>
-                        <hr>
-                        <!-- SECTION 4 -->
-                        <div class="flex flex-col gap-2">
-                            <h1 class="text-2xl font-semibold">Struktur Dasar CSS</h1>
-                            <p>HTML, atau HyperText Markup Language, adalah bahasa markup yang digunakan untuk membuat
-                                dan
-                                menyusun struktur halaman web. HTML menggunakan elemen-elemen atau tag untuk menentukan
-                                berbagai bagian dari sebuah halaman web, seperti paragraf, gambar, tautan, dan lainnya.
-                                Setiap elemen HTML biasanya terdiri dari tag pembuka, isi, dan tag penutup.</p>
-                        </div>
-                        <hr>
-                        <!-- QUIZ SECTION -->
-                        <div class="flex flex-col gap-2">
-                            <div class="flex gap-2">
-                                <!-- <ion-icon name="alarm" class="text-2xl relative top-1"></ion-icon> -->
-                                <h1 class="font-semibold text-2xl">Quiz: Styling Tag HTML menggunakan CSS</h1>
-                            </div>
-
-                            <a href="#" class="text-blue-700">https://youtu.be/Q2VqCG13ejA?si=F8Du2oHxMqFSmGlM</a>
-
-                        </div>
-                        <hr>
-                    </div>
-                </div>
 
             </div>
+        </div>
+    </div>
 
 
+    <footer class="flex flex-col sm:flex-col mt-52 md:flex-row gap-10 bg-white">
+        <div class="flex flex-col gap-3 text-white bg-blue-700 px-5 py-10 md:px-7 md:py-4">
+            <div class="flex gap-1 font-quicksand">
+                <img src="../img/letter-s.png" alt="" width="50px">
+                <h1 class="relative top-3 font-poppins text-lg font-semibold">SIMPLIFY</h1>
+            </div>
+            <p class="font-semibold">Politeknik Negeri Batam</p>
+            <p>Ahmad Yani, Batam Kota District, Batam City, Riau Islands.</p>
+            <div class="flex gap-4">
+                <a href="#" class="w-max"><ion-icon name="logo-instagram" class="text-3xl"></ion-icon></a>
+                <a href="#" class="w-max"><ion-icon name="logo-youtube" class="text-3xl"></ion-icon></a>
+                <a href="#" class="w-max"><ion-icon name="logo-facebook" class="text-3xl"></ion-icon></a>
+                <a href="#" class="w-max"><ion-icon name="logo-github" class="text-3xl"></ion-icon></a>
+            </div>
         </div>
 
-
-        <footer class="flex flex-col sm:flex-col mt-52 md:flex-row gap-10 bg-white">
-            <div class="flex flex-col gap-3 text-white bg-blue-700 px-5 py-10 md:px-7 md:py-4">
-                <div class="flex gap-1 font-quicksand">
-                    <img src="../img/letter-s.png" alt="" width="50px">
-                    <h1 class="relative top-3 font-poppins text-lg font-semibold">SIMPLIFY</h1>
-                </div>
-                <p class="font-semibold">Politeknik Negeri Batam</p>
-                <p>Ahmad Yani, Batam Kota District, Batam City, Riau Islands.</p>
-                <div class="flex gap-4">
-                    <a href="#" class="w-max"><ion-icon name="logo-instagram" class="text-3xl"></ion-icon></a>
-                    <a href="#" class="w-max"><ion-icon name="logo-youtube" class="text-3xl"></ion-icon></a>
-                    <a href="#" class="w-max"><ion-icon name="logo-facebook" class="text-3xl"></ion-icon></a>
-                    <a href="#" class="w-max"><ion-icon name="logo-github" class="text-3xl"></ion-icon></a>
-                </div>
+        <div class=" text-slate-700 bg-white font-poppins p-3 flex flex-wrap gap-10 justify-between md:w-1/2 md:gap-20">
+            <div class="flex flex-col gap-4">
+                <h1 class="text-black font-semibold">COMPANY</h1>
+                <header
+                    class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
+                </header>
+                <ul class="flex flex-col gap-2">
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Copyright</a></li>
+                </ul>
             </div>
 
-            <div
-                class=" text-slate-700 bg-white font-poppins p-3 flex flex-wrap gap-10 justify-between md:w-1/2 md:gap-20">
-                <div class="flex flex-col gap-4">
-                    <h1 class="text-black font-semibold">COMPANY</h1>
-                    <header
-                        class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
-                    </header>
-                    <ul class="flex flex-col gap-2">
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Help Center</a></li>
-                        <li><a href="#">Copyright</a></li>
-                    </ul>
-                </div>
-
-                <div class="flex flex-col gap-4">
-                    <h1 class="text-black font-semibold">LEARN</h1>
-                    <header
-                        class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
-                    </header>
-                    <ul class="flex flex-col gap-2">
-                        <li><a href="#">Online Class</a></li>
-                        <li><a href="#">Offline Class</a></li>
-                        <li><a href="#">All Course</a></li>
-                    </ul>
-                </div>
-
-                <div class="flex flex-col gap-4">
-                    <h1 class="text-black font-semibold">COMUNITY</h1>
-                    <header
-                        class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
-                    </header>
-                    <ul class="flex flex-col gap-2">
-                        <li><a href="#">Check Certificate</a></li>
-                        <li><a href="#">Telegram Group</a></li>
-                        <li><a href="#">Discord</a></li>
-                    </ul>
-                </div>
+            <div class="flex flex-col gap-4">
+                <h1 class="text-black font-semibold">LEARN</h1>
+                <header
+                    class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
+                </header>
+                <ul class="flex flex-col gap-2">
+                    <li><a href="#">Online Class</a></li>
+                    <li><a href="#">Offline Class</a></li>
+                    <li><a href="#">All Course</a></li>
+                </ul>
             </div>
-        </footer>
+
+            <div class="flex flex-col gap-4">
+                <h1 class="text-black font-semibold">COMUNITY</h1>
+                <header
+                    class="border border-b-slate-300 w-32 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
+                </header>
+                <ul class="flex flex-col gap-2">
+                    <li><a href="#">Check Certificate</a></li>
+                    <li><a href="#">Telegram Group</a></li>
+                    <li><a href="#">Discord</a></li>
+                </ul>
+            </div>
+        </div>
+    </footer>
 
     </div>
 
