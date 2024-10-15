@@ -113,7 +113,7 @@ $course = get_course_by_mentor();
                 <div
                     class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
                     <div class="flex p-3 absolute gap-1">
-                        <a href="tambah-materi.html">
+                        <a href="tambah-materi.php?id=<?=$data['id_course']?>">
                             <ion-icon name="brush"
                                 class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
                         </a>

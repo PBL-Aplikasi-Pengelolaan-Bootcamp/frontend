@@ -70,16 +70,59 @@
                             class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Logout
                         </button>
                     </form>
-<!-- 
-                    <h1 class='relative top-2 font-semibold font-poppins'><?= $_SESSION['username'] ?></h1>
+                    <!-- 
+                    <h1 class='relative top-2 font-semibold font-poppins'>username</h1>
                     <img src='img/user.png' alt='' width='40px' height='40px'> -->
 
-                    <button id="open-modal-btn">
+                    <button id="open-   -btn">
                         <div class="flex gap-2 w-max">
                             <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
                             <img src="../img/pp-profile.jpg" alt="" class="w-10 h-10 rounded-full">
                         </div>
                     </button>
+
+                    <!-- MODAL WRAPPER -->
+                    <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                        <div
+                            class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                            <!-- MODAL BOX -->
+                            <div
+                                class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
+                                <form action="" class="flex flex-col gap-5 my-2 w-full">
+                                    <div class="flex flex-col gap-2">
+                                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
+                                        <label for="img">Upload Gambar</label>
+                                        <input type="file" src="" alt="" name="img"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="nama-mentor">Nama</label>
+                                        <input
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="nama-mentor" type="text" placeholder="Enter your name">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="expertiser">Expertise</label>
+                                        <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="deskripsi">Bio</label>
+                                        <textarea name="deskripsi"
+                                            class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                    </div>
+
+                                    <div class="flex justify-between">
+                                        <button type="submit"
+                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                        <button id="close-modal-btn"
+                                            class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                     <?php endif; ?>
 
                     <!-- profil -->
@@ -322,7 +365,17 @@
 
 
 
+        <script>
+        // Modal PopUp
+        document.getElementById("open-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.remove("hidden")
+        })
 
+        document.getElementById("close-modal-btn").addEventListener("click", () => {
+            document.getElementById("modal-wrapper").classList.add("hidden")
+        })
+        </script>
+        </script>
     </body>
 
     </html>

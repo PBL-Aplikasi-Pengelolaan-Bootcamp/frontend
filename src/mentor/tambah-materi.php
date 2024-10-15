@@ -91,29 +91,17 @@
 
         <div class="w-4/5 m-auto relative top-36 flex flex-col gap-6 py-5">
 
-            <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                <button @click="open = !open"
-                    class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                    <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                    <span>INPUT: JUDUL </span>
-                </button>
-                <div x-show="open"
-                    class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                    <div class="flex gap-5">
-                        <h1 class="font-semibold text-xl">Judul:</h1>
-                        <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
-                            class="border-slate-700 border rounded-sm py-1 px-1 w-full">
-                    </div>
-                    <button type="submit"
-                        class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
-                </div>
-            </div>
+            
             <h1 class="text-2xl font-poppins font-semibold">Frontend Pemula: Dasar-Dasar HTML & CSS</h1>
 
 
 
             <div class="space-y-4 mt-5">
                 <!-- SECTION -->
+                
+                <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden mb-10">
+                    <img src="../img/smartphoneio.jpg" alt="">
+                </div>
                 <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
@@ -129,9 +117,6 @@
                         <button type="submit"
                             class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
                     </div>
-                </div>
-                <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden mb-10">
-                    <img src="../img/smartphoneio.jpg" alt="">
                 </div>
 
                 <!-- SECTION 1 -->
@@ -163,20 +148,7 @@
                     </div>
                 </div>
 
-                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>PENDAHULUAN</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t">
-                        <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fugiat eum provident sint quaerat
-                            consequuntur veniam soluta totam dolorem at. Beatae amet neque provident, nam inventore
-                            itaque, ratione quam sequi quidem eum dolorem quis. Nam explicabo illo sapiente totam
-                            nostrum magni sed commodi suscipit veritatis minima. Distinctio corrupti sed praesentium
-                            obcaecati.</p>
-                    </div>
-                </div>
+               
 
                 <!-- SECTION 2 -->
                 <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
