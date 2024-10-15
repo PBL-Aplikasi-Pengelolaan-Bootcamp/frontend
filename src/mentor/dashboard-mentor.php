@@ -16,7 +16,7 @@ $total_course_mentor = get_total_course_mentor();
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <title>Simplify | Dashboard Mentor</title>
+    <title>Mentor | Dashboard</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
     .sidebar {
@@ -47,28 +47,18 @@ $total_course_mentor = get_total_course_mentor();
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Pengguna
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="grid" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="bulb" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Profile
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.html" class="block p-4 text-gray-700">
-                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Kursus
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Materi
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
-                            Out
-                        </a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
+                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
+                            class="block p-4 text-gray-700"><ion-icon name="grid"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
+                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.php"
+                            class="block p-4 text-gray-700"><ion-icon name="list-box"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a></li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
                 </ul>
             </nav>
         </aside>
@@ -90,12 +80,11 @@ $total_course_mentor = get_total_course_mentor();
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-bold relative top-2"><?= $_SESSION['username']?></h1>
-                        <img src="../img/user.png" alt="" class="w-10 h-10">
+                        <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
+                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
                     </div>
                 </button>
 
-                <!-- MODAL WRAPPER -->
                 <!-- MODAL WRAPPER -->
                 <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
                     <div
@@ -105,7 +94,7 @@ $total_course_mentor = get_total_course_mentor();
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
                             <form action="" class="flex flex-col gap-5 my-2 w-full">
                                 <div class="flex flex-col gap-2">
-                                    <img src="../img/user.png" alt="" class="w-12 h-12">
+                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
                                     <label for="img">Upload Gambar</label>
                                     <input type="file" src="" alt="" name="img"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -114,7 +103,7 @@ $total_course_mentor = get_total_course_mentor();
                                     <label for="nama-mentor">Nama</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="nama-mentor" type="text" placeholder="Masukkan nama anda">
+                                        id="nama-mentor" type="text" placeholder="Enter your name">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="expertiser">Expertise</label>
@@ -129,14 +118,12 @@ $total_course_mentor = get_total_course_mentor();
 
                                 <div class="flex justify-between">
                                     <button type="submit"
-                                        class="px-7 py-1 text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
                                     <button id="close-modal-btn"
-                                        class="text-red-600 font-bold tracking-wide text-lg py-3 px-10 rounded">Close</button>
+                                        class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
                                 </div>
 
                             </form>
-
-
                         </div>
                     </div>
                 </div>

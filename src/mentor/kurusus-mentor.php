@@ -6,6 +6,8 @@ if (isset($_POST['create_course'])) {
     create_course($_POST);
 }
 
+$course = get_course_by_mentor();
+
 
 
 
@@ -17,7 +19,7 @@ if (isset($_POST['create_course'])) {
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simplify | Kursus</title>
+    <title>Mentor | Kursus</title>
     <link href="../output.css" rel="stylesheet" />
     <link href="img/logo.png" rel="shortcut icon" />
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -28,16 +30,16 @@ if (isset($_POST['create_course'])) {
     <div class=" m-auto bg-slate-50">
         <!-- NAVBAR -->
 
-        <!-- <nav id="top"
-            class="flex z-10 shadow-lg opacity-95 justify-between mx-10 bg-white rounded-full p-3 fixed left-0 top-3 right-0 font-poppins md:rounded-none md:top-0 md:mx-0 md:py-7">
+        <nav id="top"
+            class="flex z-10 shadow-lg justify-between mx-10 bg-white rounded-full p-3 fixed left-0 top-3 right-0 font-poppins md:rounded-none md:top-0 md:mx-0 md:py-7">
 
             <div class="flex gap-4">
-                <div class="flex gap-2">
+                <div class="flex gap-2 my-auto">
                     <div class="">
                         <img src="../img/logo.png" width="35px" alt="">
                     </div>
 
-                    <h1 class="font-poppins font-semibold relative top-2 sm:top-1 md:hidden">Simplify
+                    <h1 class="font-poppins font-semibold relative top-1 sm:top-1 md:hidden">Simplify
                     </h1>
                 </div>
 
@@ -58,7 +60,7 @@ if (isset($_POST['create_course'])) {
                 <img src="../img/user.png" alt="" width="40px" height="40px">
             </div>
 
-        </nav> -->
+        </nav>
 
         <div class="w-5/6 m-auto mt-40 mb-10">
             <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
@@ -83,7 +85,7 @@ if (isset($_POST['create_course'])) {
                         </div>
 
                         <button type="submit" name="create_course"
-                            class="p-2 text-white bg-blue-700 font-semibold w-32 text-center rounded-sm">Tambahkan</button>
+                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Tambah</button>
                     </form>
                 </div>
             </div>
@@ -106,6 +108,8 @@ if (isset($_POST['create_course'])) {
 
 
             <div class="flex flex-wrap gap-10 m-auto text-center justify-between">
+
+                <?php foreach ($course as $data) { ?>
                 <div
                     class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
                     <div class="flex p-3 absolute gap-1">
@@ -119,10 +123,9 @@ if (isset($_POST['create_course'])) {
                             </ion-icon>
                         </a>
                     </div>
-                    <img src="../img/social.jpg" alt="" class="object-center md:h-40">
+                    <img src="../foto_cover_course/<?=$data['course_picture']?>" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Frontend Pemula:
-                            Dasar-Dasar HTML dan CSS</h1>
+                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left"><?=$data['title']?></h1>
 
                         <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira </h3>
                         <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
@@ -133,144 +136,7 @@ if (isset($_POST['create_course'])) {
                             suscipit quam sapiente voluptatibus molestias.</p>
                     </div>
                 </div>
-
-                <div
-                    class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto">
-                    <div class="flex p-3 absolute gap-1">
-                        <a href="#">
-                            <ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                            </ion-icon>
-                        </a>
-                    </div>
-                    <img src="../img/smartphoneio.jpg" alt="" class="object-center md:h-40">
-                    <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Backend Pemula:
-                            Dasar-Dasar PHP dan MySQL</h1>
-
-                        <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira</h3>
-                        <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Repellat iusto
-                            nemo
-                            provident
-                            cupiditate nobis at
-                            suscipit quam sapiente voluptatibus molestias.</p>
-                    </div>
-                </div>
-
-                <div
-                    class="flex flex-col w-full h-max  shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
-                    <div class="flex p-3 absolute gap-1">
-                        <a href="#">
-                            <ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                            </ion-icon>
-                        </a>
-                    </div>
-                    <img src="../img/dashboard.jpg" alt="" class="object-center md:h-40">
-                    <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Frontend Framework:
-                            Dasar-Dasar Boostrap</h1>
-                        <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira</h3>
-                        <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Repellat iusto
-                            nemo
-                            provident
-                            cupiditate nobis at
-                            suscipit quam sapiente voluptatibus molestias.</p>
-                    </div>
-                </div>
-
-                <div
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
-                    <div class="flex p-3 absolute gap-1">
-                        <a href="#">
-                            <ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                            </ion-icon>
-                        </a>
-                    </div>
-                    <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
-                    <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Backend Framework:
-                            Dasar-Dasar Laravel</h1>
-                        <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira</h3>
-                        <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Repellat iusto
-                            nemo
-                            provident
-                            cupiditate nobis at
-                            suscipit quam sapiente voluptatibus molestias.</p>
-                    </div>
-                </div>
-
-                <div
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
-                    <div class="flex p-3 absolute gap-1">
-                        <a href="#">
-                            <ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                            </ion-icon>
-                        </a>
-                    </div>
-                    <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
-                    <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left border-slate-600">Fullstack
-                            Developer: Pembuatan Aplikasi Database</h1>
-
-                        <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira</h3>
-                        <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Repellat iusto
-                            nemo
-                            provident
-                            cupiditate nobis at
-                            suscipit quam sapiente voluptatibus molestias.</p>
-                    </div>
-                </div>
-
-                <div
-                    class="flex flex-col w-full h-max shadow-md rounded-lg md:courses overflow-hidden transition-all sm:m-auto ">
-                    <div class="flex p-3 absolute gap-1">
-                        <a href="#">
-                            <ion-icon name="brush"
-                                class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon>
-                        </a>
-                        <a href="#">
-                            <ion-icon name="trash"
-                                class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                            </ion-icon>
-                        </a>
-                    </div>
-                    <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
-                    <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Bangun Rancang UI/UX
-                            Design Menggunakan Figma</h1>
-
-                        <h3 class="text-sm font-poppins text-left font-semibold text-slate-500">Avyz Yudistira</h3>
-                        <p class="text-left md:flex">Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-                            Repellat iusto
-                            nemo
-                            provident
-                            cupiditate nobis at
-                            suscipit quam sapiente voluptatibus molestias.</p>
-                    </div>
-                </div>
+                <?php }?>
 
             </div>
         </div>
@@ -342,5 +208,15 @@ if (isset($_POST['create_course'])) {
     </div>
 
 </body>
+<script>
+// Modal PopUp Edit Profile
+document.getElementById("open-modal-btn").addEventListener("click", () => {
+    document.getElementById("modal-wrapper").classList.remove("hidden")
+})
+
+document.getElementById("close-modal-btn").addEventListener("click", () => {
+    document.getElementById("modal-wrapper").classList.add("hidden")
+})
+</script>
 
 </html>

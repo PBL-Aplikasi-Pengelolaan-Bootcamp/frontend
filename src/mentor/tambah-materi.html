@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Simplify | Kursus</title>
+    <title>Simplify | Tambah Materi</title>
     <link href="../output.css" rel="stylesheet" />
     <link href="img/logo.png" rel="shortcut icon" />
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
@@ -17,14 +17,14 @@
         <!-- NAVBAR -->
 
         <nav id="top"
-            class="flex z-10 shadow-lg opacity-95 justify-between mx-10 bg-white rounded-full p-3 fixed left-0 top-3 right-0 font-poppins md:rounded-none md:top-0 md:mx-0 md:py-7">
+            class="flex z-10 shadow-lg justify-between mx-10 bg-white rounded-full p-3 fixed left-0 top-3 right-0 font-poppins md:rounded-none md:top-0 md:mx-0 md:py-7">
             <div class="flex gap-4">
-                <div class="flex gap-2">
+                <div class="flex gap-2 my-auto">
                     <div class="">
                         <img src="../img/logo.png" width="35px" alt="">
                     </div>
 
-                    <h1 class="font-poppins font-semibold relative top-2 sm:top-1 md:hidden">Simplify
+                    <h1 class="font-poppins font-semibold relative top-1 sm:top-1 md:hidden">Simplify
                     </h1>
                 </div>
 
@@ -36,22 +36,57 @@
                     <li><a href="" class="hover:text-blue-700">Kontak</a></li>
                 </ul>
             </div>
-            <!-- 
-            <div class="flex gap-5 font-semibold">
-                <a href="login.html"
-                    class="border rounded-full  py-2 px-6 bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Sign
-                    In</a>
-                <a href="#"
-                    class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Sign
-                    Up</a>
-            </div> -->
-            <!-- USER PROFILE -->
-            <div class="flex gap-2">
-                <h1 class="relative top-2 font-semibold font-poppins">Mentor1</h1>
-                <img src="../img/user.png" alt="" width="40px" height="40px">
+
+
+            <button id="open-modal-btn">
+                <div class="flex gap-2 w-max">
+                    <h1 class="font-semibold relative my-auto">Student1</h1>
+                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
+                </div>
+            </button>
+
+            <!-- MODAL WRAPPER -->
+            <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                <div
+                    class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                    <!-- MODAL BOX -->
+                    <div
+                        class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
+                        <form action="" class="flex flex-col gap-5 my-2 w-full">
+                            <div class="flex flex-col gap-2">
+                                <img src="img/pp-profile.jpg" alt="" class="w-12 h-12">
+                                <label for="img">Upload Gambar</label>
+                                <input type="file" src="" alt="" name="img"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="nama-mentor">Nama</label>
+                                <input
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="nama-mentor" type="text" placeholder="Enter your name">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="expertiser">Expertise</label>
+                                <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                            </div>
+                            <div class="flex flex-col gap-2">
+                                <label for="deskripsi">Bio</label>
+                                <textarea name="deskripsi"
+                                    class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                            </div>
+
+                            <div class="flex justify-between">
+                                <button type="submit"
+                                    class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                <button id="close-modal-btn"
+                                    class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
             </div>
-
-
         </nav>
 
         <div class="w-4/5 m-auto relative top-36 flex flex-col gap-6 py-5">
@@ -104,7 +139,7 @@
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: PENDAHULUAN</span>
+                        <span>INPUT MATERIAL</span>
                     </button>
                     <div x-show="open"
                         class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
@@ -113,6 +148,14 @@
                             <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
                                 class="border-slate-700 border rounded-sm py-1 px-1 w-full">
                         </div>
+                        <div class="flex gap-5">
+                            <h1 class="font-semibold text-xl">Link  Youtube:</h1>
+                            <input type="text" placeholder="Link youtube"
+                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
+                        </div>
+
+                        <h1 class="font-semibold text-xl">Materi Text:</h1>
+
                         <textarea id="editor1"
                             class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
                         <button type="submit"
@@ -456,6 +499,15 @@
 
 </body>
 <script>
+    // Modal PopUp Edit Profile
+    document.getElementById("open-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.remove("hidden")
+    })
+
+    document.getElementById("close-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.add("hidden")
+    })
+
     ClassicEditor
         .create(document.querySelector('#editor1'))
         .catch(error => {

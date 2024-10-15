@@ -16,7 +16,7 @@ include '../function.php';
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <title>Simplify | Dashboard Admin</title>
+    <title>Admin | Dashboard</title>
     <style>
         /* Tambahkan gaya untuk transisi sidebar */
         .sidebar {
@@ -47,14 +47,14 @@ include '../function.php';
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="grid"
+                    <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700"><ion-icon
+                                name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="#list" class="block p-4 text-gray-700"><ion-icon name="grid"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="school"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Tambah Mentor</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="bulb"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Profile</a></li>
+                    <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700"><ion-icon
+                                name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Mentor</a></li>
                     <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
                 </ul>
@@ -78,8 +78,8 @@ include '../function.php';
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-bold relative top-2">Admin1</h1>
-                        <img src="../img/user.png" alt="" class="w-10 h-10">
+                        <h1 class="font-semibold relative my-auto">Student1</h1>
+                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
                     </div>
                 </button>
 
@@ -92,7 +92,7 @@ include '../function.php';
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
                             <form action="" class="flex flex-col gap-5 my-2 w-full">
                                 <div class="flex flex-col gap-2">
-                                    <img src="../img/user.png" alt="" class="w-12 h-12">
+                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
                                     <label for="img">Upload Gambar</label>
                                     <input type="file" src="" alt="" name="img"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -116,14 +116,12 @@ include '../function.php';
 
                                 <div class="flex justify-between">
                                     <button type="submit"
-                                        class="px-7 py-1 text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
                                     <button id="close-modal-btn"
-                                        class="text-red-600 font-bold tracking-wide text-lg py-3 px-10 rounded">Close</button>
+                                        class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
                                 </div>
 
                             </form>
-
-
                         </div>
                     </div>
                 </div>
@@ -131,7 +129,7 @@ include '../function.php';
 
             <!-- Konten -->
             <!-- ANALISTIK -->
-            <div class=" flex mt-10 font-poppins justify-between flex-wrap gap-5">
+            <div class=" flex mt-10 font-poppins justify-between flex-wrap gap-5" id="pengguna">
                 <div
                     class="flex gap-5 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
                     <ion-icon name="build" class="rounded-full bg-green-500 p-3 text-4xl my-auto"></ion-icon>
@@ -164,7 +162,7 @@ include '../function.php';
             <!-- LIST -->
             <div class="flex flex-wrap gap-5 justify-between mt-10">
                 <!-- LIST ADMIN -->
-                <div class="overflow-x-autow-full w-full shadow-sm">
+                <div class="overflow-x-autow-full w-full shadow-sm" id="list">
                     <h1 class="font-bold tracking-wide text-xl mb-2">Admin</h1>
                     <table class="min-w-full bg-white shadow-md rounded-lg">
                         <thead class="bg-blue-700 text-white">

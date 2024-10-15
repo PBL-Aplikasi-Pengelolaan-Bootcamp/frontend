@@ -67,6 +67,21 @@ function create_course($data){
 }
 
 
+// getcourse by mentor
+function get_course_by_mentor(){
+    global $koneksi;
+    $mentor = $_SESSION['id_user'];
+    $sql = mysqli_query($koneksi, "SELECT * FROM course WHERE id_mentor = '$mentor'");
+
+    $courses = [];
+    while ($course = mysqli_fetch_assoc($sql)) {
+        $courses[] = $course;
+    }
+
+    return $courses;
+}
+
+
 
 // get course by slug
 function getall_course_by_slug(){

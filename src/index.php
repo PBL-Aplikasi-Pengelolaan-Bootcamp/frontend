@@ -61,14 +61,28 @@
                         class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">
                         Access</a>
 
-                        <form method="post">
-                        <button  type="submit" name="logout" href="#"
-                        class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Logout
-                        </button>
-                        </form>
 
-                    <h1 class="relative top-2 font-semibold font-poppins"><?=$_SESSION['username'] ?></h1>
-                    <img src="img/user.png" alt="" width="40px" height="40px">
+
+                    <?php if (isset($_SESSION['id_user'])): ?>
+
+                    <form method="post">
+                        <button type="submit" name="logout" href="#"
+                            class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Logout
+                        </button>
+                    </form>
+<!-- 
+                    <h1 class='relative top-2 font-semibold font-poppins'><?= $_SESSION['username'] ?></h1>
+                    <img src='img/user.png' alt='' width='40px' height='40px'> -->
+
+                    <button id="open-modal-btn">
+                        <div class="flex gap-2 w-max">
+                            <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
+                            <img src="../img/pp-profile.jpg" alt="" class="w-10 h-10 rounded-full">
+                        </div>
+                    </button>
+                    <?php endif; ?>
+
+                    <!-- profil -->
 
                 </div>
 
@@ -181,7 +195,7 @@
                 <?php
                 foreach ($course as $get) { ?>
 
-                <a href="<?php echo !isset($_SESSION['id_user']) ? 'login.php' : 'enroll.php';?>"
+                <a href="<?= 'kursus_materi.php?kursus=' . $get['slug']; ?>"
                     class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
                     <img src="foto_cover_course/<?= $get['course_picture']?>" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
@@ -191,6 +205,7 @@
                         <p class="hidden text-left md:flex"><?= $get['description']?></p>
                     </div>
                 </a>
+
                 <?php } ?>
 
 

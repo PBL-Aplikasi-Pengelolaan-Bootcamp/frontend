@@ -66,12 +66,10 @@ function register($data)
 // login function
 function login($data)
 {
-
     global $koneksi;
 
     $username =  $data['username'];
     $password =  $data['password'];
-
 
     //check the username
     $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
@@ -89,7 +87,6 @@ function login($data)
             $_SESSION['role'] = $data_from_username['role'];
             $_SESSION['id_user'] = $data_from_username['id_user'];
 
-
             if ($data_from_username['role'] == 'student') {
                 echo"<script>
                         alert('Login success !');
@@ -106,7 +103,7 @@ function login($data)
             } else {
                 echo"<script>
                         alert('Login success !');
-                        window.location.href= 'admin/index.php'
+                        window.location.href= 'admin/dashboard-admin.php'
                     </script>";
                 exit;
             }
@@ -152,5 +149,46 @@ function getAll_Course(){
     }
 
     return $courses;
+}
 
+
+
+
+
+
+
+
+
+
+
+
+
+// -----------------------------------------------------HALAMAN KURSUS MATERI--------------------------------------------------
+function get_section_by_slug(){
+    global $koneksi;
+    $slug = $_GET['kursus'];
+    $sql = mysqli_query($koneksi, 
+    "SELECT section.title
+    FROM section
+    INNER JOIN course ON section.id_course = course.id_course
+    WHERE course.slug = '$slug'");
+
+    $section = [];
+    while ($course = mysqli_fetch_assoc($sql)) {
+        $section[] = $course;
+    }   
+
+    return $section;
+}
+
+
+function get_course_by_slug(){
+    global $koneksi;
+    $slug = mysqli_real_escape_string($koneksi, $_GET['kursus']);
+
+    $sql = mysqli_query($koneksi, "SELECT * FROM course WHERE slug = '$slug'");
+
+    $course = mysqli_fetch_assoc($sql);
+
+    return $course; 
 }
