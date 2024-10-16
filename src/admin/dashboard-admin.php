@@ -1,7 +1,10 @@
 <?php
 
-include '../function.php';
+include 'function.php';
 
+if (isset($_POST['logout'])) {
+    logout();
+}
 
 ?>
 
@@ -18,10 +21,10 @@ include '../function.php';
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <title>Admin | Dashboard</title>
     <style>
-        /* Tambahkan gaya untuk transisi sidebar */
-        .sidebar {
-            transition: transform 0.3s ease;
-        }
+    /* Tambahkan gaya untuk transisi sidebar */
+    .sidebar {
+        transition: transform 0.3s ease;
+    }
     </style>
 </head>
 
@@ -47,16 +50,32 @@ include '../function.php';
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700"><ion-icon
-                                name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a>
+                    <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700">
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Pengguna
+                        </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="#list" class="block p-4 text-gray-700"><ion-icon name="grid"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700"><ion-icon
-                                name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Mentor</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                    <li class="hover:bg-gray-200"><a href="#list" class="block p-4 text-gray-700">
+                            <ion-icon name="grid" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="tambah_mentor.php" class="block p-4 text-gray-700">
+                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Mentor
+                        </a>
+                    </li>
+
+                    <form method="post">
+                    <li class="hover:bg-gray-200">
+                        <button type="submit" name="logout" class="block p-4 text-gray-700">
+                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
+                            Out
+                        </button>
+                    </li>
+                    </form>
+
+
+
                 </ul>
             </nav>
         </aside>
@@ -225,27 +244,27 @@ include '../function.php';
     </div>
 
     <script>
-        // Fungsi untuk toggle sidebar
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('close-sidebar');
+    // Fungsi untuk toggle sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
 
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
-        });
+    hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+    });
 
-        closeSidebar.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
-        });
+    closeSidebar.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
+    });
 
-        // Modal PopUp
-        document.getElementById("open-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.remove("hidden")
-        })
+    // Modal PopUp
+    document.getElementById("open-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.remove("hidden")
+    })
 
-        document.getElementById("close-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.add("hidden")
-        })
+    document.getElementById("close-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.add("hidden")
+    })
     </script>
 </body>
 

@@ -2,6 +2,12 @@
 
 include 'function.php';
 
+//logout
+if (isset($_POST['logout'])) {
+    logout();
+}
+
+//create mentor
 if (isset($_POST['create_mentor'])) {
     create_mentor($_POST);
 }
@@ -64,10 +70,15 @@ $mentor = getAll_mentor();
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Tambah
                             Mentor
                         </a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
-                            Out
-                        </a></li>
+                    <form method="post">
+                        <li class="hover:bg-gray-200">
+                            <button type="submit" name="logout" class="block p-4 text-gray-700">
+                                <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                                Log
+                                Out
+                            </button>
+                        </li>
+                    </form>
                 </ul>
             </nav>
         </aside>
@@ -228,14 +239,14 @@ $mentor = getAll_mentor();
                                 <ion-icon name="trash" class="bg-red-500 text-white p-3 rounded-md text-xl"></ion-icon>
                             </button>
 
-                            <button id="openModalIF<?=$data['id_mentor']?>">
+                            <button class="openModal" data-modal-id="modalInformation<?=$data['id_mentor']?>">
                                 <ion-icon name="information-circle-outline"
                                     class="bg-sky-700 p-3 text-white rounded-md text-xl"></ion-icon>
                             </button>
                         </div>
 
                         <!-- Modal Information -->
-                        <div id="modalInformation1"
+                        <div id="modalInformation<?=$data['id_mentor']?>"
                             class="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 hidden">
                             <div
                                 class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
@@ -247,8 +258,8 @@ $mentor = getAll_mentor();
                                             <div class="flex gap-3">
                                                 <div class="flex flex-col gap-2">
                                                     <div class="flex flex-col gap-1">
-                                                        <h1 class="font-semibold text-lg">Nama</h1>
-                                                        <h1 class="text-slate-500">Data
+                                                        <h1 class="font-semibold text-lg">Name</h1>
+                                                        <h1 class="text-slate-500"><?= $data['name'] ?>
                                                         </h1>
                                                     </div>
                                                     <div class="flex flex-col gap-1">
@@ -288,7 +299,7 @@ $mentor = getAll_mentor();
                                 </div>
                                 <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
                                     <button id="closeModalIF1"
-                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                        class="closeModal mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
                                 </div>
                             </div>
                         </div>
@@ -325,17 +336,24 @@ $mentor = getAll_mentor();
     })
 
     // Modal PopUp More Information
-    <?php foreach ($mentor as $data) { ?>
-    
-    document.getElementById('openModalIF<?=$da?>1').addEventListener('click', function() {
-        document.getElementById('modalInformation1').classList.remove('hidden');
-    });
+    document.addEventListener('DOMContentLoaded', function() {
+        const openButtons = document.querySelectorAll('.openModal');
+        const closeButtons = document.querySelectorAll('.closeModal');
 
-    document.getElementById('closeModalIF1').addEventListener('click', function() {
-        document.getElementById('modalInformation1').classList.add('hidden');
-    });
+        openButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal-id');
+                document.getElementById(modalId).classList.remove('hidden');
+            });
+        });
 
-    <?php }?>
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.fixed');
+                modal.classList.add('hidden');
+            });
+        });
+    });
 
 
     // Modal PopUp Tambah Mentor

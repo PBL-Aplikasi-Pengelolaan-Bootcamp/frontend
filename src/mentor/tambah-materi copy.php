@@ -152,8 +152,28 @@
 
                 </div>
 
+               
 
-                
+                <!-- SECTION 2 -->
+                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <button @click="open = !open"
+                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
+                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                        <span>INPUT: PERTEMUAN 1 </span>
+                    </button>
+                    <div x-show="open"
+                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
+                        <div class="flex gap-5">
+                            <h1 class="font-semibold text-xl">Judul Section:</h1>
+                            <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
+                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
+                        </div>
+                        <textarea id="editor2"
+                            class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
+                        <button type="submit"
+                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
+                    </div>
+                </div>
 
                 <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
                     <button @click="open = !open"

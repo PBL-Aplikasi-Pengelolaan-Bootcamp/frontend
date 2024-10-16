@@ -77,7 +77,7 @@ function create_mentor($data)
 }
 
 
-
+// get all mentor
 function getAll_mentor(){
     global $koneksi;
 
@@ -93,6 +93,12 @@ function getAll_mentor(){
 }
 
 
+//logout
+function logout(){
+    session_unset();
+    session_destroy();
+    echo "<script>alert('Logout'); window.location.href='../login.php'</script>";
+}
 
 
 

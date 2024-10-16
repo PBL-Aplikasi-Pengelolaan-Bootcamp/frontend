@@ -52,7 +52,7 @@ $total_course_mentor = get_total_course_mentor();
                     <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
                             class="block p-4 text-gray-700"><ion-icon name="grid"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.php"
+                    <li class="hover:bg-gray-200"><a href="kursus-mentor.php"
                             class="block p-4 text-gray-700"><ion-icon name="list-box"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a></li>
                     <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"

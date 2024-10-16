@@ -112,20 +112,35 @@ function get_total_course_mentor(){
 
 
 
-// create section
-function create_section($data){
+// create material
+function create_material($data){
     global $koneksi;
 
-    $slug = $_GET['slug'];
-    $sql = mysqli_query($koneksi, "SELECT * FROM course WHERE slug = '$slug'");
+    $course = $_GET['id'];
+    $sql = mysqli_query($koneksi, "SELECT * FROM course WHERE id = '$course'");
     $take = mysqli_fetch_assoc($sql);
 
     $id_course = $take["id_course"];
-    $title = $data['title'];
 
-    //insert ke db
+
+    $section = $data['section']; //section title
+    $video = $data['materi_video']; //materi video
+    $text = $data['materi_text']; //materi text
+
+
+    //insert ke db section
     $sql = mysqli_query($koneksi, "INSERT INTO section (id_course, title) VALUES ('$id_course', '$title')");
-    return mysqli_affected_rows($koneksi);
+    mysqli_affected_rows($koneksi);
+
+
+    //insert ke db materi video
+    $sql = mysqli_query($koneksi, "INSERT INTO materi_video (id_section, link_youtube) VALUES ('$id_section', '$video')");
+    mysqli_affected_rows($koneksi);
+
+
+
+
+
 
 }
 
