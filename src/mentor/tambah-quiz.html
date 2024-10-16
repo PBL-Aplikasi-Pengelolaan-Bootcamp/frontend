@@ -10,9 +10,9 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
-    <title>Mentor | Dashboard</title>
+    <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <title>Mentor | Tambah Quiz</title>
     <style>
-        /* Tambahkan gaya untuk transisi sidebar */
         .sidebar {
             transition: transform 0.3s ease;
         }
@@ -72,7 +72,7 @@
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Dashboard</h2>
+                <h2 class="text-3xl font-semibold">Tambah Quiz</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -126,62 +126,66 @@
             </header>
 
             <!-- Konten -->
-            <!-- ANALISTIK -->
-            <div class=" flex mt-10 font-poppins flex-wrap gap-5">
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Course in total.</h1>
-                        <p class="text-xl">10</p>
-                    </div>
-                </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
-                        <h1 class="font-bold text-lg">Siswa in total.</h1>
-                        <p class="text-xl">156</p>
-                    </div>
-                </div>
-            </div>
-
-
-
 
             <!-- LIST -->
-            <div class="flex flex-wrap gap-5 mt-10 w-full">
-                <div class="m-auto md:m-0 w-80 h-80 text-center overflow-hidden items-center">
-                    <img src="../img/pp.jpeg" alt="" class=" object-cover content-center rounded-lg">
-                </div>
-
-                <div class="flex flex-col w-auto md:m-0 m-auto min-h-80 text-center md:text-left">
-                    <h1 class="font-semibold text-2xl font-poppins my-auto">M. Farrel Adelio A</h1>
-                    <p class="text-base font-semibold tracking-normal text-gray-400 font-poppins my-auto">Front End</p>
-                    <P class="font-poppins my-auto md:max-w-96">Lorem, ipsum dolor sit amet consectetur
-                        adipisicing elit.
-                        Atque
-                        libero autem
-                        voluptas vitae aut
-                        qui
-                        blanditiis quae quas adipisci debitis. Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                        Perspiciatis libero obcaecati nam doloribus beatae quis assumenda mollitia, impedit nostrum
-                        nisi!
-                    </P>
-                    <div
-                        class="flex flex-col sm:flex-row md:flex-col sm:gap-5 md:gap-1 m-auto md:m-0 text-center lg:text-left">
-                        <div class="flex gap-2 my-auto">
-                            <ion-icon name="call" class=" my-auto"></ion-icon>
-                            <p class=" my-auto font-semibold">0812-3456-7891</p>
+            <div class="space-y-4 mt-10">
+                <!-- SECTION -->
+                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <button @click="open = !open"
+                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
+                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                        <span>INPUT: SOAL </span>
+                    </button>
+                    <div x-show="open"
+                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-7">
+                        <div class="flex flex-col gap-3">
+                            <h1 class="font-semibold text-xl">Pertanyaan:</h1>
+                            <textarea id="editor1"
+                                class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
                         </div>
-                        <div class="flex gap-2 my-auto">
-                            <ion-icon name="mail" class=" my-auto"></ion-icon>
-                            <p class=" my-auto font-semibold">polibatam@gmail.com</p>
+                        <div class="flex flex-col gap-3">
+                            <h1 class="font-semibold text-xl">Options:</h1>
+                            <textarea id="editor2"
+                                class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
                         </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-1">
+                                <input type="checkbox" class="w-4 h-4 my-auto">
+                                <h1 class="font-semibold text-xl my-auto">Answer:</h1>
+                            </div>
+                            <textarea id="editor3"
+                                class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-1">
+                                <input type="checkbox" class="w-4 h-4 my-auto">
+                                <h1 class="font-semibold text-xl my-auto">Answer:</h1>
+                            </div>
+                            <textarea id="editor4"
+                                class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-1">
+                                <input type="checkbox" class="w-4 h-4 my-auto">
+                                <h1 class="font-semibold text-xl my-auto">Answer:</h1>
+                            </div>
+                            <textarea id="editor5"
+                                class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
+                        </div>
+                        <div class="flex flex-col gap-3">
+                            <div class="flex gap-1">
+                                <input type="checkbox" class="w-4 h-4 my-auto">
+                                <h1 class="font-semibold text-xl my-auto">Answer:</h1>
+                            </div>
+                            <textarea id="editor6"
+                                class="w-full h-full p-20 border border-gray-300 rounded mt-10 mb-5"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
                     </div>
                 </div>
+
+
             </div>
         </div>
     </div>
@@ -208,6 +212,42 @@
         document.getElementById("close-modal-btn").addEventListener("click", () => {
             document.getElementById("modal-wrapper").classList.add("hidden")
         })
+
+
+        ClassicEditor
+            .create(document.querySelector('#editor1'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#editor2'))
+            .catch(error => {
+                console.error(error);
+            });
+        ClassicEditor
+            .create(document.querySelector('#editor3'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#editor4'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#editor5'))
+            .catch(error => {
+                console.error(error);
+            });
+
+        ClassicEditor
+            .create(document.querySelector('#editor6'))
+            .catch(error => {
+                console.error(error);
+            });
     </script>
 </body>
 

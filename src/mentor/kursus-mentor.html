@@ -25,9 +25,8 @@
         <aside id="sidebar"
             class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full z-20">
             <div class="flex justify-between p-6">
-                <div class="flex gap-2">
-                    <img src="../img/logo1.png" alt="" class="w-10 h-10">
-                    <h1 class="text-2xl font-bold text-gray-700">Simplify</h1>
+                <div class="w-max">
+                    <img src="../img/logo1.png" alt="" class="w-max">
                 </div>
 
 
@@ -41,14 +40,15 @@
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
+                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
+                            class="block p-4 text-gray-700"><ion-icon name="person"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
                     <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
                             class="block p-4 text-gray-700"><ion-icon name="grid"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a></li>
+                    <li class="hover:bg-gray-200"><a href="kursus-mentor.html" class="block p-4 text-gray-700"><ion-icon
+                                name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a>
+                    </li>
                     <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a></li>
                     <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
@@ -175,13 +175,13 @@
 
                 <div class="flex flex-wrap gap-10 m-auto text-center sm:justify-between">
                     <div
-                        class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0">
+                        class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
                         <div class="flex p-3 absolute gap-1">
                             <a href="tambah-materi.html"><ion-icon name="brush"
                                     class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                             <a href="#"><ion-icon name="trash"
                                     class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="daftar-siswa"><ion-icon name="information-circle"
+                            <a href="detail-kursus.html#1"><ion-icon name="information-circle"
                                     class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                         </div>
                         <img src="../img/social.jpg" alt="" class="object-center md:h-40">
@@ -200,12 +200,14 @@
                     </div>
 
                     <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0">
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
                         <div class="flex p-3 absolute gap-1">
                             <a href="#"><ion-icon name="brush"
                                     class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                             <a href="#"><ion-icon name="trash"
                                     class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                            <a href="detail-kursus.html#1"><ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                         </div>
                         <img src="../img/smartphoneio.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
@@ -223,12 +225,14 @@
                     </div>
 
                     <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <div class="flex p-3 absolute gap-1">
                             <a href="#"><ion-icon name="brush"
                                     class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                             <a href="#"><ion-icon name="trash"
                                     class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                            <a href="detail-kursus.html#1"><ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                         </div>
                         <img src="../img/dashboard.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
@@ -245,12 +249,14 @@
                     </div>
 
                     <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <div class="flex p-3 absolute gap-1">
                             <a href="#"><ion-icon name="brush"
                                     class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                             <a href="#"><ion-icon name="trash"
                                     class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                            <a href="detail-kursus.html#2"><ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                         </div>
                         <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
@@ -267,12 +273,14 @@
                     </div>
 
                     <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <div class="flex p-3 absolute gap-1">
                             <a href="#"><ion-icon name="brush"
                                     class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                             <a href="#"><ion-icon name="trash"
                                     class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                            <a href="detail-kursus.html#3"><ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                         </div>
                         <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
@@ -291,12 +299,14 @@
                     </div>
 
                     <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <div class="flex p-3 absolute gap-1">
                             <a href="#"><ion-icon name="brush"
                                     class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                             <a href="#"><ion-icon name="trash"
                                     class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
+                            <a href="detail-kursus.html#4"><ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
                         </div>
                         <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
