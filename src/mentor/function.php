@@ -19,14 +19,14 @@ function getall_course(){
     return $courses;
 }
 
+
 //get mentor by id
 function get_mentor_byId(){
     global $koneksi;
-
     $id_mentor = $_SESSION["id_user"];
-    $sql = mysqli_query($koneksi, "SELECT * FROM course WHERE id_mentor = $id_mentor");
-    $take = mysqli_fetch_assoc( $sql);
-    return $take;
+    $sql = mysqli_query($koneksi, "SELECT * FROM mentor WHERE id_mentor = $id_mentor");
+    return  mysqli_fetch_assoc( $sql);
+    
 }
 
 
@@ -43,19 +43,20 @@ function create_course($data){
     $slug = trim($slug, '-');
 
     $description = $data['description'];
-    
+    $start_date = $data['start_date'];
+    $end_date = $data['end_date'];
+    $course_type = $data['course_type'];
+    $quota = $data['quota'];
     
     $course_picture = $_FILES['course_picture']['name'];
     $tmpname = $_FILES['course_picture']['tmp_name'];
     $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_cover_course/' . $course_picture;
 
-    // $sql = mysqli_query($koneksi, "INSERT INTO course (id_course, id_mentor, title, description, course_picture) VALUES ('', '$id_mentor', '$title', '$description', '$course_picture'  )");
 
     if  (move_uploaded_file($tmpname, $folder)) {
-        $sql = mysqli_query($koneksi, "INSERT INTO course (id_course, id_mentor, title, slug, description, course_picture) VALUES ('', '$id_mentor', '$title', '$slug', '$description', '$course_picture')");
+        $sql = mysqli_query($koneksi, "INSERT INTO course (id_course, id_mentor, title, slug, description, start_date, end_date, course_type, quota, course_picture) VALUES ('', '$id_mentor', '$title', '$slug', '$description', '$start_date', '$end_date', '$course_type', '$quota', '$course_picture')");
         if ($sql) {
-            echo "<script>alert('Course Created!'); window.location.href='course.php';</script>";
-            // return mysqli_affected_rows($koneksi);
+            echo "<script>alert('Course Created!'); window.location.href='kursus.php';</script>";
         } else {
             echo "<script>alert('gagal')</script>";
         }
@@ -83,11 +84,11 @@ function get_course_by_mentor(){
 
 
 
-// get course by slug
-function getall_course_by_slug(){
+// get course by id     
+function get_course_by_id(){
     global $koneksi;
-    $slug = $_GET['slug'];
-    $get = mysqli_query($koneksi, "SELECT * FROM course WHERE slug = '$slug'");
+    $id_course = $_GET['id'];
+    $get = mysqli_query($koneksi, "SELECT * FROM course WHERE id_course = '$id_course'");
 
     $take = mysqli_fetch_assoc($get);
     return $take;

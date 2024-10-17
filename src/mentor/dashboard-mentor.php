@@ -3,6 +3,7 @@ include 'function.php';
 
 $total_course_mentor = get_total_course_mentor();
 
+$mentor = get_mentor_byId();
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +17,7 @@ $total_course_mentor = get_total_course_mentor();
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
     <title>Mentor | Dashboard</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
@@ -31,9 +33,8 @@ $total_course_mentor = get_total_course_mentor();
         <aside id="sidebar"
             class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
             <div class="flex justify-between p-6">
-                <div class="flex gap-2">
-                    <img src="../img/logo1.png" alt="" class="w-10 h-10">
-                    <h1 class="text-2xl font-bold text-gray-700">Simplify</h1>
+                <div class="w-max">
+                    <img src="../img/logo1.png" alt="" class="w-max">
                 </div>
 
 
@@ -47,18 +48,30 @@ $total_course_mentor = get_total_course_mentor();
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
-                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="grid"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="kursus-mentor.php"
-                            class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                    
+                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.php" class="block p-4 text-gray-700">
+                            <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Kursus
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Student
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="quiz.php" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
+                            Out
+                        </a></li>
                 </ul>
             </nav>
         </aside>
@@ -67,12 +80,13 @@ $total_course_mentor = get_total_course_mentor();
         <div class="flex-1 p-6 ml-0 md:ml-64">
             <!-- Tombol Hamburger -->
             <button id="hamburger" class="block justify-between md:hidden p-4 text-gray-700">
-                <div class=""></div>
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
+                <div class="">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7">
+                        </path>
+                    </svg>
             </button>
 
             <header class="flex justify-between items-center">
@@ -131,27 +145,18 @@ $total_course_mentor = get_total_course_mentor();
 
             <!-- Konten -->
             <!-- ANALISTIK -->
-            <div class=" flex mt-10 font-poppins justify-between flex-wrap gap-5">
+            <div class=" flex mt-10 font-poppins flex-wrap gap-5">
                 <div
-                    class="flex gap-5 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="build" class="rounded-full bg-green-500 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">ADMIN</h1>
-                        <h1 class="font-bold text-lg">Admin in total.</h1>
-                        <p class="text-xl">1</p>
-                    </div>
-                </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
+                    class="flex gap-3 p-3 flex-row-reverse bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
                     <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
                         <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Mentor in total.</h1>
+                        <h1 class="font-bold text-lg">Course in total.</h1>
                         <p class="text-xl">10</p>
                     </div>
                 </div>
                 <div
-                    class="flex gap-3 p-3 flex-row-reverse m-auto bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
+                    class="flex gap-3 p-3 flex-row-reverse bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
                     <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
                         <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
@@ -161,38 +166,32 @@ $total_course_mentor = get_total_course_mentor();
                 </div>
             </div>
 
+
+
+
             <!-- LIST -->
-            <div class="flex flex-wrap gap-5 justify-between mt-10">
-                <!-- LIST MENTOR -->
-                <div class="overflow-x-autow-full w-full shadow-sm">
-                    <h1 class="font-bold tracking-wide text-xl mb-2">Mentor</h1>
-                    <table class="min-w-full bg-white shadow-md rounded-lg">
-                        <thead class="bg-blue-700 text-white">
-                            <tr>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Nama</th>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                                    Expertise</th>
-                                <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Pengampu</th>
-                            </tr>
-                        </thead>
-                        <tbody class="bg-white">
-                            <tr class="">
-                                <td class="text-left py-3 px-4">Rafael Setya</td>
-                                <td class="text-left py-3 px-4">Profesional Front End Developer</td>
-                                <td class="text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
-                            </tr>
-                            <tr class="">
-                                <td class="text-left py-3 px-4">Nasyit</td>
-                                <td class="text-left py-3 px-4">Profesional Backend End Developer</td>
-                                <td class="text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
-                            </tr>
-                            <tr class="">
-                                <td class="text-left py-3 px-4">Ghiyats</td>
-                                <td class="text-left py-3 px-4">Profesional Front End Developer</td>
-                                <td class="text-left py-3 px-4">Front End Pemula, Front End Framework.</td>
-                            </tr>
-                        </tbody>
-                    </table>
+            <div class="flex flex-wrap gap-5 mt-10 w-full">
+                <div class="m-auto md:m-0 w-80 h-80 text-center overflow-hidden items-center">
+                    <img src="../foto_mentor/<?=$mentor['profil_picture']?>" alt="" class=" object-cover content-center rounded-lg">
+                </div>
+
+
+                <div class="flex flex-col w-auto md:m-0 m-auto min-h-80 text-center md:text-left">
+                    <h1 class="font-semibold text-2xl font-poppins my-auto"><?= $mentor['name']?></h1>
+                    <p class="text-base font-semibold tracking-normal text-gray-400 font-poppins my-auto">
+                        <?= $mentor['expertise']?></p>
+                    <P class="font-poppins my-auto md:max-w-96"><?=$mentor['bio']?></P>
+                    <div
+                        class="flex flex-col sm:flex-row md:flex-col sm:gap-5 md:gap-1 m-auto md:m-0 text-center lg:text-left">
+                        <div class="flex gap-2 my-auto">
+                            <ion-icon name="call" class=" my-auto"></ion-icon>
+                            <p class=" my-auto font-semibold">0812-3456-7891</p>
+                        </div>
+                        <div class="flex gap-2 my-auto">
+                            <ion-icon name="mail" class=" my-auto"></ion-icon>
+                            <p class=" my-auto font-semibold">polibatam@gmail.com</p>
+                        </div>
+                    </div>
                 </div>
 
             </div>
