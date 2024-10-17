@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <title>Mentor | Tambah Materi</title>
     <style>
         /* Tambahkan gaya untuk transisi sidebar */
@@ -24,7 +25,7 @@
     <div class="flex">
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
+            class="sidebar fixed inset-y-0 z-20 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
             <div class="flex justify-between p-6">
                 <div class="w-max">
                     <img src="../img/logo1.png" alt="" class="w-max">
@@ -41,16 +42,18 @@
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
                     <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="grid"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
+                            class="block p-4 text-gray-700"><ion-icon name="person"
+                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
                     <li class="hover:bg-gray-200"><a href="kursus-mentor.html" class="block p-4 text-gray-700"><ion-icon
                                 name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a></li>
+                    <li class="hover:bg-gray-200"><a href="tambah-materi.html" class="block p-4 text-gray-700"><ion-icon
+                                name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="tambah-quiz.html" class="block p-4 text-gray-700"><ion-icon
+                                name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz</a>
+                    </li>
                     <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
                                 class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
                 </ul>
@@ -58,7 +61,7 @@
         </aside>
 
         <!-- Konten Utama -->
-        <div class="flex-1 p-6 ml-0 md:ml-64">
+        <div class="flex-1 p-6 ml-0 md:ml-64 overflow-hidden">
             <!-- Tombol Hamburger -->
             <button id="hamburger" class="block justify-between md:hidden p-4 text-gray-700">
                 <div class="">
@@ -71,7 +74,7 @@
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Tambah Materi</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Tambah Materi</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -129,43 +132,30 @@
             <!-- LIST -->
             <div class="space-y-4 mt-10">
 
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: JUDUL </span>
-                    </button>
-                    <div x-show="open"
-                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                        <div class="flex gap-5">
-                            <h1 class="font-semibold text-xl">Judul:</h1>
-                            <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
-                                class="border-slate-700 border rounded-sm py-1 px-1 w-full">
-                        </div>
-                        <button type="submit"
-                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
-                    </div>
-                </div>
-                <!-- SECTION -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: COVER GAMBAR </span>
-                    </button>
-                    <div x-show="open"
-                        class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-5">
-                        <div class="flex gap-5">
-                            <h1 class="font-semibold text-xl">Cover Gambar:</h1>
-                            <input type="file" class="border-slate-700 border rounded-sm py-1 px-1 w-full">
-                        </div>
-                        <button type="submit"
-                            class="bg-green-500 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">Simpan</button>
-                    </div>
+                <div class="flex gap-2">
+                    <h1 class="my-auto text-2xl font-bold font-poppins">Course Title</h1>
+                    <i class="fa-solid fa-pen-to-square text-2xl my-auto"></i>
                 </div>
 
+                <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden">
+                    <img src="../img/smartphoneio.jpg" alt="">
+                </div>
+
+                <div class="flex gap-2 text-sm flex-wrap font-bold font-poppins text-slate-800">
+                    <h1 class="bg-yellow-300 px-3 py-1 rounded-lg">Online</h1>
+                    <h1 class="bg-yellow-300 px-3 py-1 rounded-lg">1 May 2024 - 1 June 2024</h1>
+                    <h1 class="bg-yellow-300 px-3 py-1 rounded-lg">30 Quota</h1>
+                </div>
+
+                <p class="text-lg">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Cupiditate voluptatum
+                    necessitatibus
+                    expedita atque aperiam, repellat deleniti reiciendis consequuntur eaque voluptatibus, animi aliquam
+                    labore unde error, magnam vel maxime. Consequuntur saepe ipsum aspernatur eum numquam corrupti at
+                    modi voluptate commodi est. lorem80 Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+                    Ducimus, labore illo voluptates ad dolor exercitationem dignissimos laboriosam distinctio quam
+                    asperiores.</p>
                 <!-- SECTION 1 -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
+                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden">
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
@@ -179,10 +169,10 @@
                                 <input type="text" placeholder="PERTEMUAN 1 - PERKENALAN HTML"
                                     class="border-slate-700 border rounded-sm py-1 px-1 w-full">
                             </div>
-                            <div class="w-full">
-                                <textarea name="content" id="editor1"
-                                    class="w-3/4 h-64 p-2 border border-gray-300 rounded-md">
-                        </textarea>
+                            <div class="">
+                                <textarea name="content" id="editor"
+                                    class="w-screen p-2 border z-10 border-gray-300 rounded-md">
+                                </textarea>
                             </div>
 
                             <button type="submit"
@@ -284,7 +274,7 @@
         })
 
         ClassicEditor
-            .create(document.querySelector('#editor1'))
+            .create(document.querySelector('#editor'))
             .catch(error => {
                 console.error(error);
             });
