@@ -25,7 +25,7 @@
     <div class="flex">
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="sidebar fixed inset-y-0 z-20 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
+            class="sidebar fixed inset-y-0 z-10 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
             <div class="flex justify-between p-6">
                 <div class="w-max">
                     <img src="../img/logo1.png" alt="" class="w-max">
@@ -42,20 +42,27 @@
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
-                    <li class="hover:bg-gray-200"><a href="kursus-mentor.html" class="block p-4 text-gray-700"><ion-icon
-                                name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a>
+                    <li class="hover:bg-gray-200"><a href="siswa.html" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-user pr-2 text-base text-slate-500 my-auto"></i>Pengguna</a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="tambah-materi.html" class="block p-4 text-gray-700"><ion-icon
-                                name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a>
+                    <li class="hover:bg-gray-200"><a href="kursus-mentor.html"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-table-list pr-2 text-base text-slate-500 my-auto"></i>Kursus</a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="tambah-quiz.html" class="block p-4 text-gray-700"><ion-icon
-                                name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz</a>
+                    <li class="hover:bg-gray-200"><a href="tambah-materi.html"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-table-list pr-2 text-base text-slate-500 my-auto"></i>Materi</a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                    <li class="hover:bg-gray-200"><a href="tambah-quiz.html" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-table-list pr-2 text-base text-slate-500 my-auto"></i>Quiz</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="tambah-quiz.html" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-graduation-cap pr-2 text-base text-slate-500 my-auto"></i>Siswa</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-right-from-bracket pr-2 text-base text-slate-500 my-auto"></i>Log
+                            out</a>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -134,7 +141,69 @@
 
                 <div class="flex gap-2">
                     <h1 class="my-auto text-2xl font-bold font-poppins">Course Title</h1>
-                    <i class="fa-solid fa-pen-to-square text-2xl my-auto"></i>
+                    <button id="open-form-kursus">
+                        <i class="fa-solid fa-pen-to-square text-2xl my-auto"></i>
+                    </button>
+
+                    <!-- MODAL WRAPPER -->
+                    <div id="modal-form-kursus" class="fixed z-10 inset-0 hidden">
+                        <div
+                            class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                            <!-- MODAL BOX -->
+                            <div
+                                class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
+                                <form action="" class="flex flex-col gap-5 my-2 w-full">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="nama-mentor">Title</label>
+                                        <input
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="nama-mentor" type="text" placeholder="Enter your name">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="expertiser">Description</label>
+                                        <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div class="flex flex-col gap-2">
+                                        <div class="flex gap-2">
+                                            <h1>Schedule</h1>
+                                        </div>
+                                        <div class="flex gap-2">
+                                            <input type="date" name="expertise" placeholder="Masukkan keahlian anda"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            <p>to</p>
+                                            <input type="date" name="expertise" placeholder="Masukkan keahlian anda"
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="deskripsi">Course Type</label>
+                                        <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="deskripsi">Quota</label>
+                                        <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div class="flex flex-col gap-2">
+                                        <label for="img">Cover Gambar</label>
+                                        <input type="file" src="" alt="" name="img"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div class="flex justify-between">
+                                        <button type="submit"
+                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                        <button id="close-form-kursus"
+                                            class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden">
@@ -171,7 +240,7 @@
                             </div>
                             <div class="">
                                 <textarea name="content" id="editor"
-                                    class="w-screen p-2 border z-10 border-gray-300 rounded-md">
+                                    class="w-screen p-2 border border-gray-300 rounded-md">
                                 </textarea>
                             </div>
 
@@ -245,6 +314,26 @@
                     </div>
                 </div>
 
+                <!-- SECTION 2 -->
+                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
+                    <button @click="open = !open"
+                        class="w-full flex items-center px-4 py-4 bg-red-600 text-white font-bold focus:outline-none">
+                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                        <span>HAPUS KURSUS</span>
+                    </button>
+                    <div x-show="open"
+                        class="px-4 py-2 border-t mx-auto w-full bg-white p-4 rounded-lg shadow flex flex-col gap-5">
+                        <form action="" class="flex flex-col gap-2 w-full">
+                            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod omnis commodi nam velit
+                                repellat, iste molestias aliquam voluptas! Odio sint at inventore est aut quaerat, quos
+                                asperiores dolor distinctio dolores.</p>
+                            <button type="submit"
+                                class="bg-red-600 text-white w-max px-3 py-2 rounded-lg font-semibold font-poppins">HAPUS
+                                KURSUS</button>
+                        </form>
+                    </div>
+                </div>
+
 
             </div>
         </div>
@@ -271,6 +360,15 @@
 
         document.getElementById("close-modal-btn").addEventListener("click", () => {
             document.getElementById("modal-wrapper").classList.add("hidden")
+        })
+
+        // Modal PopUp
+        document.getElementById("open-form-kursus").addEventListener("click", () => {
+            document.getElementById("modal-form-kursus").classList.remove("hidden")
+        })
+
+        document.getElementById("close-form-kursus").addEventListener("click", () => {
+            document.getElementById("modal-form-kursus").classList.add("hidden")
         })
 
         ClassicEditor
