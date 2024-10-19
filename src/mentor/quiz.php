@@ -69,7 +69,7 @@
         </aside>
 
         <!-- Konten Utama -->
-        <div class="flex-1 p-6 ml-0 md:ml-64">
+        <div class="flex-1 p-6 ml-0 md:ml-64 overflow-hidden">
             <!-- Tombol Hamburger -->
             <button id="hamburger" class="block justify-between md:hidden p-4 text-gray-700">
                 <div class="">
@@ -82,7 +82,7 @@
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Tambah Quiz</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Tambah Quiz</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">

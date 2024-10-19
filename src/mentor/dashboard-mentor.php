@@ -1,6 +1,9 @@
 <?php 
 include 'function.php';
 
+if (isset($_POST['logout'])) {
+    logout();
+}
 $total_course_mentor = get_total_course_mentor();
 
 $mentor = get_mentor_byId();
@@ -48,7 +51,7 @@ $mentor = get_mentor_byId();
             </div>
             <nav>
                 <ul>
-                    
+
                     <li class="hover:bg-gray-200"><a href="dashboard-mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Dashboard
@@ -68,10 +71,17 @@ $mentor = get_mentor_byId();
                             <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
-                            Out
-                        </a></li>
+
+
+                    <li class="hover:bg-gray-200">
+                        <form method="post" action="">
+                            <button type="submit" name="logout" class="block p-4 text-gray-700 w-full text-left">
+                                <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                                Log Out
+                            </button>
+                        </form>
+                    </li>
+
                 </ul>
             </nav>
         </aside>
@@ -90,7 +100,7 @@ $mentor = get_mentor_byId();
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Dashboard</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Dashboard</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -172,7 +182,8 @@ $mentor = get_mentor_byId();
             <!-- LIST -->
             <div class="flex flex-wrap gap-5 mt-10 w-full">
                 <div class="m-auto md:m-0 w-80 h-80 text-center overflow-hidden items-center">
-                    <img src="../foto_mentor/<?=$mentor['profil_picture']?>" alt="" class=" object-cover content-center rounded-lg">
+                    <img src="../foto_mentor/<?=$mentor['profil_picture']?>" alt=""
+                        class=" object-cover content-center rounded-lg">
                 </div>
 
 
