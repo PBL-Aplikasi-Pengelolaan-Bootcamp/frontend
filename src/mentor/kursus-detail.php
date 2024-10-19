@@ -57,6 +57,15 @@ if (isset($_POST['create_file'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
+    <script src="https://cdn.tiny.cloud/1/pmgg58idwi9ldov0ee6wpppin1sya5nrtpqm7pcjir11vckj/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>    
+    <script>
+        tinymce.init({
+            selector: 'textarea', // Ganti selector sesuai dengan elemen textarea Anda
+            menubar: false,
+            plugins: 'lists link image table code', // Plugin yang ingin digunakan
+            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code',
+        });
+    </script>
     <title>Mentor | Tambah Materi</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
@@ -355,8 +364,9 @@ if (isset($_POST['create_file'])) {
                                                             <label for="text">Content :</label>
                                                             <input type="number" name="id_section"
                                                                 value="<?=$section['id_section']?>" hidden>
-                                                            <input type="text" name="text" placeholder="Enter text"
-                                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                                                <textarea name="text" placeholder="Enter text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+
+
                                                         </div>
 
                                                         <div class="flex justify-end">
@@ -469,17 +479,6 @@ if (isset($_POST['create_file'])) {
                                 <?php }?>
                                 <hr>
                                 <?php }?>
-
-
-
-                                <!-- <div class="flex flex-col gap-2">
-                                    <div class="flex gap-2">
-                                        <h1 class="font-semibold text-2xl">Quiz: Dasar-dasar HTML</h1>
-                                    </div>
-                                    <a href="#"
-                                        class="text-blue-700">https://youtu.be/Q2VqCG13ejA?si=F8Du2oHxMqFSmGlM</a>
-                                </div>
-                                <hr> -->
 
                             </div>
                         </div>

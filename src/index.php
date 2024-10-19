@@ -6,6 +6,22 @@
   if (isset($_POST['logout'])) {
     logout();
   }
+
+
+  if (isset($_SESSION['role']) && $_SESSION['role'] == 'mentor') {
+    // Redirect ke halaman mentor/dashboard-mentor.php
+    header("Location: mentor/dashboard-mentor.php");
+    exit; // Menghentikan eksekusi kode setelah redirect
+} else {
+    // Jika bukan mentor, bisa diarahkan ke halaman lain atau tampilkan pesan
+    echo "Anda tidak memiliki akses ke halaman ini.";
+}
+
+
+//data user login
+$data_login = get_data_user_login();
+
+
 ?>
 
 
@@ -47,7 +63,7 @@
                     </ul>
                 </div>
 
-                <div class="flex gap-5 font-semibold">
+                <div class="flex gap-4 font-semibold">
                     <?php if (!isset($_SESSION['id_user'])) : ?>
                     <a href="login.php"
                         class="border rounded-full  py-2 px-6 bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Sign
@@ -56,10 +72,10 @@
                         class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Sign
                         Up</a>
                     <?php endif ?>
-
+                    <!-- 
                     <a href="all-access.html"
                         class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">
-                        Access</a>
+                        Access</a> -->
 
 
 
@@ -70,14 +86,12 @@
                             class="hidden md:flex md:border md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Logout
                         </button>
                     </form>
-                    <!-- 
-                    <h1 class='relative top-2 font-semibold font-poppins'>username</h1>
-                    <img src='img/user.png' alt='' width='40px' height='40px'> -->
 
-                    <button id="open-   -btn">
+
+                    <button id="open-btn">
                         <div class="flex gap-2 w-max">
-                            <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
-                            <img src="../img/pp-profile.jpg" alt="" class="w-10 h-10 rounded-full">
+                            <h1 class="font-semibold relative my-auto"><?=$data_login['username']?></h1>
+                            <img src="img/profil_default.png" alt="" class="w-8 h-8 rounded-full">
                         </div>
                     </button>
 
@@ -163,7 +177,7 @@
                 <div class="flex flex-col m-auto gap-5 md:w-1/2 lg:gap-5 md:my-auto">
                     <h1 class="font-poppins font-semibold text-3xl hidden lg:flex text-slate-700">Prospek Kerja Impian
                     </h1>
-                    <p class="lg:text-left lg:w-4/5 font-quicksand text-slate-600">TPerkembangan teknologi dapat membuka
+                    <p class="lg:text-left lg:w-4/5 font-quicksand text-slate-600">Perkembangan teknologi dapat membuka
                         peluang
                         kerja bagi seseorang. Apalagi di era digital saat ini. Pemrograman merupakan salah satu profesi
                         yang banyak
@@ -182,49 +196,53 @@
 
                 <div class="flex flex-wrap gap-5 m-auto justify-around md:justify-between lg:justify-normal md:w-1/2">
                     <div
-                        class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
+                        class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
                         <ion-icon name="git-branch" class="text-3xl bg-white text-slate-700 rounded-xl p-1"></ion-icon>
                         <h1 class="font-poppins font-semibold tracking-wide">Software Engineer</h1>
-                        <p class="hidden lg:flex">Merancang dan memelihara perangkat lunak sistem dengan benar.</p>
-                    </div>
-
-                    <div
-                        class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
-                        <ion-icon name="settings" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                        <h1 class="font-poppins font-semibold tracking-wide">IT <br class="md:hidden">Support</h1>
-                        <p class="hidden lg:flex">Membantu menyelesaikan berbagai permasalahan teknologi yang dimiliki
-                            perusahaan.</p>
-                    </div>
-
-                    <div
-                        class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
-                        <ion-icon name="brush" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                        <h1 class="font-poppins font-semibold tracking-wide">Graphic Designer</h1>
-                        <p class="hidden lg:flex">Suatu bentuk komunikasi yang dilakukan secara visual.</p>
-                    </div>
-
-                    <div
-                        class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
-                        <ion-icon name="stats" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                        <h1 class="font-poppins font-semibold tracking-wide">Analyst Data</h1>
-                        <p class="hidden lg:flex">Jelajahi dan kembangkan data besar untuk membantu membuat keputusan
-                            yang lebih baik.
+                        <p class="hidden lg:flex text-sm">Merancang dan memelihara perangkat lunak sistem dengan benar.
                         </p>
                     </div>
 
                     <div
-                        class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
-                        <ion-icon name="trending-up" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                        <h1 class="font-poppins font-semibold tracking-wide">Digital Marketing</h1>
-                        <p class="hidden lg:flex">promosi suatu merek atau merek produk atau jasa dilakukan melalui
-                            media digital.</p>
+                        class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
+                        <ion-icon name="settings" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
+                        <h1 class="font-poppins font-semibold tracking-wide">IT <br class="md:hidden">Support</h1>
+                        <p class="hidden lg:flex text-sm">Membantu menyelesaikan berbagai permasalahan teknologi yang
+                            dimiliki
+                            perusahaan.</p>
                     </div>
 
                     <div
-                        class="flex flex-col w-32 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-52 lg:h-52 m-auto">
+                        class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
+                        <ion-icon name="brush" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
+                        <h1 class="font-poppins font-semibold tracking-wide">Graphic Designer</h1>
+                        <p class="hidden lg:flex text-sm">Suatu bentuk komunikasi yang dilakukan secara visual.</p>
+                    </div>
+
+                    <div
+                        class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
+                        <ion-icon name="stats" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
+                        <h1 class="font-poppins font-semibold tracking-wide">Analyst Data</h1>
+                        <p class="hidden lg:flex text-sm">Jelajahi dan kembangkan data besar untuk membantu membuat
+                            keputusan yang
+                            lebih baik.
+                        </p>
+                    </div>
+
+                    <div
+                        class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
+                        <ion-icon name="trending-up" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
+                        <h1 class="font-poppins font-semibold tracking-wide">Digital Marketing</h1>
+                        <p class="hidden lg:flex text-sm">promosi suatu merek atau merek produk atau jasa dilakukan
+                            melalui media
+                            digital.</p>
+                    </div>
+
+                    <div
+                        class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
                         <ion-icon name="school" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
                         <h1 class="font-poppins font-semibold tracking-wide">Tenaga Pengajar</h1>
-                        <p class="hidden lg:flex">Menjadi sekolah, kursus atau guru pribadi</p>
+                        <p class="hidden lg:flex text-sm">Menjadi sekolah, kursus atau guru pribadi</p>
                     </div>
                 </div>
 

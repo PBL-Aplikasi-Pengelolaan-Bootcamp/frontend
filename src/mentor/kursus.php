@@ -2,10 +2,21 @@
 
 include 'function.php';
 
+
+// create course
 if (isset($_POST['create_course'])) {
     create_course($_POST);
 }
 
+
+
+// delete course
+if (isset($_GET['delete_id'])) {
+    delete_course($_GET['delete_id']);
+}
+
+
+// get course
 $course = get_course_by_mentor();
 
 
@@ -32,6 +43,7 @@ $course = get_course_by_mentor();
     .sidebar {
         transition: transform 0.3s ease;
     }
+
     </style>
 </head>
 
@@ -191,8 +203,7 @@ $course = get_course_by_mentor();
                             </div>
                             <div class="flex flex-col gap-2">
                                 <label for="quota"><strong>Quota</strong></label>
-                                <input type="number" name="quota"
-                                    class="border-slate-700 border rounded-sm py-1 px-1">
+                                <input type="number" name="quota" class="border-slate-700 border rounded-sm py-1 px-1">
                             </div>
 
                             <div class="flex flex-col gap-2 w-56">
@@ -222,31 +233,38 @@ $course = get_course_by_mentor();
                 <div class="flex flex-wrap gap-10 m-auto text-center sm:justify-between">
 
                     <?php foreach ($course as $data) { ?>
-                        <div class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
-                            <div class="flex p-3 absolute gap-1">
-                                <a href="tambah-materi.html">
-                                    <ion-icon name="brush"
-                                        class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all">
-                                    </ion-icon>
-                                </a>
-                                <a href="#">
-                                    <ion-icon name="trash"
-                                        class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                                    </ion-icon>
-                                </a>
-                                <a href="detail-kursus.html#1">
-                                    <ion-icon name="information-circle"
-                                        class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                                    </ion-icon>
-                                </a>
-                            </div>
-                            <img src="../img/social.jpg" alt="" class="object-center md:h-40">
-                            <div class="px-3 py-3 flex flex-col gap-2">
-                                <a href="kursus-detail.php?id=<?= $data['id_course']?>">
-                                <h1 class="font-poppins font-semibold text-sm md:text-base text-left">
-                                    <?= $data['title']?></h1></a>
-                            </div>
+                    <div
+                        class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
+                        <div class="flex p-3 absolute gap-1">
+                            <a href="tambah-materi.html">
+                                <ion-icon name="brush"
+                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all">
+                                </ion-icon>
+                            </a>
+
+                            <a href="?delete_id=<?= $data['id_course'] ?>"
+                                onclick="return confirm('Are you sure you want to delete this course?');">
+                                <ion-icon name="trash"
+                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                                </ion-icon>
+                            </a>
+
+
+                            <a href="detail-kursus.html#1">
+                                <ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                                </ion-icon>
+                            </a>
                         </div>
+                        <img src="../foto_cover_course/<?= $data['course_picture']?>" alt=""
+                            class="object-center md:h-40">
+                        <div class="px-3 py-3 flex flex-col gap-2">
+                            <a href="kursus-detail.php?id=<?= $data['id_course']?>">
+                                <h1 class="font-poppins font-semibold text-sm md:text-base text-left">
+                                    <?= $data['title']?></h1>
+                            </a>
+                        </div>
+                    </div>
                     <?php }?>
                 </div>
             </div>

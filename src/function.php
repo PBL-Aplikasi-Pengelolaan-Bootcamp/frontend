@@ -137,6 +137,43 @@ function logout(){
 // ------------------------------------------------------------HOME PAGE-------------------------------------------------------
 
 
+
+// Get user data from sesion
+function get_data_user_login() {
+    global $koneksi;
+
+    // Ambil id_user dari session
+    $id_user = $_SESSION['id_user'];
+
+    // Query untuk mendapatkan data dari user dan student
+    $sql = mysqli_query($koneksi, 
+        "SELECT user.*, student.* 
+         FROM user 
+         JOIN student ON user.id_user = student.id_student 
+         WHERE user.id_user = '$id_user'"
+    );
+
+    // Periksa jika ada hasil yang ditemukan
+    if (mysqli_num_rows($sql) > 0) {
+        // Ambil data sebagai array asosiatif
+        return mysqli_fetch_assoc($sql);
+    } else {
+        // Jika tidak ada data, kembalikan null atau pesan
+        return null;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
 //get all course
 function getAll_Course(){
     global $koneksi;

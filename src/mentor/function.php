@@ -36,7 +36,6 @@ function get_mentor_byId(){
 
 // create course
 function create_course($data){
-
     global $koneksi;
 
     $id_mentor = $_SESSION['id_user'];
@@ -70,6 +69,42 @@ function create_course($data){
         echo "<script>alert('Gagal mengupload file');</script>";
     }
 }
+
+
+// delete course
+function delete_course($id_course) {
+    global $koneksi;
+    // Hapus section yang terkait dengan course ini
+    $sql_section = mysqli_query($koneksi, "DELETE FROM section WHERE id_course = '$id_course'");
+
+    // Hapus information yang terkait dengan course ini
+    $sql_information = mysqli_query($koneksi, "DELETE FROM information WHERE id_course = '$id_course'");
+
+    // Hapus materi video yang terkait dengan course ini
+    $sql_video = mysqli_query($koneksi, "DELETE FROM materi_video WHERE id_course = '$id_course'");
+
+    // Hapus materi text yang terkait dengan course ini
+    $sql_text = mysqli_query($koneksi, "DELETE FROM materi_text WHERE id_course = '$id_course'");
+    
+    
+    // Hapus materi file yang terkait dengan course ini
+    $sql_file = mysqli_query($koneksi, "DELETE FROM materi_file WHERE id_course = '$id_course'");
+    
+    // Hapus course itu sendiri
+    $sql_course = mysqli_query($koneksi, "DELETE FROM course WHERE id_course = '$id_course'");
+
+    if ($sql_section && $sql_information && $sql_video && $sql_text && $sql_file && $sql_course) {
+        echo "<script>alert('Course and related data deleted successfully!');</script>";
+    } else {
+        echo "<script>alert('Failed to delete course and related data!');</script>";
+    }
+
+    return mysqli_affected_rows($koneksi);
+}
+
+
+
+
 
 
 // getcourse by mentor
