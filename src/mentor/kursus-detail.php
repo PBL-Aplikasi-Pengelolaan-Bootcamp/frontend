@@ -201,8 +201,11 @@ if (isset($_POST['create_file'])) {
                 </div>
 
                 <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden">
-                    <img src="../foto_cover_course/<?=$course['course_picture']?>" alt="">
-                </div>
+    <img src="../foto_cover_course/<?=$course['course_picture']?>" 
+         alt="Cover Course" 
+         class="w-full h-full object-cover object-center">
+</div>
+
 
                 <div class="flex gap-2 text-sm flex-wrap font-bold font-poppins text-slate-800">
                     <h1 class="bg-white px-3 py-1 rounded-lg"><?=$course['course_type']?></h1>
@@ -286,6 +289,18 @@ if (isset($_POST['create_file'])) {
                                                     data-modal-type="file" role="menuitem">File</a>
                                             </div>
                                         </div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -411,16 +426,24 @@ if (isset($_POST['create_file'])) {
                                             </div>
                                         </div>
 
-
-
-
-
-
-
-
-
                                     </div>
                                 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
                                 <!-- ------------------------------------------------------------KONTEN  -->
 

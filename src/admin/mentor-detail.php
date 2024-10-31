@@ -52,22 +52,18 @@ if (isset($_POST['logout'])) {
             <nav>
                 <ul>
                     <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700">
-                            <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Dashoboar
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
-                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Kursus
-                        </a>
-                    </li>   
-                    <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
+
+                    <li class="hover:bg-gray-200"><a href="tambah_mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="tambah_mentor.php" class="block p-4 text-gray-700">
-                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Student
                         </a>
                     </li>
@@ -101,12 +97,12 @@ if (isset($_POST['logout'])) {
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Dashboard</h2>
+                <h2 class="text-3xl font-semibold">Mentor Profil</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-semibold relative my-auto">ADMIN</h1>
-                        <img src="../img/logo.png" alt="" class="w-12 h-12 rounded-full">
+                        <h1 class="font-semibold relative my-auto">Student1</h1>
+                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
                     </div>
                 </button>
 
@@ -118,19 +114,28 @@ if (isset($_POST['logout'])) {
                         <div
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
                             <form action="" class="flex flex-col gap-5 my-2 w-full">
-                                
                                 <div class="flex flex-col gap-2">
-                                    <label for="nama-mentor">Username</label>
+                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
+                                    <label for="img">Upload Gambar</label>
+                                    <input type="file" src="" alt="" name="img"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="nama-mentor">Nama</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="nama-mentor" type="text" placeholder="Enter your name">
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="expertiser">Password</label>
+                                    <label for="expertiser">Expertise</label>
                                     <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-
+                                <div class="flex flex-col gap-2">
+                                    <label for="deskripsi">Bio</label>
+                                    <textarea name="deskripsi"
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                </div>
 
                                 <div class="flex justify-between">
                                     <button type="submit"
@@ -147,79 +152,60 @@ if (isset($_POST['logout'])) {
 
             <!-- Konten -->
             <!-- ANALISTIK -->
-            <div class="flex mt-10 font-poppins justify-start flex-wrap gap-5" id="pengguna">
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Mentor in total.</h1>
-                        <p class="text-xl">10</p>
-                    </div>
-                </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
-                        <h1 class="font-bold text-lg">Siswa in total.</h1>
-                        <p class="text-xl">156</p>
-                    </div>
-                </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">COURSE</h1>
-                        <h1 class="font-bold text-lg">Course in total.</h1>
-                        <p class="text-xl">156</p>
-                    </div>
-                </div>
-            </div>
+
 
 
             <!-- LIST -->
-            <div class="flex flex-wrap gap-5 justify-between mt-10">
-                <!-- Selamat Datang -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-2xl mb-3">Selamat Datang di Dashboard Admin Pengguna</h2>
-                    <p class="text-gray-600">
-                        Anda memiliki akses untuk menambah mentor baru dan mengedit data pengguna. Pastikan semua
-                        informasi pengguna
-                        selalu akurat agar sistem berjalan dengan baik.
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-5 mt-10 w-full">
+                <div class="w-64 md:w-80 aspect-square overflow-hidden rounded-lg">
+                    <img src="../foto_mentor/nasyith.jpg" alt="Foto Nasyith" class="w-full h-full object-cover">
+                </div>
+
+                <div class="flex flex-col w-full text-center md:text-left space-y-3">
+                    <h1 class="font-semibold text-xl md:text-2xl font-poppins">Nasyith</h1>
+                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins">Backend</p>
+                    <p class="text-sm md:text-base font-poppins">
+                        Berpengalaman dalam pengembangan perangkat lunak selama lebih dari dua tahun,
+                        fokus utama pada backend development menggunakan berbagai teknologi termasuk
+                        PHP (Laravel, CodeIgniter), Python (Django), dan Node.js. Lorem ipsum dolor sit amet consectetur
+                        adipisicing elit. Nemo officia harum repellendus nam magnam? Voluptatem, corporis ipsum.
+                        Laudantium excepturi harum ducimus eius deleniti porro dolor sed obcaecati quas, nisi
+                        repellendus.
                     </p>
-                </div>
 
-                <!-- Petunjuk Pengelolaan Mentor -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pengelolaan Mentor</h2>
-                    <ul class="list-disc pl-5 text-gray-600">
-                        <li>Tambahkan mentor baru melalui menu "Tambah Mentor".</li>
-                        <li>Pastikan data mentor lengkap dan benar saat ditambahkan.</li>
-                        <li>Edit informasi mentor jika terjadi perubahan, seperti email atau nomor telepon.</li>
-                    </ul>
-                </div>
-
-                <!-- Petunjuk Pengeditan Pengguna -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pengeditan Data Pengguna</h2>
-                    <ul class="list-disc pl-5 text-gray-600">
-                        <li>Edit data pengguna termasuk mentor, siswa, dan admin jika diperlukan.</li>
-                        <li>Perbarui peran atau status pengguna sesuai kebutuhan.</li>
-                        <li>Berhati-hati saat melakukan perubahan data untuk menghindari kesalahan.</li>
-                    </ul>
-                </div>
-
-                <!-- Pesan Penting -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pesan Penting</h2>
-                    <p class="text-gray-600">
-                        ⚠️ *Pastikan data pengguna selalu diperiksa sebelum disimpan untuk menghindari kesalahan.*
-                        Jika mengalami kendala, segera hubungi tim IT untuk mendapatkan bantuan.
-                    </p>
+                    <div class="flex flex-col sm:flex-row md:flex-col sm:gap-5 gap-2">
+                        <div class="flex gap-2 items-center">
+                            <ion-icon name="call" class="text-lg"></ion-icon>
+                            <p class="font-semibold text-sm">0812-3456-7891</p>
+                        </div>
+                        <div class="flex gap-2 items-center">
+                            <ion-icon name="mail" class="text-lg"></ion-icon>
+                            <p class="font-semibold text-sm">polibatam@gmail.com</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
+
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-5 mt-10 w-full">
+            <h1 class="font-semibold text-xl md:text-2xl font-poppins">Course</h1>
+
+            </div>
+
+         
+            <div class="flex flex-col md:flex-row items-center md:items-start gap-5 mt-5 w-full">
+                <div class="flex flex-wrap gap-5">
+                    <a href="kursus_materi.php"
+                        class="flex flex-col w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
+                        <img src="../foto_cover_course/fullstack.jpg" alt="" class="object-cover w-full md:h-40">
+                        <div class="px-3 py-3 flex flex-col gap-2">
+                            <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left">Okee</h1>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+         
 
 
 

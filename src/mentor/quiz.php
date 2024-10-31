@@ -11,6 +11,7 @@
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
+    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <title>Mentor | Tambah Quiz</title>
     <style>
         .sidebar {
@@ -23,7 +24,7 @@
     <div class="flex">
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
+            class="sidebar fixed inset-y-0 left-0 z-10 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
             <div class="flex justify-between p-6">
                 <div class="w-max">
                     <img src="../img/logo1.png" alt="" class="w-max">
@@ -144,7 +145,7 @@
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-orange-400 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>INPUT: SOAL </span>
+                        <span>INPUT: SOAL QUIZ</span>
                     </button>
                     <div x-show="open"
                         class="px-4 py-2 border-t mx-auto bg-white p-4 rounded-lg shadow flex flex-col gap-7">

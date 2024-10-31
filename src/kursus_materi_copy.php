@@ -32,8 +32,8 @@
                 <ul class="gap-4 hidden md:flex font-semibold relative top-2">
                     <li><a href="index.html" class="hover:text-blue-700">Beranda</a></li>
                     <li><a href="courses.html" class="hover:text-blue-700">Kursus</a></li>
-                    <li><a href="" class="hover:text-blue-700">Tentang</a></li>
-                    <li><a href="" class="hover:text-blue-700">Kontak</a></li>
+                    <li><a href="about.html" class="hover:text-blue-700">Tentang</a></li>
+                    <li><a href="index.html#kontak" class="hover:text-blue-700">Kontak</a></li>
                 </ul>
             </div>
 
@@ -41,7 +41,7 @@
                 <div class="flex gap-2 w-max">
                     <h1 class="font-semibold relative my-auto">Student1</h1>
                     <img src="img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
-                </div>
+                </div>  
             </button>
 
             <!-- MODAL WRAPPER -->

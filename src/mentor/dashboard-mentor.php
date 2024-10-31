@@ -21,6 +21,7 @@ $mentor = get_mentor_byId();
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
+    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <title>Mentor | Dashboard</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
@@ -160,8 +161,8 @@ $mentor = get_mentor_byId();
                     class="flex gap-3 p-3 flex-row-reverse bg-white 2xl:m-0 justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
                     <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Course in total.</h1>
+                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">STUDENT</h1>
+                        <h1 class="font-bold text-lg">Student Total</h1>
                         <p class="text-xl">10</p>
                     </div>
                 </div>
@@ -187,23 +188,26 @@ $mentor = get_mentor_byId();
                 </div>
 
 
-                <div class="flex flex-col w-auto md:m-0 m-auto min-h-80 text-center md:text-left">
-                    <h1 class="font-semibold text-2xl font-poppins my-auto"><?= $mentor['name']?></h1>
-                    <p class="text-base font-semibold tracking-normal text-gray-400 font-poppins my-auto">
-                        <?= $mentor['expertise']?></p>
-                    <P class="font-poppins my-auto md:max-w-96"><?=$mentor['bio']?></P>
+                <div class="flex flex-col w-auto md:m-0 m-auto min-h-80 text-center md:text-left space-y-2">
+                    <h1 class="font-semibold text-2xl font-poppins"><?= $mentor['name'] ?></h1>
+                    <p class="text-base font-semibold tracking-normal text-gray-400 font-poppins">
+                        <?= $mentor['expertise'] ?>
+                    </p>
+                    <p class="font-poppins md:max-w-96"><?= $mentor['bio'] ?></p>
+
                     <div
-                        class="flex flex-col sm:flex-row md:flex-col sm:gap-5 md:gap-1 m-auto md:m-0 text-center lg:text-left">
-                        <div class="flex gap-2 my-auto">
-                            <ion-icon name="call" class=" my-auto"></ion-icon>
-                            <p class=" my-auto font-semibold">0812-3456-7891</p>
+                        class="flex flex-col sm:flex-row md:flex-col sm:gap-5 md:gap-1 m-auto md:m-0 text-center lg:text-left space-y-2 md:space-y-1">
+                        <div class="flex gap-2">
+                            <ion-icon name="call" class="my-auto"></ion-icon>
+                            <p class="font-semibold">0812-3456-7891</p>
                         </div>
-                        <div class="flex gap-2 my-auto">
-                            <ion-icon name="mail" class=" my-auto"></ion-icon>
-                            <p class=" my-auto font-semibold">polibatam@gmail.com</p>
+                        <div class="flex gap-2">
+                            <ion-icon name="mail" class="my-auto"></ion-icon>
+                            <p class="font-semibold">polibatam@gmail.com</p>
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </div>

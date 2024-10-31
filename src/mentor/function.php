@@ -187,6 +187,7 @@ function create_information($data) {
     }
     return mysqli_affected_rows($koneksi);
 }
+
 function get_information_bySection($id_course, $id_section) {
     global $koneksi;
     $sql = "SELECT * FROM information WHERE id_course = '$id_course' AND id_section = '$id_section'";
@@ -266,7 +267,7 @@ function create_file($data) {
     $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/file_materi/' . basename($file_name); // Path untuk menyimpan file
 
     // Validasi file (ekstensi dan ukuran bisa ditambahkan sesuai kebutuhan)
-    $allowed_extensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt']; // Daftar ekstensi yang diizinkan
+    $allowed_extensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'sql', 'jpg', 'jpeg', 'png']; // Daftar ekstensi yang diizinkan
     $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
     
     if (!in_array($file_extension, $allowed_extensions)) {
@@ -376,4 +377,44 @@ function get_section_byCourseId(){
 }
 
 
+
+
+
+
+
+
+
+// -------------------------------------------------------PESERTA COURSE----------------------------------
+// Ambil data student berdasarkan course
+function get_students_by_course($id_course) {
+    global $koneksi;
+
+    $query = "
+        SELECT 
+            user.username, enroll.status, enroll.enroll_date 
+        FROM enroll 
+        JOIN student ON enroll.id_student = student.id_student
+        JOIN user ON student.id_student = user.id_user
+        WHERE enroll.id_course = '$id_course'
+    ";
+
+    $result = mysqli_query($koneksi, $query);
+
+    // Simpan data dalam array
+    $students = [];
+    while ($row = mysqli_fetch_assoc($result)) {
+        $students[] = $row;
+    }
+
+    return $students;
+}
+
+
 ?>
+
+
+
+
+
+
+

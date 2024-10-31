@@ -30,7 +30,7 @@
       <div class="flex flex-col gap-5">
         <input type="text" name="username" placeholder="Username" class="border border-slate-300 py-2 px-2 rounded-sm" />
         <input type="password" name="password" placeholder="Password" class="border border-slate-300 py-2 px-2 rounded-sm" />
-        <a href="#" class="text-right font-poppins text-sm">Lupa Password?</a>
+        <!-- <a href="#" class="text-right font-poppins text-sm">Lupa Password?</a> -->
         <button type="submit" name="login" class="bg-blue-700 rounded-sm text-white font-poppins font-semibold py-4 px-6">
           Masuk
         </button>

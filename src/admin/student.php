@@ -2,11 +2,20 @@
 
 include 'function.php';
 
+//logout
 if (isset($_POST['logout'])) {
     logout();
 }
 
+//create mentor
+if (isset($_POST['create_mentor'])) {
+    create_mentor($_POST);
+}
+
+$mentor = getAll_mentor();
+
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -19,9 +28,7 @@ if (isset($_POST['logout'])) {
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
-
-    <title>Admin | Dashboard</title>
+    <title>Admin | Tambah Mentor</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
     .sidebar {
@@ -51,23 +58,19 @@ if (isset($_POST['logout'])) {
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700">
-                            <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                    <li class="hover:bg-gray-200"><a href="dashboard-admin.php" class="block p-4 text-gray-700">
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Dashoboar
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
-                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Kursus
-                        </a>
-                    </li>   
+
                     <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="tambah_mentor.php" class="block p-4 text-gray-700">
-                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                    <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
+                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Student
                         </a>
                     </li>
@@ -101,12 +104,12 @@ if (isset($_POST['logout'])) {
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Dashboard</h2>
+                <h2 class="text-3xl font-semibold">Daftar Student</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-semibold relative my-auto">ADMIN</h1>
-                        <img src="../img/logo.png" alt="" class="w-12 h-12 rounded-full">
+                        <h1 class="font-semibold relative my-auto">Student1</h1>
+                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
                     </div>
                 </button>
 
@@ -118,19 +121,28 @@ if (isset($_POST['logout'])) {
                         <div
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
                             <form action="" class="flex flex-col gap-5 my-2 w-full">
-                                
                                 <div class="flex flex-col gap-2">
-                                    <label for="nama-mentor">Username</label>
+                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
+                                    <label for="img">Upload Gambar</label>
+                                    <input type="file" src="" alt="" name="img"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="nama-mentor">Nama</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="nama-mentor" type="text" placeholder="Enter your name">
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="expertiser">Password</label>
+                                    <label for="expertiser">Expertise</label>
                                     <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-
+                                <div class="flex flex-col gap-2">
+                                    <label for="deskripsi">Bio</label>
+                                    <textarea name="deskripsi"
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                </div>
 
                                 <div class="flex justify-between">
                                     <button type="submit"
@@ -146,87 +158,31 @@ if (isset($_POST['logout'])) {
             </header>
 
             <!-- Konten -->
-            <!-- ANALISTIK -->
-            <div class="flex mt-10 font-poppins justify-start flex-wrap gap-5" id="pengguna">
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Mentor in total.</h1>
-                        <p class="text-xl">10</p>
-                    </div>
+            <!-- List Mentor -->
+            <div class=" flex flex-col gap-3 mt-5" id="tambah-mentor">
+                <!-- Search & Tambah Mentor -->
+                <div class="flex gap-2">
+                    <input type="search" class="w-36 md:w-56 shadow-sm px-2 py-1 rounded-md" placeholder="Cari student">
                 </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
-                        <h1 class="font-bold text-lg">Siswa in total.</h1>
-                        <p class="text-xl">156</p>
-                    </div>
-                </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">COURSE</h1>
-                        <h1 class="font-bold text-lg">Course in total.</h1>
-                        <p class="text-xl">156</p>
-                    </div>
-                </div>
+
+
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
+    <?php foreach ($mentor as $data) { ?>
+        <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
+            <div class="flex items-center gap-2 font-poppins">
+                <!-- Foto Profil -->
+                <img src="../foto_mentor/nasyith.jpg" alt="Foto Profil Mentor" class="w-16 h-16 object-cover border-2 border-blue-500 rounded-md">
+                <!-- Nama Mentor -->
+                <h1 class="font-semibold text-xl"><?= $data['name']?></h1>
             </div>
-
-
-            <!-- LIST -->
-            <div class="flex flex-wrap gap-5 justify-between mt-10">
-                <!-- Selamat Datang -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-2xl mb-3">Selamat Datang di Dashboard Admin Pengguna</h2>
-                    <p class="text-gray-600">
-                        Anda memiliki akses untuk menambah mentor baru dan mengedit data pengguna. Pastikan semua
-                        informasi pengguna
-                        selalu akurat agar sistem berjalan dengan baik.
-                    </p>
-                </div>
-
-                <!-- Petunjuk Pengelolaan Mentor -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pengelolaan Mentor</h2>
-                    <ul class="list-disc pl-5 text-gray-600">
-                        <li>Tambahkan mentor baru melalui menu "Tambah Mentor".</li>
-                        <li>Pastikan data mentor lengkap dan benar saat ditambahkan.</li>
-                        <li>Edit informasi mentor jika terjadi perubahan, seperti email atau nomor telepon.</li>
-                    </ul>
-                </div>
-
-                <!-- Petunjuk Pengeditan Pengguna -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pengeditan Data Pengguna</h2>
-                    <ul class="list-disc pl-5 text-gray-600">
-                        <li>Edit data pengguna termasuk mentor, siswa, dan admin jika diperlukan.</li>
-                        <li>Perbarui peran atau status pengguna sesuai kebutuhan.</li>
-                        <li>Berhati-hati saat melakukan perubahan data untuk menghindari kesalahan.</li>
-                    </ul>
-                </div>
-
-                <!-- Pesan Penting -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pesan Penting</h2>
-                    <p class="text-gray-600">
-                        ⚠️ *Pastikan data pengguna selalu diperiksa sebelum disimpan untuk menghindari kesalahan.*
-                        Jika mengalami kendala, segera hubungi tim IT untuk mendapatkan bantuan.
-                    </p>
-                </div>
-            </div>
-
-
-
-
-
         </div>
+    <?php } ?>
+</div>
 
-    </div>
+
+            </div>
+        </div>
     </div>
 
     <script>
@@ -243,7 +199,7 @@ if (isset($_POST['logout'])) {
         sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
     });
 
-    // Modal PopUp
+    // Modal PopUp Edit Profile
     document.getElementById("open-modal-btn").addEventListener("click", () => {
         document.getElementById("modal-wrapper").classList.remove("hidden")
     })
@@ -251,6 +207,26 @@ if (isset($_POST['logout'])) {
     document.getElementById("close-modal-btn").addEventListener("click", () => {
         document.getElementById("modal-wrapper").classList.add("hidden")
     })
+
+    // Modal PopUp More Information
+    document.addEventListener('DOMContentLoaded', function() {
+        const openButtons = document.querySelectorAll('.openModal');
+        const closeButtons = document.querySelectorAll('.closeModal');
+
+        openButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal-id');
+                document.getElementById(modalId).classList.remove('hidden');
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.fixed');
+                modal.classList.add('hidden');
+            });
+        });
+    });
     </script>
 </body>
 

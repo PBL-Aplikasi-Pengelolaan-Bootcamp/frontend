@@ -1,11 +1,6 @@
 <?php
-
 include 'function.php';
-
-if (isset($_POST['logout'])) {
-    logout();
-}
-
+$course = getAll_Course();
 ?>
 
 <!DOCTYPE html>
@@ -19,14 +14,14 @@ if (isset($_POST['logout'])) {
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
-    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
-
-    <title>Admin | Dashboard</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
+    <title>Mentor | Tambah Kursus</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
     .sidebar {
         transition: transform 0.3s ease;
     }
+
     </style>
 </head>
 
@@ -34,7 +29,7 @@ if (isset($_POST['logout'])) {
     <div class="flex">
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
+            class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full z-20">
             <div class="flex justify-between p-6">
                 <div class="w-max">
                     <img src="../img/logo1.png" alt="" class="w-max">
@@ -51,39 +46,30 @@ if (isset($_POST['logout'])) {
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700">
+
+                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Dashoboar
+                            Dashboard
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
                             <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Kursus
                         </a>
-                    </li>   
-                    <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
-                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Mentor
-                        </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="tambah_mentor.php" class="block p-4 text-gray-700">
+                    <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
                             <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Student
                         </a>
                     </li>
-
-                    <form method="post">
-                        <li class="hover:bg-gray-200">
-                            <button type="submit" name="logout" class="block p-4 text-gray-700">
-                                <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                                Log
-                                Out
-                            </button>
-                        </li>
-                    </form>
-
-
-
+                    <li class="hover:bg-gray-200"><a href="quiz.php" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
+                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
+                            Out
+                        </a></li>
                 </ul>
             </nav>
         </aside>
@@ -101,12 +87,12 @@ if (isset($_POST['logout'])) {
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Dashboard</h2>
+                <h2 class="text-3xl font-semibold">Tambah Kursus</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-semibold relative my-auto">ADMIN</h1>
-                        <img src="../img/logo.png" alt="" class="w-12 h-12 rounded-full">
+                        <h1 class="font-semibold relative my-auto">Student1</h1>
+                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
                     </div>
                 </button>
 
@@ -117,20 +103,29 @@ if (isset($_POST['logout'])) {
                         <!-- MODAL BOX -->
                         <div
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
-                            <form action="" class="flex flex-col gap-5 my-2 w-full">
-                                
+                            <form method="post" class="flex flex-col gap-5 my-2 w-full">
                                 <div class="flex flex-col gap-2">
-                                    <label for="nama-mentor">Username</label>
+                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
+                                    <label for="img">Upload Gambar</label>
+                                    <input type="file" src="" alt="" name="img"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="nama-mentor">Nama</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="nama-mentor" type="text" placeholder="Enter your name">
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="expertiser">Password</label>
+                                    <label for="expertiser">Expertise</label>
                                     <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
-
+                                <div class="flex flex-col gap-2">
+                                    <label for="deskripsi">Bio</label>
+                                    <textarea name="deskripsi"
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                </div>
 
                                 <div class="flex justify-between">
                                     <button type="submit"
@@ -146,87 +141,60 @@ if (isset($_POST['logout'])) {
             </header>
 
             <!-- Konten -->
-            <!-- ANALISTIK -->
-            <div class="flex mt-10 font-poppins justify-start flex-wrap gap-5" id="pengguna">
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Mentor in total.</h1>
-                        <p class="text-xl">10</p>
+            <!-- KURSUS -->
+
+
+            <div class="m-auto relative flex flex-col gap-6 bg-white p-10 rounded-lg">
+                <div class="flex gap-5 flex-col">
+                    <h1 class="text-2xl font-poppins font-semibold">Semua Kursus</h1>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <input type="search" placeholder="Cari Kursus.."
+                            class="max-w-72 py-1 px-2 border-slate-700 outline-none border rounded-md">
                     </div>
+
                 </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
-                        <h1 class="font-bold text-lg">Siswa in total.</h1>
-                        <p class="text-xl">156</p>
+
+
+
+                <div class="flex flex-wrap gap-10 m-auto text-center sm:justify-between">
+
+                    <?php foreach ($course as $data) { ?>
+                    <div
+                        class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
+                        <div class="flex p-3 absolute gap-1">
+                            <a href="tambah-materi.html">
+                                <ion-icon name="brush"
+                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all">
+                                </ion-icon>
+                            </a>
+
+                            <a href="?delete_id=<?= $data['id_course'] ?>"
+                                onclick="return confirm('Are you sure you want to delete this course?');">
+                                <ion-icon name="trash"
+                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                                </ion-icon>
+                            </a>
+
+
+                            <a href="detail-kursus.html#1">
+                                <ion-icon name="information-circle"
+                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
+                                </ion-icon>
+                            </a>
+                        </div>
+                        <img src="../foto_cover_course/<?= $data['course_picture']?>" alt=""
+                            class="object-center md:h-40">
+                        <div class="px-3 py-3 flex flex-col gap-2">
+                            <a href="kursus-detail.php?id=<?= $data['id_course']?>">
+                                <h1 class="font-poppins font-semibold text-sm md:text-base text-left">
+                                    <?= $data['title']?></h1>
+                            </a>
+                        </div>
                     </div>
-                </div>
-                <div
-                    class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
-                    <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
-                    <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">COURSE</h1>
-                        <h1 class="font-bold text-lg">Course in total.</h1>
-                        <p class="text-xl">156</p>
-                    </div>
+                    <?php }?>
                 </div>
             </div>
-
-
-            <!-- LIST -->
-            <div class="flex flex-wrap gap-5 justify-between mt-10">
-                <!-- Selamat Datang -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-2xl mb-3">Selamat Datang di Dashboard Admin Pengguna</h2>
-                    <p class="text-gray-600">
-                        Anda memiliki akses untuk menambah mentor baru dan mengedit data pengguna. Pastikan semua
-                        informasi pengguna
-                        selalu akurat agar sistem berjalan dengan baik.
-                    </p>
-                </div>
-
-                <!-- Petunjuk Pengelolaan Mentor -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pengelolaan Mentor</h2>
-                    <ul class="list-disc pl-5 text-gray-600">
-                        <li>Tambahkan mentor baru melalui menu "Tambah Mentor".</li>
-                        <li>Pastikan data mentor lengkap dan benar saat ditambahkan.</li>
-                        <li>Edit informasi mentor jika terjadi perubahan, seperti email atau nomor telepon.</li>
-                    </ul>
-                </div>
-
-                <!-- Petunjuk Pengeditan Pengguna -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pengeditan Data Pengguna</h2>
-                    <ul class="list-disc pl-5 text-gray-600">
-                        <li>Edit data pengguna termasuk mentor, siswa, dan admin jika diperlukan.</li>
-                        <li>Perbarui peran atau status pengguna sesuai kebutuhan.</li>
-                        <li>Berhati-hati saat melakukan perubahan data untuk menghindari kesalahan.</li>
-                    </ul>
-                </div>
-
-                <!-- Pesan Penting -->
-                <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-xl mb-3">Pesan Penting</h2>
-                    <p class="text-gray-600">
-                        ⚠️ *Pastikan data pengguna selalu diperiksa sebelum disimpan untuk menghindari kesalahan.*
-                        Jika mengalami kendala, segera hubungi tim IT untuk mendapatkan bantuan.
-                    </p>
-                </div>
-            </div>
-
-
-
-
-
         </div>
-
-    </div>
     </div>
 
     <script>
@@ -244,6 +212,15 @@ if (isset($_POST['logout'])) {
     });
 
     // Modal PopUp
+    document.getElementById("open-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.remove("hidden")
+    })
+
+    document.getElementById("close-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.add("hidden")
+    })
+
+    // Modal PopUp Edit Profile
     document.getElementById("open-modal-btn").addEventListener("click", () => {
         document.getElementById("modal-wrapper").classList.remove("hidden")
     })

@@ -1,3 +1,15 @@
+<?php
+
+include 'function.php';
+
+
+// get course
+$course = get_course_by_mentor();
+
+
+?>
+
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,12 +23,12 @@
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
-    <title>Mentor | Dashboard</title>
+    <title>Mentor | Detail Kursus</title>
     <style>
-        /* Tambahkan gaya untuk transisi sidebar */
-        .sidebar {
-            transition: transform 0.3s ease;
-        }
+    /* Tambahkan gaya untuk transisi sidebar */
+    .sidebar {
+        transition: transform 0.3s ease;
+    }
     </style>
 </head>
 
@@ -41,7 +53,7 @@
             </div>
             <nav>
                 <ul>
-                    
+
                     <li class="hover:bg-gray-200"><a href="dashboard-mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Dashboard
@@ -138,209 +150,94 @@
             <!-- Konten -->
 
             <div class="flex flex-col gap-5 mt-10">
-                <!-- SECTION 1 -->
+                <!-- SECTION  -->
+                <?php foreach ($course as $data) { ?>
+
                 <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden" id="1">
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>Frontend Pemula: Dasar-Dasar HTML dan CSS</span>
+                        <span><?= $data['title']?></span>
                     </button>
                     <div x-show="open" class="px-4 py-2 border-t">
                         <div class="overflow-x-autow-full w-full shadow-sm">
                             <table class="min-w-full bg-white shadow-md rounded-lg">
                                 <thead class="bg-gray-400 text-white">
                                     <tr>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Username</th>
+                                        <th class="text-left py-    3 px-4 uppercase font-semibold text-sm">No</th>
+                                        <th class="text-left py-    3 px-4 uppercase font-semibold text-sm">Username</th>
                                         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
                                             Status</th>
                                         <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Enroll date</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white">
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Nasyit</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Denis</td>
-                                        <td class="text-left py-3 px-4">Complete</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Jarwo</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                                    <?php 
+                                        $id_course = $data['id_course'];  // Dapatkan ID course dari parameter
+                                        $students = get_students_by_course($id_course);  // Panggil fungsi untuk mendapatkan data student
+                                        $no = 1; // Inisialisasi nomor urut
+                                    ?>
 
-                <!-- SECTION 2 -->
-                <div x-data="{ open: true }" class="bg-white shadow-md rounded-lg overflow-hidden" id="fr">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>Frontend Pemula: Dasar-Dasar HTML dan CSS</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t">
-                        <div class="overflow-x-autow-full w-full shadow-sm">
-                            <table class="min-w-full bg-white shadow-md rounded-lg">
-                                <thead class="bg-gray-400 text-white">
-                                    <tr>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Username</th>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Status</th>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Enroll date</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
+                                    <?php foreach ($students as $student) { ?>
                                     <tr class="">
-                                        <td class="text-left py-3 px-4">Nasyit</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
+                                        <td class="text-left py-3 px-4"><?= $no++ ?></td> <!-- Tampilkan nomor urut -->
+                                        <td class="text-left py-3 px-4"><?= $student['username'] ?></td>
+                                        <td class="text-left py-3 px-4"><?= $student['status'] ?></td>
+                                        <td class="text-left py-3 px-4"><?= $student['enroll_date'] ?>
+                                        </td>
                                     </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Denis</td>
-                                        <td class="text-left py-3 px-4">Complete</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Jarwo</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
+                                    <?php } ?>
                                 </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
 
-                <!-- SECTION 3 -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden" id="3">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>Frontend Pemula: Dasar-Dasar HTML dan CSS</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t">
-                        <div class="overflow-x-autow-full w-full shadow-sm">
-                            <table class="min-w-full bg-white shadow-md rounded-lg">
-                                <thead class="bg-gray-400 text-white">
-                                    <tr>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Username</th>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Status</th>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Enroll date</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Nasyit</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Denis</td>
-                                        <td class="text-left py-3 px-4">Complete</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Jarwo</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-
-                <!-- SECTION 4 -->
-                <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden" id="4">
-                    <button @click="open = !open"
-                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>Frontend Pemula: Dasar-Dasar HTML dan CSS</span>
-                    </button>
-                    <div x-show="open" class="px-4 py-2 border-t">
-                        <div class="overflow-x-autow-full w-full shadow-sm">
-                            <table class="min-w-full bg-white shadow-md rounded-lg">
-                                <thead class="bg-gray-400 text-white">
-                                    <tr>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Username</th>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">
-                                            Status</th>
-                                        <th class="text-left py-3 px-4 uppercase font-semibold text-sm">Enroll date</th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white">
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Nasyit</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Denis</td>
-                                        <td class="text-left py-3 px-4">Complete</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                    <tr class="">
-                                        <td class="text-left py-3 px-4">Jarwo</td>
-                                        <td class="text-left py-3 px-4">On progress</td>
-                                        <td class="text-left py-3 px-4">2024-03-01</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
+                <?php }?>
             </div>
 
         </div>
     </div>
 
     <script>
-        // Fungsi untuk toggle sidebar
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('close-sidebar');
+    // Fungsi untuk toggle sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
 
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
-        });
+    hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+    });
 
-        closeSidebar.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
-        });
+    closeSidebar.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
+    });
 
-        // Modal PopUp
-        document.getElementById("open-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.remove("hidden")
-        })
+    // Modal PopUp
+    document.getElementById("open-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.remove("hidden")
+    })
 
-        document.getElementById("close-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.add("hidden")
-        })
+    document.getElementById("close-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.add("hidden")
+    })
 
-        // Modal PopUp Tugas
-        document.getElementById("open-modal-tugas1").addEventListener("click", () => {
-            document.getElementById("modal-tugas1").classList.remove("hidden")
-        })
+    // Modal PopUp Tugas
+    document.getElementById("open-modal-tugas1").addEventListener("click", () => {
+        document.getElementById("modal-tugas1").classList.remove("hidden")
+    })
 
-        document.getElementById("close-modal-tugas1").addEventListener("click", () => {
-            document.getElementById("modal-tugas1").classList.add("hidden")
-        })
+    document.getElementById("close-modal-tugas1").addEventListener("click", () => {
+        document.getElementById("modal-tugas1").classList.add("hidden")
+    })
 
-        document.getElementById("open-modal-tugas2").addEventListener("click", () => {
-            document.getElementById("modal-tugas2").classList.remove("hidden")
-        })
+    document.getElementById("open-modal-tugas2").addEventListener("click", () => {
+        document.getElementById("modal-tugas2").classList.remove("hidden")
+    })
 
-        document.getElementById("close-modal-tugas2").addEventListener("click", () => {
-            document.getElementById("modal-tugas2").classList.add("hidden")
-        })
+    document.getElementById("close-modal-tugas2").addEventListener("click", () => {
+        document.getElementById("modal-tugas2").classList.add("hidden")
+    })
     </script>
 </body>
 

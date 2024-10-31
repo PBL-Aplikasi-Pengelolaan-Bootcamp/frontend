@@ -2,6 +2,12 @@
 
 include 'function.php';
 
+//logout
+if (isset($_POST['logout'])) {
+    logout();
+}
+
+//create mentor
 if (isset($_POST['create_mentor'])) {
     create_mentor($_POST);
 }
@@ -9,6 +15,7 @@ if (isset($_POST['create_mentor'])) {
 $mentor = getAll_mentor();
 
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -34,7 +41,7 @@ $mentor = getAll_mentor();
     <div class="flex">
         <!-- Sidebar -->
         <aside id="sidebar"
-            class="sidebar z-10 fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
+            class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
             <div class="flex justify-between p-6">
                 <div class="w-max">
                     <img src="../img/logo1.png" alt="" class="w-max">
@@ -51,21 +58,35 @@ $mentor = getAll_mentor();
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="dashboard-admin.html" class="block p-4 text-gray-700">
+                    <li class="hover:bg-gray-200"><a href="dashboard-admin.php" class="block p-4 text-gray-700">
                             <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Pengguna
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="dashboard-admin.html" class="block p-4 text-gray-700">
-                            <ion-icon name="grid" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="#tambah-mentor" class="block p-4 text-gray-700">
-                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Tambah
+                            Dashoboar
+                        </a>
+                    </li>
+
+                    <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
+                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor
-                        </a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
-                            Out
-                        </a></li>
+                        </a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
+                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Student
+                        </a>
+                    </li>
+
+                    <form method="post">
+                        <li class="hover:bg-gray-200">
+                            <button type="submit" name="logout" class="block p-4 text-gray-700">
+                                <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                                Log
+                                Out
+                            </button>
+                        </li>
+                    </form>
+
+
+
                 </ul>
             </nav>
         </aside>
@@ -99,7 +120,7 @@ $mentor = getAll_mentor();
                         <!-- MODAL BOX -->
                         <div
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
-                            <form method="post" class="flex flex-col gap-5 my-2 w-full">
+                            <form action="" class="flex flex-col gap-5 my-2 w-full">
                                 <div class="flex flex-col gap-2">
                                     <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
                                     <label for="img">Upload Gambar</label>
@@ -148,9 +169,10 @@ $mentor = getAll_mentor();
                     <div id="modalTambah"
                         class="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 hidden">
                         <div
-                            class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+                            class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full max-h-screen overflow-y-auto">
                             <div class="px-4 py-5 sm:p-6 flex flex-col gap-3">
-                                <form method="post" enctype="multipart/form-data" name="create_mentor" class="grid grid-cols-2 gap-5 my-2 w-full">
+                                <form method="post" enctype="multipart/form-data" name="create_mentor"
+                                    class="grid grid-cols-2 gap-5 my-2 w-full">
                                     <div class="flex flex-col gap-2 col-span-2">
                                         <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
                                         <label for="img">Upload Profil Picture</label>
@@ -205,101 +227,33 @@ $mentor = getAll_mentor();
                                             class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
                                     </div>
                                 </form>
-
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="flex flex-col gap-3">
 
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                     <?php foreach ($mentor as $data) { ?>
-                        
-                    
-                    <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
-                        <div class="flex flex-col gap-2">
-                            <h1 class="font-semibold text-xl font-poppins"><?= $data['name']?></h1>
-                            <h1><?=$data['expertise']?></h1>
-                        </div>
+                    <a href="mentor-detail.php">
 
-                        <div class="flex gap-2 my-auto">
-                            <button>
-                                <ion-icon name="trash" class="bg-red-500 text-white p-3 rounded-md text-xl"></ion-icon>
-                            </button>
-
-                            <button id="openModalIF1">
-                                <ion-icon name="information-circle-outline"
-                                    class="bg-sky-700 p-3 text-white rounded-md text-xl"></ion-icon>
-                            </button>
-                        </div>
-
-                        <!-- Modal Information -->
-                        <div id="modalInformation1"
-                            class="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                            <div
-                                class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
-                                <div class="px-4 py-5 sm:p-6 flex flex-col gap-3">
-                                    <img src="../img/pp-profile.jpg" alt=""
-                                        class="rounded-md w-20 h-20 border border-slate-700">
-                                    <div class="flex gap-3">
-                                        <div class="flex gap-3 flex-col">
-                                            <div class="flex gap-3">
-                                                <div class="flex flex-col gap-2">
-                                                    <div class="flex flex-col gap-1">
-                                                        <h1 class="font-semibold text-lg">Nama</h1>
-                                                        <h1 class="text-slate-500">Rafael
-                                                            Setya
-                                                        </h1>
-                                                    </div>
-                                                    <div class="flex flex-col gap-1">
-                                                        <h1 class="font-semibold text-lg">Expertise</h1>
-                                                        <h1 class="text-slate-500">Profesional Front End Developer</h1>
-                                                    </div>
-                                                </div>
-                                                <div class="flex flex-col gap-2">
-                                                    <div class="flex flex-col gap-1">
-                                                        <h1 class="font-semibold text-lg">Email</h1>
-                                                        <h1 class="text-slate-500">
-                                                            rafaelsetya1@gmail.com
-                                                        </h1>
-                                                    </div>
-                                                    <div class="flex flex-col gap-1">
-                                                        <h1 class="font-semibold text-lg">Pengampu</h1>
-                                                        <h1 class="text-slate-500">Front End Pemula, Front End
-                                                            Framework.
-                                                        </h1>
-                                                    </div>
-                                                </div>
-
-                                            </div>
-
-                                            <div class="flex flex-col gap-1">
-                                                <h1 class="font-semibold text-lg">Bio</h1>
-                                                <p class="text-slate-500">Lorem ipsum dolor sit amet consectetur
-                                                    adipisicing elit. Nobis alias
-                                                    quo
-                                                    magnam
-                                                    nam ipsam id explicabo hic, quis, nisi quam qui nesciunt tempore,
-                                                    sapiente
-                                                    exercitationem velit! Error deleniti facere ducimus.</p>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                                    <button id="closeModalIF1"
-                                        class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
-                                </div>
+                        <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
+                            <div class="flex items-center gap-2 font-poppins">
+                                <!-- Foto Profil -->
+                                <img src="../foto_mentor/nasyith.jpg" alt="Foto Profil Mentor"
+                                    class="w-16 h-16 object-cover border-2 border-blue-500 rounded-md">
+                                <!-- Nama Mentor -->
+                                <h1 class="font-semibold text-xl"><?= $data['name']?></h1>
                             </div>
                         </div>
-                    </div>
-                    
-                    <?php }?>
-                    
+                    </a>
 
-
+                    <?php } ?>
                 </div>
+
+
+
             </div>
         </div>
     </div>
@@ -328,22 +282,25 @@ $mentor = getAll_mentor();
     })
 
     // Modal PopUp More Information
-    
-    document.getElementById('openModalIF1').addEventListener('click', function() {
-        document.getElementById('modalInformation1').classList.remove('hidden');
+    document.addEventListener('DOMContentLoaded', function() {
+        const openButtons = document.querySelectorAll('.openModal');
+        const closeButtons = document.querySelectorAll('.closeModal');
+
+        openButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modalId = this.getAttribute('data-modal-id');
+                document.getElementById(modalId).classList.remove('hidden');
+            });
+        });
+
+        closeButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const modal = this.closest('.fixed');
+                modal.classList.add('hidden');
+            });
+        });
     });
 
-    document.getElementById('closeModalIF1').addEventListener('click', function() {
-        document.getElementById('modalInformation1').classList.add('hidden');
-    });
-
-    document.getElementById('openModalIF2').addEventListener('click', function() {
-        document.getElementById('modalInformation2').classList.remove('hidden');
-    });
-
-    document.getElementById('closeModalIF2').addEventListener('click', function() {
-        document.getElementById('modalInformation2').classList.add('hidden');
-    });
 
     // Modal PopUp Tambah Mentor
     document.getElementById('tambahMentor').addEventListener('click', function() {

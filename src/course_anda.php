@@ -86,9 +86,11 @@
                         </li>
                         <li><a href="kursus.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kursus</a>
                         </li>
-                        <li><a href="about.php#visi" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang</a>
+                        <li><a href="index.php#about"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang</a>
                         </li>
-                        <li><a href="#kontak" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kontak</a></li>
+                        <li><a href="index.php#kontak"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kontak</a></li>
                         <li><a href="coourse_anda.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Course
                                 Anda</a></li>
                         <li></li>
@@ -108,8 +110,8 @@
                 <ul class="gap-4 hidden md:flex font-semibold relative my-auto">
                     <li><a href="index.php" class="hover:text-blue-700">Beranda</a></li>
                     <li><a href="kursus.php" class="hover:text-blue-700">Kursus</a></li>
-                    <li><a href="#about" class="hover:text-blue-700">Tentang</a></li>
-                    <li><a href="#kontak" class="hover:text-blue-700">Kontak</a></li>
+                    <li><a href="index.php#about" class="hover:text-blue-700">Tentang</a></li>
+                    <li><a href="index.php#kontak" class="hover:text-blue-700">Kontak</a></li>
                     <?php if (isset($_SESSION['id_user'])) : ?>
                     <li><a href="course_anda.php" class="hover:text-blue-700">Kursus Anda</a></li>
                     <?php endif ?>
@@ -221,182 +223,75 @@
 
         </nav>
 
-        <!-- HEADER -->
-        <header
-            class="relative top-40 text-center px-4 flex flex-col gap-5 md:gap-6 md:width-header m-auto md:w-5/6 md:top-56 lg:w-2/3">
-            <h1 class="font-bold font-poppins text-3xl md:text-5xl lg:text-6xl lg:tracking-normal">Solusi Untuk Anda
-                yang
-                bingung
-                ingin
-                <span class="text-blue-700">
-                    Memulai Pemrograman</span>
-            </h1>
-            <p class="font-poppins text-slate-500 text-lg lg:text-xl">Kami akan membantu anda untuk mencapai tujuan anda
-                dengan terstruktur,
-                tentunya dengan mudah dan simpel. Tunggu apalagi? Daftar Sekarang.</p>
-
-            <?php if (!isset($_SESSION['id_user'])) { ?>
-            <a href="login.php"
-                class=" text-white transition-all py-3 px-5 rounded-sm w-max m-auto font-poppins font-semibold 
-                tracking-wide border bg-blue-700 border-slatetext-blue-700 hover:bg-white hover:border hover:text-blue-700 hover:border-blue-700">Daftar
-                Sekarang</a>
-            <?php }?>
-        </header>
 
 
-        <!-- PROSPEK KERJA -->
-        <div id="about"
-            class="flex relative bg-slate-50 mt-60 lg:mt-80 justify-between sm:justify-center text-center flex-col-reverse gap-4 p-10 lg:flex-row">
-            <div class="flex flex-col m-auto gap-5 md:w-1/2 lg:gap-5 md:my-auto">
-                <h1 class="font-poppins font-semibold text-3xl hidden lg:flex text-slate-700">Prospek Kerja Impian</h1>
-                <p class="lg:text-left lg:w-4/5 font-quicksand text-slate-600">Perkembangan teknologi dapat membuka
-                    peluang
-                    kerja bagi seseorang. Apalagi di era digital saat ini. Pemrograman merupakan salah satu profesi yang
-                    banyak
-                    diminati oleh kalangan anak muda saat ini. Selain itu, profesi ini dinilai memiliki prospek masa
-                    depan.
-                    Kata-kata "keren" dan "gaji besar" sering kali dilontarkan kepada para programmer. Hal ini tentunya
-                    sangat
-                    menarik terutama bagi Anda yang ingin merasakan manisnya menjadi seorang programmer yang terampil.
-                    Tidak hanya
-                    itu, programmer juga memiliki hubungan kerja seperti IT support, desainer grafis, analis data,
-                    pemasaran
-                    digital, guru dan lain-lain.</p>
-                <a href="#"
-                    class="bg-blue-700 hidden text-white border border-skytext-blue-700 rounded-sm w-max hover:bg-white hover:text-blue-700 border-blue-700 py-2 px-3 m-auto font-poppins font-semibold lg:ml-0 lg:mt-0">Selengkapnya</a>
-            </div>
 
-            <div class="flex flex-wrap gap-5 m-auto justify-around md:justify-between lg:justify-normal md:w-1/2">
-                <div
-                    class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
-                    <ion-icon name="git-branch" class="text-3xl bg-white text-slate-700 rounded-xl p-1"></ion-icon>
-                    <h1 class="font-poppins font-semibold tracking-wide">Software Engineer</h1>
-                    <p class="hidden lg:flex text-sm">Merancang dan memelihara perangkat lunak sistem dengan benar.</p>
-                </div>
 
-                <div
-                    class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
-                    <ion-icon name="settings" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                    <h1 class="font-poppins font-semibold tracking-wide">IT <br class="md:hidden">Support</h1>
-                    <p class="hidden lg:flex text-sm">Membantu menyelesaikan berbagai permasalahan teknologi yang
-                        dimiliki
-                        perusahaan.</p>
-                </div>
+        <div class="flex flex-col gap-8 bg-slate-50 m-auto mt-20 px-10 pt-16 pb-28">
 
-                <div
-                    class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
-                    <ion-icon name="brush" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                    <h1 class="font-poppins font-semibold tracking-wide">Graphic Designer</h1>
-                    <p class="hidden lg:flex text-sm">Suatu bentuk komunikasi yang dilakukan secara visual.</p>
-                </div>
 
-                <div
-                    class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
-                    <ion-icon name="stats" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                    <h1 class="font-poppins font-semibold tracking-wide">Analyst Data</h1>
-                    <p class="hidden lg:flex text-sm">Jelajahi dan kembangkan data besar untuk membantu membuat
-                        keputusan yang
-                        lebih baik.
+
+            <!-- H1 di Paling Atas -->
+            <h1 class="text-2xl font-poppins text-center font-semibold">Kursus Yang Anda Ikuti</h1>
+
+            <!-- Wrapper untuk Card -->
+            <div class="flex flex-col md:flex-row gap-8">
+                <!-- Card 1 -->
+                <?php foreach ($enrolledCourses as $data) { ?>
+
+                <div class="w-full md:w-1/3 bg-white rounded-lg shadow-md p-5">
+                    <h2 class="font-semibold text-lg mb-2"><?=$data['title']?></h2>
+                    <p class="text-sm text-gray-600">
+                        <?= strlen($data['description']) > 108 ? substr($data['description'], 0, 108) . '...' : $data['description'] ?>
                     </p>
-                </div>
-
-                <div
-                    class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
-                    <ion-icon name="trending-up" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                    <h1 class="font-poppins font-semibold tracking-wide">Digital Marketing</h1>
-                    <p class="hidden lg:flex text-sm">promosi suatu merek atau merek produk atau jasa dilakukan melalui
-                        media
-                        digital.</p>
-                </div>
-
-                <div
-                    class="flex flex-col w-28 bg-white shadow-md p-3 rounded-2xl text-left gap-2 md:w-44 lg:h-52 m-auto">
-                    <ion-icon name="school" class="text-3xl text-slate-700 rounded-xl p-1"></ion-icon>
-                    <h1 class="font-poppins font-semibold tracking-wide">Tenaga Pengajar</h1>
-                    <p class="hidden lg:flex text-sm">Menjadi sekolah, kursus atau guru pribadi</p>
-                </div>
-            </div>
-
-            <h1 class="font-poppins font-semibold text-3xl mb-5 lg:hidden">Prospek Kerja Impian</h1>
-        </div>
-
-        <!-- Enroll Course -->
-
-
-
-
-        <!-- POPULAR COURSE -->
-        <h1 class="mt-10 font-semibold font-poppins text-2xl text-center">Program Kursus Terbaru</h1>
-
-        <div class="flex flex-wrap gap-5 m-auto justify-between text-start mt-10 px-10">
-
-            <?php foreach ($courses as $data) { ?>
-            <a href="<?= 'kursus_materi.php?kursus=' . $data['slug']; ?>"
-                class="flex flex-col m-auto w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
-                <img src="foto_cover_course/<?=$data['course_picture']?>" alt="" class="object-center md:h-40">
-                <div class="px-3 py-3 flex flex-col gap-2">
-                    <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left"><?=$data['title']?>
-                    </h1>
-
-                    <div class="flex flex-wrap gap-2 text-xs font-bold font-poppins text-slate-800">
-                        <h1 class="bg-green-300 px-2 py-0.5 rounded-lg"><?=$data['course_type']?></h1>
-                        <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?=$data['quota']?> Quota</h1>
-                        <?php
-                $formattedStartDate = date('j F Y', strtotime($data['start_date']));
-                $formattedEndDate = date('j F Y', strtotime($data['end_date']));
-                ?>
-                        <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?=$formattedStartDate?> -
-                            <?=$formattedEndDate?></h1>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-sm text-gray-500">Status: <strong><?=$data['status']?></strong></span>
+                        <a href="<?= 'kursus_materi.php?kursus=' . $data['slug']; ?>"><button
+                                class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg">
+                                Masuk
+                            </button></a>
                     </div>
-
-                    <p class="hidden md:flex text-left">
-                        <?= strlen($data['description']) > 200 ? substr($data['description'], 0, 200) . '...' : $data['description'] ?>
-                    </p>
                 </div>
-            </a>
-            <?php }?>
+                <?php } ?>
 
+
+                <!-- Card 2 -->
+                <!-- <div class="w-full md:w-1/3 bg-white rounded-lg shadow-md p-5">
+                    <h2 class="font-semibold text-lg mb-2">Frontend Development</h2>
+                    <p class="text-sm text-gray-600">
+                        Kuasai HTML, CSS, dan JavaScript untuk membuat website interaktif dan responsif.
+                    </p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-sm text-gray-500">Status: <strong>Berjalan</strong></span>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg">
+                            Lanjutkan Course
+                        </button>
+                    </div>
+                </div> -->
+
+                <!-- Card 3 -->
+                <!-- <div class="w-full md:w-1/3 bg-white rounded-lg shadow-md p-5">
+                    <h2 class="font-semibold text-lg mb-2">Data Science</h2>
+                    <p class="text-sm text-gray-600">
+                        Belajar mengolah data dan membuat model prediksi menggunakan Python dan SQL.
+                    </p>
+                    <div class="flex justify-between items-center mt-4">
+                        <span class="text-sm text-gray-500">Status: <strong>Belum Mulai</strong></span>
+                        <button class="bg-blue-500 hover:bg-blue-600 text-white text-sm px-4 py-2 rounded-lg">
+                            Mulai Sekarang
+                        </button>
+                    </div>
+                </div> -->
+            </div>
         </div>
-        <div class="m-auto w-max mt-10">
-            <a href="kursus.php" class="text-white transition-all py-3 px-5 rounded-sm w-max font-poppins font-semibold 
-    tracking-tight border bg-blue-700 border-blue-700 hover:bg-white hover:border hover:text-blue-700 m-auto">Program
-                Lainnya</a>
-        </div>
+
+
+
 
 
         <!-- INFORMATION -->
 
-        <div class="flex flex-col gap-16 bg-slate-50 m-auto mt-20 pt-16 pb-28" id="kontak">
-            <h1 class=" text-2xl text-center font-semibold font-poppins mt-5">Informasi dan Pesan</h1>
 
-            <div
-                class=" text-white flex-col gap-5 sm:gap-0 text-left flex justify-between font-poppins px-10 rounded-md overflow-hidden md:flex-row">
-                <div class="flex md:w-2/5">
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15956.231225080577!2d104.0484566!3d1.1187205!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x31d98921856ddfab%3A0xf9d9fc65ca00c9d!2sPoliteknik%20Negeri%20Batam!5e0!3m2!1sen!2sid!4v1726510103054!5m2!1sen!2sid"
-                        width="600" height="350" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade" class="rounded-md"></iframe>
-                </div>
-
-                <div class="flex flex-col gap-5 md:w-1/2">
-                    <h1 class="text-black font-semibold">Kirim Kami Sebuah Pesan</h1>
-                    <form action="https://api.web3forms.com/submit" method="POST" id="form"
-                        class="flex flex-col gap-5 text-black">
-                        <input type="hidden" name="access_key" value="05b50342-3b02-4a75-8f99-8d263e295bed" />
-                        <input type="hidden" name="subject" value="New Submission from your Website" />
-                        <input type="text" name="email" placeholder="Email" required
-                            class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
-                        <input type="text" name="nama" placeholder="Nama Pengirim" required
-                            class="w-full bg-white px-1 py-2 border border-slate-400 rounded-md">
-                        <textarea name="pesan" id="" placeholder="Pesan" required
-                            class="w-full bg-white h-32 px-1 py-2 border border-slate-400 rounded-md"></textarea>
-                        <button
-                            class="px-4 py-3 bg-blue-700 font-semibold m-auto w-28 rounded-sm md:m-0 hover:opacity-90 text-white"
-                            type="submit">Kirim</button>
-                    </form>
-                </div>
-            </div>
-        </div>
 
 
         <footer class="flex flex-col sm:flex-col md:flex-row gap-10 bg-white">
