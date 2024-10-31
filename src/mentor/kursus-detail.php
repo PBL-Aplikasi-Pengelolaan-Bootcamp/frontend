@@ -57,14 +57,15 @@ if (isset($_POST['create_file'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
     <script src="https://cdn.ckeditor.com/ckeditor5/34.1.0/classic/ckeditor.js"></script>
     <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
-    <script src="https://cdn.tiny.cloud/1/pmgg58idwi9ldov0ee6wpppin1sya5nrtpqm7pcjir11vckj/tinymce/7/tinymce.min.js" referrerpolicy="origin"></script>    
+    <script src="https://cdn.tiny.cloud/1/pmgg58idwi9ldov0ee6wpppin1sya5nrtpqm7pcjir11vckj/tinymce/7/tinymce.min.js"
+        referrerpolicy="origin"></script>
     <script>
-        tinymce.init({
-            selector: 'textarea', // Ganti selector sesuai dengan elemen textarea Anda
-            menubar: false,
-            plugins: 'lists link image table code', // Plugin yang ingin digunakan
-            toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code',
-        });
+    tinymce.init({
+        selector: 'textarea', // Ganti selector sesuai dengan elemen textarea Anda
+        menubar: false,
+        plugins: 'lists link image table code', // Plugin yang ingin digunakan
+        toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code',
+    });
     </script>
     <title>Mentor | Tambah Materi</title>
     <style>
@@ -197,14 +198,46 @@ if (isset($_POST['create_file'])) {
 
                 <div class="flex gap-2">
                     <h1 class="my-auto text-2xl font-bold font-poppins"><?=$course['title']?></h1>
-                    <i class="fa-solid fa-pen-to-square text-2xl my-auto"></i>
+                    <a href="#" class="open-modal-btn block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                        data-modal-type="course" role="menuitem">
+                        <i class="fa-solid fa-pen-to-square text-2xl my-auto"></i>
+                    </a>
+
+                    <div class="modal-wrapper fixed z-10 inset-0 hidden" data-modal-type="course">
+                        <div
+                            class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                            <div
+                                class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
+                                <form method="post" class="flex flex-col gap-5 my-2 w-full">
+                                    <div class="flex flex-col gap-2">
+                                        <input type="text" value="<?=$section['title']?>" readonly
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline">
+                                        <hr>
+                                        <label for="video">iframe url :</label>
+                                        <input type="number" name="id_section" value="<?=$section['id_section']?>"
+                                            hidden>
+                                        <input type="text" name="url" placeholder="Enter video"
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                    </div>
+
+                                    <div class="flex justify-end">
+                                        <button
+                                            class="close-modal-btn w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                        <button type="submit" name="create_video"
+                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
+
+
                 <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden">
-    <img src="../foto_cover_course/<?=$course['course_picture']?>" 
-         alt="Cover Course" 
-         class="w-full h-full object-cover object-center">
-</div>
+                    <img src="../foto_cover_course/<?=$course['course_picture']?>" alt="Cover Course"
+                        class="w-full h-full object-cover object-center">
+                </div>
 
 
                 <div class="flex gap-2 text-sm flex-wrap font-bold font-poppins text-slate-800">
@@ -379,7 +412,8 @@ if (isset($_POST['create_file'])) {
                                                             <label for="text">Content :</label>
                                                             <input type="number" name="id_section"
                                                                 value="<?=$section['id_section']?>" hidden>
-                                                                <textarea name="text" placeholder="Enter text" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
+                                                            <textarea name="text" placeholder="Enter text"
+                                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"></textarea>
 
 
                                                         </div>
