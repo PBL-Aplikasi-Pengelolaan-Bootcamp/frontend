@@ -10,7 +10,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
-    <title>Mentor | Tambah Kursus</title>
+    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
+    <title>Mentor | Detail Kursus</title>
     <style>
         /* Tambahkan gaya untuk transisi sidebar */
         .sidebar {
@@ -25,9 +26,8 @@
         <aside id="sidebar"
             class="sidebar fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full z-20">
             <div class="flex justify-between p-6">
-                <div class="flex gap-2">
-                    <img src="../img/logo1.png" alt="" class="w-10 h-10">
-                    <h1 class="text-2xl font-bold text-gray-700">Simplify</h1>
+                <div class="w-max">
+                    <img src="../img/logo1.png" alt="" class="w-max">
                 </div>
 
 
@@ -41,18 +41,28 @@
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
-                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="grid"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="kurusus-mentor.html"
-                            class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Kursus</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="list-box"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Materi</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                    <li class="hover:bg-gray-200"><a href="siswa.html" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-user pr-2 text-base text-slate-500 my-auto"></i>Pengguna</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="kursus-mentor.html"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-table-list pr-2 text-base text-slate-500 my-auto"></i>Kursus</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="tambah-materi.html"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-table-list pr-2 text-base text-slate-500 my-auto"></i>Materi</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="tambah-quiz.html" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-table-list pr-2 text-base text-slate-500 my-auto"></i>Quiz</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="detail-kursus.html"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-graduation-cap pr-2 text-base text-slate-500 my-auto"></i>Siswa</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-right-from-bracket pr-2 text-base text-slate-500 my-auto"></i>Log
+                            out</a>
+                    </li>
                 </ul>
             </nav>
         </aside>
@@ -70,7 +80,7 @@
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Tambah Kursus</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Tambah Kursus</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -174,16 +184,8 @@
 
 
                 <div class="flex flex-wrap gap-10 m-auto text-center sm:justify-between">
-                    <div
-                        class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="tambah-materi.html"><ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="#"><ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="daftar-siswa"><ion-icon name="information-circle"
-                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        </div>
+                    <a href="#"
+                        class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
                         <img src="../img/social.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
                             <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Frontend Pemula:
@@ -197,16 +199,10 @@
                                 cupiditate nobis at
                                 suscipit quam sapiente voluptatibus molestias.</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="#"><ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="#"><ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        </div>
+                    <a href="#"
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
                         <img src="../img/smartphoneio.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
                             <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Backend Pemula:
@@ -220,16 +216,10 @@
                                 cupiditate nobis at
                                 suscipit quam sapiente voluptatibus molestias.</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="#"><ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="#"><ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        </div>
+                    <a href="#"
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <img src="../img/dashboard.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
                             <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Frontend Framework:
@@ -242,16 +232,10 @@
                                 cupiditate nobis at
                                 suscipit quam sapiente voluptatibus molestias.</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="#"><ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="#"><ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        </div>
+                    <a href="#"
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
                             <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Backend Framework:
@@ -264,16 +248,10 @@
                                 cupiditate nobis at
                                 suscipit quam sapiente voluptatibus molestias.</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="#"><ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="#"><ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        </div>
+                    <a href="#"
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
                             <h1 class="font-poppins font-semibold text-sm md:text-base text-left border-slate-600">
@@ -288,16 +266,10 @@
                                 cupiditate nobis at
                                 suscipit quam sapiente voluptatibus molestias.</p>
                         </div>
-                    </div>
+                    </a>
 
-                    <div
-                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-96 overflow-hidden transition-all xl:m-0 ">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="#"><ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                            <a href="#"><ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all"></ion-icon></a>
-                        </div>
+                    <a href="#"
+                        class="flex flex-col h-max m-auto shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0 ">
                         <img src="../img/mysql.jpg" alt="" class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">
                             <h1 class="font-poppins font-semibold text-sm md:text-base text-left">Bangun Rancang UI/UX
@@ -311,8 +283,7 @@
                                 cupiditate nobis at
                                 suscipit quam sapiente voluptatibus molestias.</p>
                         </div>
-                    </div>
-
+                    </a>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+    <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <title>Admin | Tambah Mentor</title>
     <style>
         /* Tambahkan gaya untuk transisi sidebar */
@@ -24,9 +25,8 @@
         <aside id="sidebar"
             class="sidebar z-10 fixed inset-y-0 left-0 w-64 bg-white shadow-md transform -translate-x-full md:translate-x-0 h-full">
             <div class="flex justify-between p-6">
-                <div class="flex gap-2">
-                    <img src="../img/logo1.png" alt="" class="w-10 h-10">
-                    <h1 class="text-2xl font-bold text-gray-700">Simplify</h1>
+                <div class="w-max">
+                    <img src="../img/logo1.png" alt="" class="w-max">
                 </div>
 
 
@@ -40,17 +40,19 @@
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="dashboard-admin.html"
-                            class="block p-4 text-gray-700"><ion-icon name="person"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Pengguna</a></li>
-                    <li class="hover:bg-gray-200"><a href="dashboard-admin.html"
-                            class="block p-4 text-gray-700"><ion-icon name="grid"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>List</a></li>
-                    <li class="hover:bg-gray-200"><a href="#tambah-mentor" class="block p-4 text-gray-700"><ion-icon
-                                name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Tambah
-                            Mentor</a></li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700"><ion-icon name="log-out"
-                                class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log Out</a></li>
+                    <li class="hover:bg-gray-200"><a href="dashboard-admin.html#pengguna"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-user pr-2 text-base text-slate-500 my-auto"></i>Pengguna</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="tambah-mentor.html"
+                            class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-graduation-cap pr-2 text-base text-slate-500 my-auto"></i>Tambah
+                            Mentor</a>
+                    </li>
+                    <li class="hover:bg-gray-200"><a href="#" class="block my-auto p-4 text-gray-700"><i
+                                class="fa-solid fa-right-from-bracket pr-2 text-base text-slate-500 my-auto"></i>Log
+                            out</a>
+                    </li>
                 </ul>
             </nav>
         </aside>
