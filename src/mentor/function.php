@@ -10,6 +10,56 @@ function logout(){
     echo "<script>alert('Logout'); window.location.href='../login.php'</script>";
 }
 
+//edit profil
+function edit_profil($data, $id_user) {
+    global $koneksi;
+
+    $username = strtolower(stripslashes($data['username']));
+    $email = strtolower(stripslashes($data['email']));
+    $name = mysqli_real_escape_string($koneksi, $data['name']);
+    $bio = mysqli_real_escape_string($koneksi, $data['bio']);
+    $expertise = mysqli_real_escape_string($koneksi, $data['expertise']);
+    $telp = mysqli_real_escape_string($koneksi, $data['telp']);
+
+    // Penanganan upload foto profil
+    $img = $_FILES['profil_picture']['name'];
+    $tmp = $_FILES['profil_picture']['tmp_name'];
+    $imgFolder = "../foto_mentor/";  // Hanya path folder
+    $imgPath = $imgFolder . $img;  // Path lengkap dengan nama file
+
+    if ($img) {
+        if (move_uploaded_file($tmp, $imgPath)) {
+            // Update hanya dengan nama file
+            $updateMentor = mysqli_query($koneksi, 
+                "UPDATE mentor 
+                 SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp', profil_picture = '$img' 
+                 WHERE id_mentor = '$id_user'");
+        } else {
+            echo "<script>alert('Gagal upload foto.');</script>";
+            return false;
+        }
+    } else {
+        // Update tanpa mengubah kolom foto
+        $updateMentor = mysqli_query($koneksi, 
+            "UPDATE mentor 
+             SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp'
+             WHERE id_mentor = '$id_user'");
+    }
+
+    // Update data di tabel user
+    $updateUser = mysqli_query($koneksi, 
+        "UPDATE user 
+         SET username = '$username', email = '$email' 
+         WHERE id_user = '$id_user'");
+
+    // Cek apakah update berhasil di kedua tabel
+    if ($updateUser && $updateMentor) {
+        $_SESSION['username'] = $username;
+        echo "<script>alert('Account updated successfully!'); window.location.href = window.location.href;</script>";
+    } else {
+        echo "<script>alert('Failed to update account.');</script>";
+    }
+}
 
 //get mentor course
 function getall_course(){
@@ -31,6 +81,33 @@ function get_mentor_byId(){
     $sql = mysqli_query($koneksi, "SELECT * FROM mentor WHERE id_mentor = $id_mentor");
     return  mysqli_fetch_assoc( $sql);
     
+}
+
+function get_data_user_login() {
+    global $koneksi;
+
+    // Cek apakah session 'id_user' ada
+    if (!isset($_SESSION['id_user'])) {
+        return null; // Kembalikan null jika session tidak ada
+    }
+
+    // Ambil id_user dari session
+    $id_user = $_SESSION['id_user'];
+
+    // Query untuk mendapatkan data dari user dan mentor
+    $sql = mysqli_query($koneksi, 
+        "SELECT user.*, mentor.* 
+         FROM user 
+         JOIN mentor ON user.id_user = mentor.id_mentor 
+         WHERE user.id_user = '$id_user'"
+    );
+
+    // Periksa jika ada hasil yang ditemukan
+    if (mysqli_num_rows($sql) > 0) {
+        return mysqli_fetch_assoc($sql); // Ambil data sebagai array asosiatif
+    } else {
+        return null; // Kembalikan null jika tidak ada data
+    }
 }
 
 
@@ -71,9 +148,87 @@ function create_course($data){
 }
 
 
-// delete course
-function delete_course($id_course) {
+
+function edit_course($data) {
     global $koneksi;
+
+    $id_course = $_GET['id'];
+    $title = $data['title'];
+
+    // Generate slug from title
+    $slug = strtolower($title);
+    $slug = preg_replace('/[^A-Za-z0-9-]+/', '-', $slug);
+    $slug = trim($slug, '-');
+
+    $description = $data['description'];
+    $start_date = $data['start_date'];
+    $end_date = $data['end_date'];
+    $course_type = $data['course_type'];
+    $quota = $data['quota'];
+
+    // Check if there's a new image upload
+    if (!empty($_FILES['course_picture']['name'])) {
+        $course_picture = $_FILES['course_picture']['name'];
+        $tmpname = $_FILES['course_picture']['tmp_name'];
+        $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_cover_course/' . $course_picture;
+
+        // Get old picture name
+        $query = mysqli_query($koneksi, "SELECT course_picture FROM course WHERE id_course = '$id_course'");
+        $old_data = mysqli_fetch_assoc($query);
+        $old_picture = $old_data['course_picture'];
+
+        // Delete old picture if exists
+        if (!empty($old_picture)) {
+            $old_picture_path = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_cover_course/' . $old_picture;
+            if (file_exists($old_picture_path)) {
+                unlink($old_picture_path);
+            }
+        }
+
+        // Upload new picture
+        if (move_uploaded_file($tmpname, $folder)) {
+            // Update with new picture
+            $sql = mysqli_query($koneksi, "UPDATE course SET 
+                title = '$title',
+                slug = '$slug',
+                description = '$description',
+                start_date = '$start_date',
+                end_date = '$end_date',
+                course_type = '$course_type',
+                quota = '$quota',
+                course_picture = '$course_picture'
+                WHERE id_course = '$id_course'");
+        } else {
+            echo "<script>alert('Gagal mengupload file baru');</script>";
+            return false;
+        }
+    } else {
+        // Update without changing picture
+        $sql = mysqli_query($koneksi, "UPDATE course SET 
+            title = '$title',
+            slug = '$slug',
+            description = '$description',
+            start_date = '$start_date',
+            end_date = '$end_date',
+            course_type = '$course_type',
+            quota = '$quota'
+            WHERE id_course = '$id_course'");
+    }
+
+    if ($sql) {
+        echo "<script>alert('Course Updated!'); window.location.href='kursus.php';</script>";
+        return true;
+    } else {
+        echo "<script>alert('Gagal mengupdate course');</script>";
+        return false;
+    }
+}
+
+// delete course
+function delete_course() {
+    global $koneksi;
+
+    $id_course= $_GET['id'];
     // Hapus section yang terkait dengan course ini
     $sql_section = mysqli_query($koneksi, "DELETE FROM section WHERE id_course = '$id_course'");
 
@@ -411,10 +566,3 @@ function get_students_by_course($id_course) {
 
 
 ?>
-
-
-
-
-
-
-

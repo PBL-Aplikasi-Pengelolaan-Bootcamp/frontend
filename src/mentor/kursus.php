@@ -2,6 +2,18 @@
 
 include 'function.php';
 
+// get data mentor logged in
+$mentor = get_data_user_login();
+
+//edit profil
+if (isset($_POST['edit_profil'])) {
+    edit_profil($_POST, $mentor['id_user']);
+}
+
+//logout
+if (isset($_POST['logout'])) {
+    logout();
+}
 
 // create course
 if (isset($_POST['create_course'])) {
@@ -88,10 +100,17 @@ $course = get_course_by_mentor();
                             <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
-                            Out
-                        </a></li>
+
+
+                    <li class="hover:bg-gray-200">
+                        <form method="post" action="">
+                            <button type="submit" name="logout" class="block p-4 text-gray-700 w-full text-left">
+                                <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                                Log Out
+                            </button>
+                        </form>
+                    </li>
+
                 </ul>
             </nav>
         </aside>
@@ -100,21 +119,22 @@ $course = get_course_by_mentor();
         <div class="flex-1 p-6 ml-0 md:ml-64">
             <!-- Tombol Hamburger -->
             <button id="hamburger" class="block justify-between md:hidden p-4 text-gray-700">
-                <div class=""></div>
-                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
-                    xmlns="http://www.w3.org/2000/svg">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7">
-                    </path>
-                </svg>
+                <div class="">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16m-7 6h7">
+                        </path>
+                    </svg>
             </button>
 
-            <header class="flex justify-between items-center">
-                <h2 class="text-3xl font-semibold">Tambah Kursus</h2>
+            <header class="flex justify-end items-center">
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-semibold relative my-auto">Student1</h1>
-                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
+                        <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
+                        <img src="../foto_mentor/<?= isset($mentor['profil_picture']) ? $mentor['profil_picture'] : 'profil_default.png' ?>"
+                            alt="" class="w-12 h-12 rounded-full object-cover">
                     </div>
                 </button>
 
@@ -124,36 +144,67 @@ $course = get_course_by_mentor();
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
                         <div
-                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
-                            <form method="post" class="flex flex-col gap-5 my-2 w-full">
+                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[90vh] overflow-y-auto">
+                            <form method="post" enctype="multipart/form-data" class="flex flex-col gap-5 my-2 w-full">
+
                                 <div class="flex flex-col gap-2">
-                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
-                                    <label for="img">Upload Gambar</label>
-                                    <input type="file" src="" alt="" name="img"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <label for="nama-mentor">Nama</label>
+                                    <label for="username">Username</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="nama-mentor" type="text" placeholder="Enter your name">
+                                        id="username" name="username" type="text" placeholder="Enter your username"
+                                        value="<?= $mentor['username']?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="expertiser">Expertise</label>
+                                    <label for="name">Nama</label>
+                                    <input
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                        id="name" name="name" type="text" placeholder="Enter your name"
+                                        value="<?= $mentor['name']?>">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="bio">Bio</label>
+                                    <textarea name="bio" id="bio"
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"><?= $mentor['bio']?></textarea>
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="expertise">Expertise</label>
                                     <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                        value="<?= $mentor['expertise']?>"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="deskripsi">Bio</label>
-                                    <textarea name="deskripsi"
-                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                    <label for="telp">Telp</label>
+                                    <input type="text" name="telp" id="telp" placeholder="Masukkan keahlian anda"
+                                        value="<?= $mentor['telp']?>"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+                                <div class="flex flex-col gap-2">
+                                    <label for="email">Email</label>
+                                    <input type="email" name="email" id="email" placeholder="Masukkan keahlian anda"
+                                        value="<?= $mentor['email']?>"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
-                                <div class="flex justify-between">
-                                    <button type="submit"
+                                <div>
+                                    <!-- Preview area for cropping -->
+                                    <img id="preview-image" style="max-width: 100%; display: none;" />
+                                </div>
+
+                                <!-- Button untuk crop gambar -->
+                                <button type="button" id="crop-button" style="display: none;"
+                                    class="px-4 py-2 h-max my-auto text-white bg-green-500 font-semibold w-max text-center rounded-md">Crop
+                                    & Upload</button>
+
+                                <div class="flex justify-end gap-2">
+                                    <button type="submit" name="edit_profil" id="submit-form" style="display: none;"
                                         class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                </div>
+
+                                <div class="flex justify-end gap-2">
                                     <button id="close-modal-btn"
                                         class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                    <button type="submit" name="edit_profil"
+                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
                                 </div>
 
                             </form>

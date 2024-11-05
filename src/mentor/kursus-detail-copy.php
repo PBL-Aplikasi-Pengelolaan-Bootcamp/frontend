@@ -2,19 +2,6 @@
 
 include 'function.php';
 
-// get data mentor logged in
-$mentor = get_data_user_login();
-
-//edit profil
-if (isset($_POST['edit_profil'])) {
-    edit_profil($_POST, $mentor['id_user']);
-}
-
-//logout
-if (isset($_POST['logout'])) {
-    logout();
-}
-
 // get data course
 $course = get_course_by_id();
 
@@ -165,7 +152,9 @@ if (isset($_POST['create_file'])) {
                     </svg>
             </button>
 
-            <header class="flex justify-end items-center">
+            <header class="flex justify-between items-center">
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Dashboard</h2>
+
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
                         <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
@@ -255,7 +244,7 @@ if (isset($_POST['create_file'])) {
 
             <div class="space-y-4 mt-10">
 
-                <div class="container flex gap-2">
+                <div class="dropdown-container flex gap-2">
                     <h1 class="my-auto text-2xl font-bold font-poppins"><?=$course['title']?></h1>
 
                     <!-- Button untuk membuka modal -->
@@ -414,25 +403,11 @@ if (isset($_POST['create_file'])) {
                 </div>
 
 
-                <?php foreach ($section as $section) { ?>
-                <div x-data="{ 
-                        open: true,
-                        dropdownOpen: false,
-                        activeModal: null,
-                        
-                        toggleDropdown() {
-                            this.dropdownOpen = !this.dropdownOpen;
-                        },
-                        
-                        openModal(type) {
-                            this.activeModal = type;
-                            this.dropdownOpen = false;
-                        },
-                        
-                        closeModal() {
-                            this.activeModal = null;
-                        }
-                    }" class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
+                <?php foreach ($section as $section) { 
+    $sectionId = $section['id_section'];
+?>
+                <div x-data="initSection('section-<?= $sectionId ?>')"
+                    class="bg-white shadow-md rounded-lg overflow-hidden mb-4" id="section-<?= $sectionId ?>">
                     <!-- Collapsible Header -->
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
@@ -474,119 +449,110 @@ if (isset($_POST['create_file'])) {
                                 </div>
                             </div>
 
-                            <!-- Modal Templates -->
                             <!-- Information Modal -->
-                            <template x-if="activeModal === 'information'">
-                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                    x-transition:enter="transition ease-out duration-300">
-                                    <div class="flex items-center justify-center min-h-screen px-4">
-                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                            <form method="post" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
-                                                    class="w-full p-2 bg-gray-200 rounded border">
-                                                <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
-                                                <div class="space-y-2">
-                                                    <label for="information">Information:</label>
-                                                    <input type="text" name="information"
-                                                        placeholder="Enter information"
-                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
-                                                </div>
-                                                <div class="flex justify-end space-x-2">
-                                                    <button type="button" @click="closeModal"
-                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                    <button type="submit" name="create_information"
-                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                            <div x-show="modals.information" class="fixed inset-0 z-50 overflow-y-auto"
+                                @click.self="closeModal('information')"
+                                x-transition:enter="transition ease-out duration-300">
+                                <div class="flex items-center justify-center min-h-screen px-4">
+                                    <div class="bg-white rounded-xl w-full md:w-2/3 p-6" @click.stop>
+                                        <form method="post" class="space-y-4">
+                                            <input type="text" value="<?=$section['title']?>" readonly
+                                                class="w-full p-2 bg-gray-200 rounded border">
+                                            <input type="number" name="id_section" value="<?=$section['id_section']?>"
+                                                hidden>
+                                            <div class="space-y-2">
+                                                <label for="information">Information:</label>
+                                                <input type="text" name="information" placeholder="Enter information"
+                                                    class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                            </div>
+                                            <div class="flex justify-end space-x-2">
+                                                <button type="button" @click="closeModal('information')"
+                                                    class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                <button type="submit" name="create_information"
+                                                    class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
 
                             <!-- Video Modal -->
-                            <template x-if="activeModal === 'video'">
-                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                    x-transition:enter="transition ease-out duration-300">
-                                    <div class="flex items-center justify-center min-h-screen px-4">
-                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                            <form method="post" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
-                                                    class="w-full p-2 bg-gray-200 rounded border">
-                                                <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
-                                                <div class="space-y-2">
-                                                    <label for="video">Video URL:</label>
-                                                    <input type="text" name="url" placeholder="Enter video URL"
-                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
-                                                </div>
-                                                <div class="flex justify-end space-x-2">
-                                                    <button type="button" @click="closeModal"
-                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                    <button type="submit" name="create_video"
-                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                            <div x-show="modals.video" class="fixed inset-0 z-50 overflow-y-auto"
+                                @click.self="closeModal('video')" x-transition:enter="transition ease-out duration-300">
+                                <div class="flex items-center justify-center min-h-screen px-4">
+                                    <div class="bg-white rounded-xl w-full md:w-2/3 p-6" @click.stop>
+                                        <form method="post" class="space-y-4">
+                                            <input type="text" value="<?=$section['title']?>" readonly
+                                                class="w-full p-2 bg-gray-200 rounded border">
+                                            <input type="number" name="id_section" value="<?=$section['id_section']?>"
+                                                hidden>
+                                            <div class="space-y-2">
+                                                <label for="video">Video URL:</label>
+                                                <input type="text" name="url" placeholder="Enter video URL"
+                                                    class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                            </div>
+                                            <div class="flex justify-end space-x-2">
+                                                <button type="button" @click="closeModal('video')"
+                                                    class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                <button type="submit" name="create_video"
+                                                    class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
 
                             <!-- Text Modal -->
-                            <template x-if="activeModal === 'text'">
-                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                    x-transition:enter="transition ease-out duration-300">
-                                    <div class="flex items-center justify-center min-h-screen px-4">
-                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                            <form method="post" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
-                                                    class="w-full p-2 bg-gray-200 rounded border">
-                                                <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
-                                                <div class="space-y-2">
-                                                    <label for="text">Content:</label>
-                                                    <textarea name="text" placeholder="Enter text"
-                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32"></textarea>
-                                                </div>
-                                                <div class="flex justify-end space-x-2">
-                                                    <button type="button" @click="closeModal"
-                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                    <button type="submit" name="create_text"
-                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                            <div x-show="modals.text" class="fixed inset-0 z-50 overflow-y-auto"
+                                @click.self="closeModal('text')" x-transition:enter="transition ease-out duration-300">
+                                <div class="flex items-center justify-center min-h-screen px-4">
+                                    <div class="bg-white rounded-xl w-full md:w-2/3 p-6" @click.stop>
+                                        <form method="post" class="space-y-4">
+                                            <input type="text" value="<?=$section['title']?>" readonly
+                                                class="w-full p-2 bg-gray-200 rounded border">
+                                            <input type="number" name="id_section" value="<?=$section['id_section']?>"
+                                                hidden>
+                                            <div class="space-y-2">
+                                                <label for="text">Content:</label>
+                                                <textarea name="text" placeholder="Enter text"
+                                                    class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32"></textarea>
+                                            </div>
+                                            <div class="flex justify-end space-x-2">
+                                                <button type="button" @click="closeModal('text')"
+                                                    class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                <button type="submit" name="create_text"
+                                                    class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
 
                             <!-- File Modal -->
-                            <template x-if="activeModal === 'file'">
-                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                    x-transition:enter="transition ease-out duration-300">
-                                    <div class="flex items-center justify-center min-h-screen px-4">
-                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                            <form method="post" enctype="multipart/form-data" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
-                                                    class="w-full p-2 bg-gray-200 rounded border">
-                                                <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
-                                                <div class="space-y-2">
-                                                    <label for="file">File:</label>
-                                                    <input type="file" name="file"
-                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
-                                                </div>
-                                                <div class="flex justify-end space-x-2">
-                                                    <button type="button" @click="closeModal"
-                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                    <button type="submit" name="create_file"
-                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                            <div x-show="modals.file" class="fixed inset-0 z-50 overflow-y-auto"
+                                @click.self="closeModal('file')" x-transition:enter="transition ease-out duration-300">
+                                <div class="flex items-center justify-center min-h-screen px-4">
+                                    <div class="bg-white rounded-xl w-full md:w-2/3 p-6" @click.stop>
+                                        <form method="post" enctype="multipart/form-data" class="space-y-4">
+                                            <input type="text" value="<?=$section['title']?>" readonly
+                                                class="w-full p-2 bg-gray-200 rounded border">
+                                            <input type="number" name="id_section" value="<?=$section['id_section']?>"
+                                                hidden>
+                                            <div class="space-y-2">
+                                                <label for="file">File:</label>
+                                                <input type="file" name="file"
+                                                    class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                            </div>
+                                            <div class="flex justify-end space-x-2">
+                                                <button type="button" @click="closeModal('file')"
+                                                    class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                <button type="submit" name="create_file"
+                                                    class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
-                            </template>
+                            </div>
                         </div>
 
                         <!-- Content Display Section -->
@@ -767,7 +733,7 @@ if (isset($_POST['create_file'])) {
             });
         });
 
-        // Setup modals
+        // Setup modals 
         document.querySelectorAll('.open-modal-btn').forEach(btn => {
             btn.addEventListener('click', (event) => {
                 event.preventDefault();
@@ -790,7 +756,32 @@ if (isset($_POST['create_file'])) {
     </script>
 
 
-
+    <script>
+    function initSection(id) {
+        return {
+            id: id,
+            open: true,
+            dropdownOpen: false,
+            modals: {
+                information: false,
+                video: false,
+                text: false,
+                file: false
+            },
+            toggleDropdown() {
+                this.dropdownOpen = !this.dropdownOpen;
+            },
+            openModal(type) {
+                Object.keys(this.modals).forEach(key => this.modals[key] = false);
+                this.modals[type] = true;
+                this.dropdownOpen = false;
+            },
+            closeModal(type) {
+                this.modals[type] = false;
+            }
+        }
+    }
+    </script>
 
 </body>
 
