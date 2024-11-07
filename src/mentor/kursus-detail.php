@@ -23,6 +23,11 @@ if (isset($_POST['edit_course'])) {
     edit_course($_POST);
 }
 
+// delete course
+if (isset($_POST['delete_course'])) {
+    delete_course();
+}
+
 
 
 // get data section
@@ -79,14 +84,10 @@ if (isset($_POST['create_file'])) {
     <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <script src="https://cdn.tiny.cloud/1/pmgg58idwi9ldov0ee6wpppin1sya5nrtpqm7pcjir11vckj/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
-    <script>
-    // tinymce.init({
-    //     selector: 'textarea', 
-    //     menubar: false,
-    //     plugins: 'lists link image table code', 
-    //     toolbar: 'undo redo | styles | bold italic | alignleft aligncenter alignright | bullist numlist | link image | code',
-    // });
-    </script>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+
     <title>Mentor | Tambah Materi</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
@@ -221,20 +222,23 @@ if (isset($_POST['create_file'])) {
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
-                                <div>
-                                    <!-- Preview area for cropping -->
-                                    <img id="preview-image" style="max-width: 100%; ;" />
+
+
+                                <div class="flex flex-col gap-2">
+                                    <label for="profil_picture">Foto Profil</label>
+                                    <input type="file" accept="image/*" name="profil_picture" id="profil_picture"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
+                                    <input type="hidden" name="cropped_image" id="cropped_image">
+
+                                    <div class="relative w-12 h-12">
+                                        <img src="../foto_mentor/<?=$mentor['profil_picture']?>" alt=""
+                                            id="preview-image" class="w-12 h-12 object-cover rounded-full">
+                                    </div>
                                 </div>
 
-                                <!-- Button untuk crop gambar -->
-                                <button type="button" id="crop-button" style=";"
-                                    class="px-4 py-2 h-max my-auto text-white bg-green-500 font-semibold w-max text-center rounded-md">Crop
-                                    & Upload</button>
 
-                                <div class="flex justify-end gap-2">
-                                    <button type="submit" name="edit_profil" id="submit-form" style=";"
-                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
-                                </div>
 
                                 <div class="flex justify-end gap-2">
                                     <button id="close-modal-btn"
@@ -244,6 +248,36 @@ if (isset($_POST['create_file'])) {
                                 </div>
 
                             </form>
+
+
+                            <div id="cropperModal"
+                                class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                                <div class="bg-white rounded-lg max-w-2xl w-full">
+                                    <div class="flex justify-between items-center p-4 border-b">
+                                        <h3 class="text-lg font-semibold">Crop Image</h3>
+                                        <button type="button" onclick="closeCropperModal()"
+                                            class="text-gray-500 hover:text-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="max-h-[60vh] overflow-hidden">
+                                            <img id="cropperImage" class="max-w-full">
+                                        </div>
+                                        <div class="mt-4 flex justify-end gap-2">
+                                            <button type="button" onclick="applyCrop()"
+                                                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                                Apply Crop
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
@@ -336,10 +370,12 @@ if (isset($_POST['create_file'])) {
                                     </div>
 
                                     <div class="flex flex-col gap-2">
-                                        <button type="button"
+                                        <form method="post">
+                                        <button type="submit" name="delete_course"
                                             class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                             DELETE COURSE
                                         </button>
+                                        </form>
                                     </div>
 
                                     <div class="flex justify-end gap-2">
@@ -393,8 +429,8 @@ if (isset($_POST['create_file'])) {
                                 class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
                                 <form method="post" class="flex flex-col gap-5 my-2 w-full">
                                     <div class="flex flex-col gap-2">
-                                        <label for="information">Section :</label>
-                                        <input type="text" name="information" placeholder="Enter information"
+                                        <label for="section">Section :</label>
+                                        <input type="text" name="section" placeholder="Enter Section Title"
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                     </div>
 
@@ -459,7 +495,7 @@ if (isset($_POST['create_file'])) {
                             <!-- Dropdown Menu -->
                             <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
                                 x-transition:enter="transition ease-out duration-100"
-                                class="absolute right-0 top-12 w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50">
+                                class="absolute right-0 top-full w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5  overflow-visible">
                                 <div class="py-1">
                                     <a href="#" @click.prevent="openModal('information')"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Information</a>
@@ -669,6 +705,120 @@ if (isset($_POST['create_file'])) {
 
 
 
+    <script>
+    let cropper = null;
+    const profileForm = document.getElementById('profileForm');
+    const fileInput = document.getElementById('profil_picture');
+    const previewImage = document.getElementById('preview-image');
+    const cropperModal = document.getElementById('cropperModal');
+    const cropperImage = document.getElementById('cropperImage');
+    const croppedImageInput = document.getElementById('cropped_image');
+
+    // File input change handler
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Initialize cropper
+                cropperImage.src = e.target.result;
+                cropperModal.classList.remove('hidden');
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 2,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false,
+                    initialAspectRatio: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Apply crop function
+    function applyCrop() {
+        if (!cropper) return;
+
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        // Convert to blob
+        canvas.toBlob(function(blob) {
+            // Create file from blob
+            const fileName = fileInput.files[0].name;
+            const croppedFile = new File([blob], fileName, {
+                type: 'image/jpeg'
+            });
+
+            // Create FileList object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(croppedFile);
+            fileInput.files = dataTransfer.files;
+
+            // Update preview
+            previewImage.src = canvas.toDataURL('image/jpeg');
+
+            // Store base64 in hidden input
+            croppedImageInput.value = canvas.toDataURL('image/jpeg');
+
+            // Close modal
+            closeCropperModal();
+        }, 'image/jpeg', 0.9);
+    }
+
+    function closeCropperModal() {
+        cropperModal.classList.add('hidden');
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+    }
+
+    // Handle form submission
+    profileForm.addEventListener('submit', function(e) {
+        if (fileInput.files.length > 0 && !croppedImageInput.value) {
+            e.preventDefault();
+            alert('Please crop the image before submitting');
+            return;
+        }
+    });
+
+    // Close modal when clicking outside
+    cropperModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeCropperModal();
+        }
+    });
+
+    // Close button handler
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+        window.history.back();
+    });
+    </script>
+
+    
     <script>
     // Fungsi untuk toggle sidebar
     const hamburger = document.getElementById('hamburger');

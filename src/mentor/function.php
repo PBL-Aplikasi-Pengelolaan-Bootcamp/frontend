@@ -249,7 +249,7 @@ function delete_course() {
     $sql_course = mysqli_query($koneksi, "DELETE FROM course WHERE id_course = '$id_course'");
 
     if ($sql_section && $sql_information && $sql_video && $sql_text && $sql_file && $sql_course) {
-        echo "<script>alert('Course and related data deleted successfully!');</script>";
+        echo "<script>alert('Course and related data deleted successfully!'); window.location.href='kursus.php';</script>";
     } else {
         echo "<script>alert('Failed to delete course and related data!');</script>";
     }
@@ -316,7 +316,7 @@ function create_section($data){
     $take = mysqli_fetch_assoc($sql);
 
     $id_course = $take["id_course"];
-    $section = $data['title']; //section title
+    $section = $data['section']; //section title
     
     //insert ke db section
     $sql = mysqli_query($koneksi, "INSERT INTO section (id_course, title) VALUES ('$id_course', '$section')");

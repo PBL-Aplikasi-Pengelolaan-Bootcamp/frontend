@@ -200,6 +200,8 @@
                                         value="<?=$data_login['telp']?>">
                                 </div>
 
+                               
+
                                 <div class="flex flex-col gap-2">
                                     <label for="profil_picture">Foto Profil</label>
                                     <input type="file" accept="image/*" name="profil_picture" id="profil_picture"
@@ -251,9 +253,15 @@
                                     </div>
                                 </div>
                             </div>
+
+
+
+
                         </div>
                     </div>
                 </div>
+
+
             </div>
 
         </nav>

@@ -48,6 +48,8 @@ $isEnrolled = !empty($enrolledCourses);
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/2.8.2/alpine.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
 </head>
 
@@ -77,11 +79,9 @@ $isEnrolled = !empty($enrolledCourses);
                         </li>
                         <li><a href="kursus.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kursus</a>
                         </li>
-                        <li><a href="index.php#about"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang</a>
+                        <li><a href="about.php#visi" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang</a>
                         </li>
-                        <li><a href="index.php#kontak"
-                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kontak</a></li>
+                        <li><a href="#kontak" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kontak</a></li>
                         <li><a href="coourse_anda.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Course
                                 Anda</a></li>
                         <li></li>
@@ -101,8 +101,8 @@ $isEnrolled = !empty($enrolledCourses);
                 <ul class="gap-4 hidden md:flex font-semibold relative my-auto">
                     <li><a href="index.php" class="hover:text-blue-700">Beranda</a></li>
                     <li><a href="kursus.php" class="hover:text-blue-700">Kursus</a></li>
-                    <li><a href="index.php#about" class="hover:text-blue-700">Tentang</a></li>
-                    <li><a href="index.php#kontak" class="hover:text-blue-700">Kontak</a></li>
+                    <li><a href="#about" class="hover:text-blue-700">Tentang</a></li>
+                    <li><a href="#kontak" class="hover:text-blue-700">Kontak</a></li>
                     <?php if (isset($_SESSION['id_user'])) : ?>
                     <li><a href="course_anda.php" class="hover:text-blue-700">Kursus Anda</a></li>
                     <?php endif ?>
@@ -147,12 +147,12 @@ $isEnrolled = !empty($enrolledCourses);
                 <?php endif ?>
 
                 <!-- MODAL WRAPPER -->
-                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden overflow-y-auto max-h-[90vh]">
                     <div
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
                         <div
-                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-screen overflow-y-auto">
+                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
                             <form method="post" enctype="multipart/form-data" class="flex flex-col gap-5 my-2 w-full">
 
                                 <div class="flex flex-col gap-2">
@@ -190,14 +190,21 @@ $isEnrolled = !empty($enrolledCourses);
                                         id="telp" name="telp" type="text" placeholder="Masukkan nomor telp"
                                         value="<?=$data_login['telp']?>">
                                 </div>
-                                <div class="flex flex-col gap-2">
-                                    <label for="img">Foto Profil</label>
-                                    <input type="file" src="" alt="" name="profil_picture"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        value="<?=$data_login['profil_picture']?>">
-                                    <img src="img/pp-profile.jpg" alt="" class="w-12 h-12">
 
+                                <div class="flex flex-col gap-2">
+                                    <label for="profil_picture">Foto Profil</label>
+                                    <input type="file" accept="image/*" name="profil_picture" id="profil_picture"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
+                                    <input type="hidden" name="cropped_image" id="cropped_image">
+
+                                    <div class="relative w-12 h-12">
+                                        <img src="foto_student/<?=$data_login['profil_picture']?>" alt=""
+                                            id="preview-image" class="w-12 h-12 object-cover rounded-full">
+                                    </div>
                                 </div>
+
 
                                 <div class="flex justify-end gap-2">
                                     <button id="close-modal-btn"
@@ -207,6 +214,34 @@ $isEnrolled = !empty($enrolledCourses);
                                 </div>
 
                             </form>
+
+                            <div id="cropperModal"
+                                class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                                <div class="bg-white rounded-lg max-w-2xl w-full">
+                                    <div class="flex justify-between items-center p-4 border-b">
+                                        <h3 class="text-lg font-semibold">Crop Image</h3>
+                                        <button type="button" onclick="closeCropperModal()"
+                                            class="text-gray-500 hover:text-gray-700">
+                                            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                    d="M6 18L18 6M6 6l12 12" />
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <div class="p-4">
+                                        <div class="max-h-[60vh] overflow-hidden">
+                                            <img id="cropperImage" class="max-w-full">
+                                        </div>
+                                        <div class="mt-4 flex justify-end gap-2">
+                                            <button type="button" onclick="applyCrop()"
+                                                class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                                Apply Crop
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -554,6 +589,123 @@ $isEnrolled = !empty($enrolledCourses);
     </div>
 
 </body>
+
+
+<script>
+let cropper = null;
+const profileForm = document.getElementById('profileForm');
+const fileInput = document.getElementById('profil_picture');
+const previewImage = document.getElementById('preview-image');
+const cropperModal = document.getElementById('cropperModal');
+const cropperImage = document.getElementById('cropperImage');
+const croppedImageInput = document.getElementById('cropped_image');
+
+// File input change handler
+fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Initialize cropper
+            cropperImage.src = e.target.result;
+            cropperModal.classList.remove('hidden');
+
+            if (cropper) {
+                cropper.destroy();
+            }
+
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 1,
+                viewMode: 2,
+                dragMode: 'move',
+                autoCropArea: 1,
+                restore: false,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                initialAspectRatio: 1,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Apply crop function
+function applyCrop() {
+    if (!cropper) return;
+
+    // Get cropped canvas
+    const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+    });
+
+    // Convert to blob
+    canvas.toBlob(function(blob) {
+        // Create file from blob
+        const fileName = fileInput.files[0].name;
+        const croppedFile = new File([blob], fileName, {
+            type: 'image/jpeg'
+        });
+
+        // Create FileList object
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(croppedFile);
+        fileInput.files = dataTransfer.files;
+
+        // Update preview
+        previewImage.src = canvas.toDataURL('image/jpeg');
+
+        // Store base64 in hidden input
+        croppedImageInput.value = canvas.toDataURL('image/jpeg');
+
+        // Close modal
+        closeCropperModal();
+    }, 'image/jpeg', 0.9);
+}
+
+function closeCropperModal() {
+    cropperModal.classList.add('hidden');
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+}
+
+// Handle form submission
+profileForm.addEventListener('submit', function(e) {
+    if (fileInput.files.length > 0 && !croppedImageInput.value) {
+        e.preventDefault();
+        alert('Please crop the image before submitting');
+        return;
+    }
+});
+
+// Close modal when clicking outside
+cropperModal.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeCropperModal();
+    }
+});
+
+// Close button handler
+document.getElementById('close-modal-btn').addEventListener('click', function() {
+    window.history.back();
+});
+</script>
+
+
+
 <script>
 // Modal PopUp Edit Profile
 document.getElementById("open-modal-btn").addEventListener("click", () => {

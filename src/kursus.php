@@ -51,9 +51,11 @@ if (isset($_POST['edit_profil'])) {
                         </li>
                         <li><a href="kursus.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kursus</a>
                         </li>
-                        <li><a href="index.php#about" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang</a>
+                        <li><a href="index.php#about"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Tentang</a>
                         </li>
-                        <li><a href="index.php#kontak" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kontak</a></li>
+                        <li><a href="index.php#kontak"
+                                class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Kontak</a></li>
                         <li><a href="coourse_anda.php" class="block px-4 py-2 text-gray-700 hover:bg-gray-100">Course
                                 Anda</a></li>
                         <li></li>
@@ -192,43 +194,39 @@ if (isset($_POST['edit_profil'])) {
                 <h1 class="text-2xl font-poppins font-semibold">Program Kursus Tersedia</h1>
                 <div class="flex flex-col sm:flex-row gap-2">
                     <input type="search" placeholder="Cari Kursus.."
-                        class="max-w-72 py-1 px-2 border-slate-700 outline-none border rounded-md">
+                        class="max-w-72 py-1 px-2 border-slate-700 outline-none border rounded-md" id="searchInput">
                 </div>
-
             </div>
 
-
-
-            <div class="flex flex-wrap gap-10 m-auto text-center sm:justify-between">
+            <div class="flex flex-wrap gap-10 m-auto text-center sm:justify-between" id="courseList">
                 <?php foreach ($courses as $data) { ?>
                 <a href="<?= 'kursus_materi.php?kursus=' . $data['slug']; ?>"
-                    class="flex flex-col m-auto w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
+                    class="course-item flex flex-col m-auto w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
                     <img src="foto_cover_course/<?=$data['course_picture']?>" alt="" class="object-center md:h-40">
                     <div class="px-3 py-3 flex flex-col gap-2">
                         <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left"><?=$data['title']?>
                         </h1>
-
                         <div class="flex flex-wrap gap-2 text-xs font-bold font-poppins text-slate-800">
                             <h1 class="bg-green-300 px-2 py-0.5 rounded-lg"><?=$data['course_type']?></h1>
                             <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?=$data['quota']?> Quota
                             </h1>
-                            <?php
-                $formattedStartDate = date('j F Y', strtotime($data['start_date']));
-                $formattedEndDate = date('j F Y', strtotime($data['end_date']));
-                ?>
+                            <?php 
+                    $formattedStartDate = date('j F Y', strtotime($data['start_date'])); 
+                    $formattedEndDate = date('j F Y', strtotime($data['end_date'])); 
+                    ?>
                             <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?=$formattedStartDate?> -
                                 <?=$formattedEndDate?></h1>
                         </div>
-
                         <p class="hidden md:flex text-left">
                             <?= strlen($data['description']) > 200 ? substr($data['description'], 0, 200) . '...' : $data['description'] ?>
                         </p>
                     </div>
                 </a>
                 <?php }?>
-
             </div>
         </div>
+
+        
 
         <footer class="flex flex-col sm:flex-col md:flex-row gap-10 bg-white">
             <div class="flex flex-col gap-3 text-white bg-blue-700 px-5 py-10 md:px-7 md:py-4">
@@ -321,5 +319,25 @@ document.getElementById("close-modal-btn").addEventListener("click", () => {
     document.getElementById("modal-wrapper").classList.add("hidden")
 })
 </script>
+
+
+
+<script>
+        const searchInput = document.getElementById('searchInput');
+        const courseItems = document.querySelectorAll('.course-item');
+
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            courseItems.forEach(item => {
+                const title = item.querySelector('h1').textContent.toLowerCase();
+                const description = item.querySelector('p').textContent.toLowerCase();
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    item.style.display = 'flex';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+        </script>
 
 </html>
