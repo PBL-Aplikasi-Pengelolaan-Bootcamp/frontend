@@ -127,7 +127,7 @@
                 <div class=" gap-5 font-semibold flex my-auto">
                     <a href="login.php"
                         class="border rounded-full py-1 px-6 font-medium md:font-semibold bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Masuk</a>
-                    <a href="#"
+                    <a href="buat-akun.php"
                         class="md:border hidden md:flex md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Daftar</a>
                 </div>
                 <?php endif ?>
