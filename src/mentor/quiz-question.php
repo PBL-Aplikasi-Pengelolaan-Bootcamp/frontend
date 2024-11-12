@@ -15,9 +15,13 @@ if (isset($_POST['logout'])) {
 }
 
 
-// get course
-$course = get_course_by_mentor();
+//get question
+$question = get_question_byQuiz();
 
+//add question
+if (isset($_POST['add_question'])) {
+    add_question($_POST );
+}
 
 ?>
 
@@ -117,7 +121,7 @@ $course = get_course_by_mentor();
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz Course</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Buat Quiz</h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -241,20 +245,212 @@ $course = get_course_by_mentor();
             <!-- ANALISTIK -->
             <div class="flex flex-col">
 
-
                 <div class="flex mt-10 justify-between gap-5 flex-wrap">
-                    <?php foreach ($course as $data) { ?>
-                    <a href="add-quiz.php?id=<?=$data['id_course']?>">
-                        <div class="flex rounded-md gap-2 bg-white w-full lg:w-80 h-20 m-auto sm:m-0 overflow-hidden">
-                            <div class="bg-blue-300 text-blue-300 w-3">.</div>
-                            <div class="flex w-full justify-between">
-                                <div class="font-poppins my-auto">
-                                    <h1 class="my-auto font-semibold text-md"><?=$data['title']?></h1>
+                    <button id="open-add-question"
+                        class="bg-blue-700 font-poppins font-semibold text-white px-2 py-3 text-sm rounded-md">Add Question</button>
+                    <div id="modal-add-question" class="fixed z-10 inset-0 hidden">
+                        <div
+                            class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                            <!-- MODAL BOX -->
+                            <div
+                                class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[90vh] overflow-y-auto">
+                                <form method="post" enctype="multipart/form-data"
+                                    class="flex flex-col gap-5 my-2 w-full">
+                                    <div class="flex flex-col gap-2">
+                                        <label for="question" class="font-poppins font-semibold">Tambah Soal</label>
+                                        <input
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="question" name="question" type="text" placeholder="Soal" required>
+                                    </div>
+
+                                    <div class="flex flex-col gap-2">
+                                        <label for="bio" class="font-poppins font-semibold">Option</label>
+                                        <div class="flex flex-col gap-6">
+                                            <!-- Option 1 -->
+                                            <div class="flex flex-col gap-2">
+                                                <textarea name="option1" placeholder="Option 1"
+                                                    class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                                                    required></textarea>
+                                                <div class="flex gap-2 text-gray-400">
+                                                    <input type="radio" name="correct_option" value="1" id="jawaban1">
+                                                    <label for="jawaban1">Jawaban Benar</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Option 2 -->
+                                            <div class="flex flex-col gap-2">
+                                                <textarea name="option2" placeholder="Option 2"
+                                                    class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                                                    required></textarea>
+                                                <div class="flex gap-2 text-gray-400">
+                                                    <input type="radio" name="correct_option" value="2" id="jawaban2">
+                                                    <label for="jawaban2">Jawaban Benar</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Option 3 -->
+                                            <div class="flex flex-col gap-2">
+                                                <textarea name="option3" placeholder="Option 3"
+                                                    class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                                                    required></textarea>
+                                                <div class="flex gap-2 text-gray-400">
+                                                    <input type="radio" name="correct_option" value="3" id="jawaban3">
+                                                    <label for="jawaban3">Jawaban Benar</label>
+                                                </div>
+                                            </div>
+
+                                            <!-- Option 4 -->
+                                            <div class="flex flex-col gap-2">
+                                                <textarea name="option4" placeholder="Option 4"
+                                                    class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                                                    required></textarea>
+                                                <div class="flex gap-2 text-gray-400">
+                                                    <input type="radio" name="correct_option" value="4" id="jawaban4">
+                                                    <label for="jawaban4">Jawaban Benar</label>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <!-- Submit button -->
+                                        <div class="flex justify-end gap-2">
+                                            <button type="reset"
+                                                class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
+                                                Batal
+                                            </button>
+                                            <button type="submit" name="add_question"
+                                                class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">
+                                                Simpan
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <?php foreach ($question as $data) { ?>
+                    <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
+                        <div class="flex w-full justify-between">
+                            <div class="font-poppins my-auto">
+                                <h1 class="my-auto font-semibold text-md"><?=$data['question']?></h1>
+                            </div>
+                            <div class="flex gap-2 my-auto p-2">
+                                <button id="open-edit-1">
+                                    <i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i>
+                                </button>
+                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
+
+                                <!-- MODAL WRAPPER -->
+                                <div id="modal-edit-1" class="fixed z-10 inset-0 hidden">
+                                    <div
+                                        class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                                        <!-- MODAL BOX -->
+                                        <div
+                                            class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[90vh] overflow-y-auto">
+                                            <form method="post" enctype="multipart/form-data"
+                                                class="flex flex-col gap-5 my-2 w-full">
+                                                <div class="flex flex-col gap-2">
+                                                    <label for="username" class="font-poppins font-semibold">Edit
+                                                        Soal</label>
+                                                    <input
+                                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                        id="username" name="username" type="text" placeholder="">
+                                                </div>
+                                                <div class="flex flex-col gap-2">
+                                                    <label for="bio" class="font-poppins font-semibold">Edit
+                                                        Option</label>
+                                                    <div class="flex flex-col gap-6">
+                                                        <div class="flex flex-col gap-2">
+                                                            <textarea name="bio" id="bio" placeholder="Option 1"
+                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                                            <div class="flex gap-2 text-gray-400">
+                                                                <input type="radio" id="jawaban" value="">
+                                                                <label for="jawaban">Jawaban Benar</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex flex-col gap-2">
+                                                            <textarea name="bio" id="bio" placeholder="Option 2"
+                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                                            <div class="flex gap-2 text-gray-400">
+                                                                <input type="radio" id="jawaban" value="">
+                                                                <label for="jawaban">Jawaban Benar</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex flex-col gap-2">
+                                                            <textarea name="bio" id="bio" placeholder="Option 3"
+                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                                            <div class="flex gap-2 text-gray-400">
+                                                                <input type="radio" id="jawaban" value="">
+                                                                <label for="jawaban">Jawaban Benar</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="flex flex-col gap-2">
+                                                            <textarea name="bio" id="bio" placeholder="Option 4"
+                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                                            <div class="flex gap-2 text-gray-400">
+                                                                <input type="radio" id="jawaban" value="">
+                                                                <label for="jawaban">Jawaban Benar</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="flex justify-end gap-2">
+                                                        <button id="close-edit-1"
+                                                            class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                                        <button type="submit" name=""
+                                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </a>
+                    </div>
                     <?php }?>
+
+
+
+
+
+
+                    <!-- <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
+                        <div class="flex w-full justify-between">
+                            <div class="font-poppins my-auto">
+                                <h1 class="my-auto font-semibold text-md">Question 2</h1>
+                            </div>
+                            <div class="flex gap-2 my-auto p-2">
+                                <a href="#"><i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i></a>
+                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
+                        <div class="flex w-full justify-between">
+                            <div class="font-poppins my-auto">
+                                <h1 class="my-auto font-semibold text-md">Question 3</h1>
+                            </div>
+                            <div class="flex gap-2 my-auto p-2">
+                                <a href="#"><i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i></a>
+                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
+                        <div class="flex w-full justify-between">
+                            <div class="font-poppins my-auto">
+                                <h1 class="my-auto font-semibold text-md">Question 4</h1>
+                            </div>
+                            <div class="flex gap-2 my-auto p-2">
+                                <a href="#"><i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i></a>
+                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
+                            </div>
+                        </div>
+                    </div> -->
                 </div>
             </div>
         </div>
@@ -382,7 +578,7 @@ $course = get_course_by_mentor();
 
         hamburger.addEventListener('click', () => {
             sidebar.classList.toggle(
-            '-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+                '-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
         });
 
         closeSidebar.addEventListener('click', () => {
@@ -396,6 +592,24 @@ $course = get_course_by_mentor();
 
         document.getElementById("close-modal-btn").addEventListener("click", () => {
             document.getElementById("modal-wrapper").classList.add("hidden")
+        })
+
+        // Modal PopUp
+        document.getElementById("open-edit-1").addEventListener("click", () => {
+            document.getElementById("modal-edit-1").classList.remove("hidden")
+        })
+
+        document.getElementById("close-edit-1").addEventListener("click", () => {
+            document.getElementById("modal-edit-1").classList.add("hidden")
+        })
+
+        // Modal PopUp
+        document.getElementById("open-add-question").addEventListener("click", () => {
+            document.getElementById("modal-add-question").classList.remove("hidden")
+        })
+
+        document.getElementById("close-add-question").addEventListener("click", () => {
+            document.getElementById("modal-add-question").classList.add("hidden")
         })
         </script>
 </body>

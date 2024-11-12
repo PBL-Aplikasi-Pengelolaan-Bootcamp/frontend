@@ -90,10 +90,10 @@ if (isset($_POST['create_file'])) {
 
     <title>Mentor | Tambah Materi</title>
     <style>
-        /* Tambahkan gaya untuk transisi sidebar */
-        .sidebar {
-            transition: transform 0.3s ease;
-        }
+    /* Tambahkan gaya untuk transisi sidebar */
+    .sidebar {
+        transition: transform 0.3s ease;
+    }
     </style>
 </head>
 
@@ -451,7 +451,7 @@ if (isset($_POST['create_file'])) {
 
 
                 <?php foreach ($section as $section) { ?>
-                    <div x-data="{ 
+                <div x-data="{ 
                         open: true,
                         dropdownOpen: false,
                         activeModal: null,
@@ -469,219 +469,244 @@ if (isset($_POST['create_file'])) {
                             this.activeModal = null;
                         }
                     }" class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
-                        <!-- Collapsible Header -->
-                        <button @click="open = !open"
-                            class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
-                            <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                            <span><?= $section['title'] ?></span>
-                        </button>
+                    <!-- Collapsible Header -->
+                    <button @click="open = !open"
+                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
+                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                        <span><?= $section['title'] ?></span>
+                    </button>
 
-                        <!-- Section Content -->
-                        <div x-show="open" x-transition:enter="transition ease-out duration-200"
-                            x-transition:enter-start="opacity-0 transform -translate-y-2"
-                            x-transition:enter-end="opacity-100 transform translate-y-0" class="px-4 py-2 border-t">
+                    <!-- Section Content -->
+                    <div x-show="open" x-transition:enter="transition ease-out duration-200"
+                        x-transition:enter-start="opacity-0 transform -translate-y-2"
+                        x-transition:enter-end="opacity-100 transform translate-y-0" class="px-4 py-2 border-t">
 
-                            <!-- Add Content Button -->
-                            <div class="flex justify-end relative">
-                                <button @click="toggleDropdown"
-                                    class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center focus:outline-none">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M12 4v16m8-8H4" />
-                                    </svg>
-                                </button>
+                        <!-- Add Content Button -->
+                        <div class="flex justify-end relative">
+                            <button @click="toggleDropdown"
+                                class="bg-blue-500 text-white rounded-full w-10 h-10 flex items-center justify-center focus:outline-none">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 4v16m8-8H4" />
+                                </svg>
+                            </button>
 
-                                <!-- Dropdown Menu -->
-                                <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
-                                    x-transition:enter="transition ease-out duration-100"
-                                    class=" right-0 ml-2 top-full w-48 h-full bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5  overflow-visible">
-                                    <div class="py-1">
-                                        <a href="#" @click.prevent="openModal('information')"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Information</a>
-                                        <a href="#" @click.prevent="openModal('video')"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Video
-                                            material</a>
-                                        <a href="#" @click.prevent="openModal('text')"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Text
-                                            material</a>
-                                        <a href="#" @click.prevent="openModal('file')"
-                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">File</a>
+                            <!-- Dropdown Menu -->
+                            <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
+                                x-transition:enter="transition ease-out duration-100"
+                                class=" right-0 ml-2 top-full w-48 h-full bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5  overflow-visible">
+                                <div class="py-1">
+                                    <a href="#" @click.prevent="openModal('information')"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Information</a>
+                                    <a href="#" @click.prevent="openModal('video')"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Video
+                                        material</a>
+                                    <a href="#" @click.prevent="openModal('text')"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Text
+                                        material</a>
+                                    <a href="#" @click.prevent="openModal('file')"
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">File</a>
+                                </div>
+                            </div>
+
+                            <!-- Modal Templates -->
+                            <!-- Information Modal -->
+                            <template x-if="activeModal === 'information'">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
+                                    <div class="flex items-center justify-center min-h-screen px-4">
+                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                            <form method="post" class="space-y-4">
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
+                                                    class="w-full p-2 bg-gray-200 rounded border">
+                                                <input type="number" name="id_section"
+                                                    value="<?= $section['id_section'] ?>" hidden>
+                                                <div class="space-y-2">
+                                                    <label for="information">Information:</label>
+                                                    <input type="text" name="information"
+                                                        placeholder="Enter information"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                </div>
+                                                <div class="flex justify-end space-x-2">
+                                                    <button type="button" @click="closeModal"
+                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                    <button type="submit" name="create_information"
+                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
+                            </template>
 
-                                <!-- Modal Templates -->
-                                <!-- Information Modal -->
-                                <template x-if="activeModal === 'information'">
-                                    <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                        x-transition:enter="transition ease-out duration-300">
-                                        <div class="flex items-center justify-center min-h-screen px-4">
-                                            <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                                <form method="post" class="space-y-4">
-                                                    <input type="text" value="<?= $section['title'] ?>" readonly
-                                                        class="w-full p-2 bg-gray-200 rounded border">
-                                                    <input type="number" name="id_section"
-                                                        value="<?= $section['id_section'] ?>" hidden>
-                                                    <div class="space-y-2">
-                                                        <label for="information">Information:</label>
-                                                        <input type="text" name="information"
-                                                            placeholder="Enter information"
-                                                            class="w-full p-2 border rounded focus:outline-none focus:ring-2">
-                                                    </div>
-                                                    <div class="flex justify-end space-x-2">
-                                                        <button type="button" @click="closeModal"
-                                                            class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                        <button type="submit" name="create_information"
-                                                            class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                            <!-- Video Modal -->
+                            <template x-if="activeModal === 'video'">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
+                                    <div class="flex items-center justify-center min-h-screen px-4">
+                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                            <form method="post" class="space-y-4">
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
+                                                    class="w-full p-2 bg-gray-200 rounded border">
+                                                <input type="number" name="id_section"
+                                                    value="<?= $section['id_section'] ?>" hidden>
+                                                <div class="space-y-2">
+                                                    <label for="video">Video URL:</label>
+                                                    <input type="text" name="url" placeholder="Enter video URL"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                </div>
+                                                <div class="flex justify-end space-x-2">
+                                                    <button type="button" @click="closeModal"
+                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                    <button type="submit" name="create_video"
+                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </template>
+                                </div>
+                            </template>
 
-                                <!-- Video Modal -->
-                                <template x-if="activeModal === 'video'">
-                                    <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                        x-transition:enter="transition ease-out duration-300">
-                                        <div class="flex items-center justify-center min-h-screen px-4">
-                                            <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                                <form method="post" class="space-y-4">
-                                                    <input type="text" value="<?= $section['title'] ?>" readonly
-                                                        class="w-full p-2 bg-gray-200 rounded border">
-                                                    <input type="number" name="id_section"
-                                                        value="<?= $section['id_section'] ?>" hidden>
-                                                    <div class="space-y-2">
-                                                        <label for="video">Video URL:</label>
-                                                        <input type="text" name="url" placeholder="Enter video URL"
-                                                            class="w-full p-2 border rounded focus:outline-none focus:ring-2">
-                                                    </div>
-                                                    <div class="flex justify-end space-x-2">
-                                                        <button type="button" @click="closeModal"
-                                                            class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                        <button type="submit" name="create_video"
-                                                            class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                            <!-- Text Modal -->
+                            <template x-if="activeModal === 'text'">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
+                                    <div class="flex items-center justify-center min-h-screen px-4">
+                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                            <form method="post" class="space-y-4">
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
+                                                    class="w-full p-2 bg-gray-200 rounded border">
+                                                <input type="number" name="id_section"
+                                                    value="<?= $section['id_section'] ?>" hidden>
+                                                <div class="space-y-2">
+                                                    <label for="text">Content:</label>
+                                                    <textarea name="text" placeholder="Enter text"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32"></textarea>
+                                                </div>
+                                                <div class="flex justify-end space-x-2">
+                                                    <button type="button" @click="closeModal"
+                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                    <button type="submit" name="create_text"
+                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </template>
+                                </div>
+                            </template>
 
-                                <!-- Text Modal -->
-                                <template x-if="activeModal === 'text'">
-                                    <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                        x-transition:enter="transition ease-out duration-300">
-                                        <div class="flex items-center justify-center min-h-screen px-4">
-                                            <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                                <form method="post" class="space-y-4">
-                                                    <input type="text" value="<?= $section['title'] ?>" readonly
-                                                        class="w-full p-2 bg-gray-200 rounded border">
-                                                    <input type="number" name="id_section"
-                                                        value="<?= $section['id_section'] ?>" hidden>
-                                                    <div class="space-y-2">
-                                                        <label for="text">Content:</label>
-                                                        <textarea name="text" placeholder="Enter text"
-                                                            class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32"></textarea>
-                                                    </div>
-                                                    <div class="flex justify-end space-x-2">
-                                                        <button type="button" @click="closeModal"
-                                                            class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                        <button type="submit" name="create_text"
-                                                            class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                            <!-- File Modal -->
+                            <template x-if="activeModal === 'file'">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
+                                    <div class="flex items-center justify-center min-h-screen px-4">
+                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                            <form method="post" enctype="multipart/form-data" class="space-y-4">
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
+                                                    class="w-full p-2 bg-gray-200 rounded border">
+                                                <input type="number" name="id_section"
+                                                    value="<?= $section['id_section'] ?>" hidden>
+                                                <div class="space-y-2">
+                                                    <label for="file">File:</label>
+                                                    <input type="file" name="file"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                </div>
+                                                <div class="flex justify-end space-x-2">
+                                                    <button type="button" @click="closeModal"
+                                                        class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
+                                                    <button type="submit" name="create_file"
+                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
-                                </template>
+                                </div>
+                            </template>
+                        </div>
 
-                                <!-- File Modal -->
-                                <template x-if="activeModal === 'file'">
-                                    <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
-                                        x-transition:enter="transition ease-out duration-300">
-                                        <div class="flex items-center justify-center min-h-screen px-4">
-                                            <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
-                                                <form method="post" enctype="multipart/form-data" class="space-y-4">
-                                                    <input type="text" value="<?= $section['title'] ?>" readonly
-                                                        class="w-full p-2 bg-gray-200 rounded border">
-                                                    <input type="number" name="id_section"
-                                                        value="<?= $section['id_section'] ?>" hidden>
-                                                    <div class="space-y-2">
-                                                        <label for="file">File:</label>
-                                                        <input type="file" name="file"
-                                                            class="w-full p-2 border rounded focus:outline-none focus:ring-2">
-                                                    </div>
-                                                    <div class="flex justify-end space-x-2">
-                                                        <button type="button" @click="closeModal"
-                                                            class="px-4 py-2 text-red-500 border rounded hover:bg-gray-50">Close</button>
-                                                        <button type="submit" name="create_file"
-                                                            class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">Save</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </template>
-                            </div>
-
-                            <!-- Content Display Section -->
-                            <div class="mt-4 space-y-6">
-                                <!-- Information Display -->
-                                <?php $information = get_information_bySection($_GET['id'], $section['id_section']); ?>
-                                <?php if (!empty($information)) { ?>
-                                    <div class="space-y-2">
-                                        <h2 class="text-2xl font-semibold">Information</h2>
-                                        <?php foreach ($information as $info) { ?>
-                                            <p class="text-gray-700">• <?= htmlspecialchars($info['information']) ?></p>
-                                        <?php } ?>
-                                    </div>
-                                    <hr>
-                                <?php } ?>
-
-                                <!-- Video Display -->
-                                <?php $video = get_video_bySection($_GET['id'], $section['id_section']); ?>
-                                <?php if (!empty($video)) { ?>
-                                    <?php foreach ($video as $vid) { ?>
-                                        <div class="aspect-w-16 aspect-h-9">
-                                            <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96" allowfullscreen
-                                                frameborder="0"></iframe>
-                                        </div>
-                                    <?php } ?>
-                                    <hr>
-                                <?php } ?>
-
-                                <!-- Text Display -->
-                                <?php $text = get_text_bySection($_GET['id'], $section['id_section']); ?>
-                                <?php if (!empty($text)) { ?>
-                                    <?php foreach ($text as $txt) { ?>
-                                        <div class="prose max-w-none">
-                                            <p><?= $txt['content'] ?></p>
-                                        </div>
-                                    <?php } ?>
-                                    <hr>
-                                <?php } ?>
-
-                                <!-- File Display -->
-                                <?php $file = get_file_bySection($_GET['id'], $section['id_section']); ?>
-                                <?php if (!empty($file)) { ?>
-                                    <?php foreach ($file as $f) { ?>
-                                        <div
-                                            class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                                            <a href="../file_materi/<?= $f['file'] ?>" target="_blank"
-                                                class="text-blue-600 hover:text-blue-800 font-medium">
-                                                <?= $f['file'] ?>
-                                            </a>
-                                            <span class="text-sm text-gray-500">
-                                                <?= round(filesize('../file_materi/' . $f['file']) / 1024, 2) ?> KB
-                                            </span>
-                                        </div>
-                                    <?php } ?>
-                                    <hr>
+                        <!-- Content Display Section -->
+                        <div class="mt-4 space-y-6">
+                            <!-- Information Display -->
+                            <?php $information = get_information_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php if (!empty($information)) { ?>
+                            <div class="space-y-2">
+                                <h2 class="text-2xl font-semibold">Information</h2>
+                                <?php foreach ($information as $info) { ?>
+                                <p class="text-gray-700">• <?= htmlspecialchars($info['information']) ?></p>
                                 <?php } ?>
                             </div>
+                            <hr>
+                            <?php } ?>
+
+                            <!-- Video Display -->
+                            <?php $video = get_video_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php if (!empty($video)) { ?>
+                            <?php foreach ($video as $vid) { ?>
+                            <div class="aspect-w-16 aspect-h-9">
+                                <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96" allowfullscreen
+                                    frameborder="0"></iframe>
+                            </div>
+                            <?php } ?>
+                            <hr>
+                            <?php } ?>
+
+                            <!-- Text Display -->
+                            <?php $text = get_text_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php if (!empty($text)) { ?>
+                            <?php foreach ($text as $txt) { ?>
+                            <div class="prose max-w-none">
+                                <p><?= $txt['content'] ?></p>
+                            </div>
+                            <?php } ?>
+                            <hr>
+                            <?php } ?>
+
+                            <!-- File Display -->
+                            <?php $file = get_file_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php if (!empty($file)) { ?>
+                            <?php foreach ($file as $f) { ?>
+                            <div
+                                class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
+                                <a href="../file_materi/<?= $f['file'] ?>" target="_blank"
+                                    class="text-blue-600 hover:text-blue-800 font-medium">
+                                    <?= $f['file'] ?>
+                                </a>
+                                <span class="text-sm text-gray-500">
+                                    <?= round(filesize('../file_materi/' . $f['file']) / 1024, 2) ?> KB
+                                </span>
+                            </div>
+                            <?php } ?>
+                            <hr>
+                            <?php } ?>
+
+
+                            <?php $quiz = get_quiz_bySection($section['id_section']); ?>
+                            <?php if (!empty($quiz)) { ?>
+                            <?php foreach ($quiz as $quizz) { ?>
+
+                            <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
+                                <div class="flex flex-col">
+                                    <h3 class="text-blue-600 font-medium"><?= $quizz['title'] ?></h3>
+                                </div>
+                                <div class="text-gray-500 text-sm space-y-1 ml-4">
+                                    <p>Soal: 25</p>
+                                    <p>Skor/soal: 4</p>
+                                    <p>Skor Anda: 100</p>
+                                </div>
+                            </div>
+
+                            <?php } ?>
+                            <hr>
+                            <?php } ?>
+
+
+
+
+
                         </div>
                     </div>
+                </div>
                 <?php } ?>
 
 
@@ -706,237 +731,237 @@ if (isset($_POST['create_file'])) {
 
 
     <script>
-        let cropper = null;
-        const profileForm = document.getElementById('profileForm');
-        const fileInput = document.getElementById('profil_picture');
-        const previewImage = document.getElementById('preview-image');
-        const cropperModal = document.getElementById('cropperModal');
-        const cropperImage = document.getElementById('cropperImage');
-        const croppedImageInput = document.getElementById('cropped_image');
+    let cropper = null;
+    const profileForm = document.getElementById('profileForm');
+    const fileInput = document.getElementById('profil_picture');
+    const previewImage = document.getElementById('preview-image');
+    const cropperModal = document.getElementById('cropperModal');
+    const cropperImage = document.getElementById('cropperImage');
+    const croppedImageInput = document.getElementById('cropped_image');
 
-        // File input change handler
-        fileInput.addEventListener('change', function(e) {
-            const file = e.target.files[0];
-            if (file) {
-                if (!file.type.startsWith('image/')) {
-                    alert('Please select an image file');
-                    return;
-                }
-
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    // Initialize cropper
-                    cropperImage.src = e.target.result;
-                    cropperModal.classList.remove('hidden');
-
-                    if (cropper) {
-                        cropper.destroy();
-                    }
-
-                    cropper = new Cropper(cropperImage, {
-                        aspectRatio: 1,
-                        viewMode: 2,
-                        dragMode: 'move',
-                        autoCropArea: 1,
-                        restore: false,
-                        guides: true,
-                        center: true,
-                        highlight: false,
-                        cropBoxMovable: true,
-                        cropBoxResizable: true,
-                        toggleDragModeOnDblclick: false,
-                        initialAspectRatio: 1,
-                    });
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-
-        // Apply crop function
-        function applyCrop() {
-            if (!cropper) return;
-
-            // Get cropped canvas
-            const canvas = cropper.getCroppedCanvas({
-                width: 300,
-                height: 300,
-                imageSmoothingEnabled: true,
-                imageSmoothingQuality: 'high',
-            });
-
-            // Convert to blob
-            canvas.toBlob(function(blob) {
-                // Create file from blob
-                const fileName = fileInput.files[0].name;
-                const croppedFile = new File([blob], fileName, {
-                    type: 'image/jpeg'
-                });
-
-                // Create FileList object
-                const dataTransfer = new DataTransfer();
-                dataTransfer.items.add(croppedFile);
-                fileInput.files = dataTransfer.files;
-
-                // Update preview
-                previewImage.src = canvas.toDataURL('image/jpeg');
-
-                // Store base64 in hidden input
-                croppedImageInput.value = canvas.toDataURL('image/jpeg');
-
-                // Close modal
-                closeCropperModal();
-            }, 'image/jpeg', 0.9);
-        }
-
-        function closeCropperModal() {
-            cropperModal.classList.add('hidden');
-            if (cropper) {
-                cropper.destroy();
-                cropper = null;
-            }
-        }
-
-        // Handle form submission
-        profileForm.addEventListener('submit', function(e) {
-            if (fileInput.files.length > 0 && !croppedImageInput.value) {
-                e.preventDefault();
-                alert('Please crop the image before submitting');
+    // File input change handler
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
                 return;
             }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Initialize cropper
+                cropperImage.src = e.target.result;
+                cropperModal.classList.remove('hidden');
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 2,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false,
+                    initialAspectRatio: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Apply crop function
+    function applyCrop() {
+        if (!cropper) return;
+
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
         });
 
-        // Close modal when clicking outside
-        cropperModal.addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeCropperModal();
-            }
-        });
+        // Convert to blob
+        canvas.toBlob(function(blob) {
+            // Create file from blob
+            const fileName = fileInput.files[0].name;
+            const croppedFile = new File([blob], fileName, {
+                type: 'image/jpeg'
+            });
 
-        // Close button handler
-        document.getElementById('close-modal-btn').addEventListener('click', function() {
-            window.history.back();
-        });
+            // Create FileList object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(croppedFile);
+            fileInput.files = dataTransfer.files;
+
+            // Update preview
+            previewImage.src = canvas.toDataURL('image/jpeg');
+
+            // Store base64 in hidden input
+            croppedImageInput.value = canvas.toDataURL('image/jpeg');
+
+            // Close modal
+            closeCropperModal();
+        }, 'image/jpeg', 0.9);
+    }
+
+    function closeCropperModal() {
+        cropperModal.classList.add('hidden');
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+    }
+
+    // Handle form submission
+    profileForm.addEventListener('submit', function(e) {
+        if (fileInput.files.length > 0 && !croppedImageInput.value) {
+            e.preventDefault();
+            alert('Please crop the image before submitting');
+            return;
+        }
+    });
+
+    // Close modal when clicking outside
+    cropperModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeCropperModal();
+        }
+    });
+
+    // Close button handler
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+        window.history.back();
+    });
     </script>
 
 
     <script>
-        // Fungsi untuk toggle sidebar
-        const hamburger = document.getElementById('hamburger');
-        const sidebar = document.getElementById('sidebar');
-        const closeSidebar = document.getElementById('close-sidebar');
+    // Fungsi untuk toggle sidebar
+    const hamburger = document.getElementById('hamburger');
+    const sidebar = document.getElementById('sidebar');
+    const closeSidebar = document.getElementById('close-sidebar');
 
-        hamburger.addEventListener('click', () => {
-            sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+    hamburger.addEventListener('click', () => {
+        sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+    });
+
+    closeSidebar.addEventListener('click', () => {
+        sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
+    });
+
+    // Modal PopUp Edit Profil
+    document.getElementById("open-modal-btn").addEventListener("click", (event) => {
+        event.preventDefault();
+        document.getElementById("modal-wrapper").classList.remove("hidden");
+    });
+
+    document.getElementById("close-modal-btn").addEventListener("click", () => {
+        document.getElementById("modal-wrapper").classList.add("hidden");
+    });
+
+
+    // Modal Edit Course
+    document.getElementById("open-modal-btn-course").addEventListener("click", (event) => {
+        event.preventDefault();
+        document.getElementById("modal-wrapper-course").classList.remove("hidden");
+    });
+
+    document.getElementById("close-modal-btn-course").addEventListener("click", () => {
+        document.getElementById("modal-wrapper-course").classList.add("hidden");
+    });
+
+
+
+
+    ClassicEditor
+        .create(document.querySelector('#editor'))
+        .catch(error => {
+            console.error(error);
         });
-
-        closeSidebar.addEventListener('click', () => {
-            sidebar.classList.add('-translate-x-full'); // Menyembunyikan sidebar saat tombol tutup ditekan
-        });
-
-        // Modal PopUp Edit Profil
-        document.getElementById("open-modal-btn").addEventListener("click", (event) => {
-            event.preventDefault();
-            document.getElementById("modal-wrapper").classList.remove("hidden");
-        });
-
-        document.getElementById("close-modal-btn").addEventListener("click", () => {
-            document.getElementById("modal-wrapper").classList.add("hidden");
-        });
-
-
-        // Modal Edit Course
-        document.getElementById("open-modal-btn-course").addEventListener("click", (event) => {
-            event.preventDefault();
-            document.getElementById("modal-wrapper-course").classList.remove("hidden");
-        });
-
-        document.getElementById("close-modal-btn-course").addEventListener("click", () => {
-            document.getElementById("modal-wrapper-course").classList.add("hidden");
-        });
-
-
-
-
-        ClassicEditor
-            .create(document.querySelector('#editor'))
-            .catch(error => {
-                console.error(error);
-            });
     </script>
 
 
 
     <!-- Setup Section -->
     <script>
-        const openModalBtn = document.getElementById('open-modal-btn-section');
-        const closeModalBtn = document.getElementById('close-modal-btn-section');
-        const modalWrapper = document.getElementById('modal-wrapper-section');
+    const openModalBtn = document.getElementById('open-modal-btn-section');
+    const closeModalBtn = document.getElementById('close-modal-btn-section');
+    const modalWrapper = document.getElementById('modal-wrapper-section');
 
-        // Fungsi untuk membuka modal
-        openModalBtn.addEventListener('click', () => {
-            modalWrapper.classList.remove('hidden');
-        });
+    // Fungsi untuk membuka modal
+    openModalBtn.addEventListener('click', () => {
+        modalWrapper.classList.remove('hidden');
+    });
 
-        // Fungsi untuk menutup modal
-        closeModalBtn.addEventListener('click', () => {
+    // Fungsi untuk menutup modal
+    closeModalBtn.addEventListener('click', () => {
+        modalWrapper.classList.add('hidden');
+    });
+
+    // Menutup modal jika klik di luar konten modal
+    window.addEventListener('click', (e) => {
+        if (e.target === modalWrapper) {
             modalWrapper.classList.add('hidden');
-        });
-
-        // Menutup modal jika klik di luar konten modal
-        window.addEventListener('click', (e) => {
-            if (e.target === modalWrapper) {
-                modalWrapper.classList.add('hidden');
-            }
-        });
+        }
+    });
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            // Setup dropdowns
-            document.querySelectorAll('.dropdown-container').forEach(container => {
-                const button = container.querySelector('.dropdown-button');
-                const menu = container.querySelector('.dropdown-menu');
+    document.addEventListener('DOMContentLoaded', function() {
+        // Setup dropdowns
+        document.querySelectorAll('.dropdown-container').forEach(container => {
+            const button = container.querySelector('.dropdown-button');
+            const menu = container.querySelector('.dropdown-menu');
 
-                button.addEventListener('click', (event) => {
-                    event.stopPropagation();
-                    menu.classList.toggle('hidden');
-                });
-
-                // Close dropdown when clicking outside
-                document.addEventListener('click', (event) => {
-                    if (!container.contains(event.target)) {
-                        menu.classList.add('hidden');
-                    }
-                });
-
-                // Close dropdown when a menu item is clicked
-                menu.querySelectorAll('a').forEach(item => {
-                    item.addEventListener('click', () => {
-                        menu.classList.add('hidden');
-                    });
-                });
+            button.addEventListener('click', (event) => {
+                event.stopPropagation();
+                menu.classList.toggle('hidden');
             });
 
-            // Setup modals
-            document.querySelectorAll('.open-modal-btn').forEach(btn => {
-                btn.addEventListener('click', (event) => {
-                    event.preventDefault();
-                    const modalType = btn.getAttribute('data-modal-type');
-                    const modalWrapper = btn.closest('.dropdown-container').querySelector(
-                        `.modal-wrapper[data-modal-type="${modalType}"]`);
-                    modalWrapper.classList.remove('hidden');
-                });
+            // Close dropdown when clicking outside
+            document.addEventListener('click', (event) => {
+                if (!container.contains(event.target)) {
+                    menu.classList.add('hidden');
+                }
             });
 
-            document.querySelectorAll('.close-modal-btn').forEach(btn => {
-                btn.addEventListener('click', (event) => {
-                    event.preventDefault(); // Prevent form submission
-                    const modalWrapper = btn.closest('.modal-wrapper');
-                    modalWrapper.classList.add('hidden');
+            // Close dropdown when a menu item is clicked
+            menu.querySelectorAll('a').forEach(item => {
+                item.addEventListener('click', () => {
+                    menu.classList.add('hidden');
                 });
             });
-
         });
+
+        // Setup modals
+        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault();
+                const modalType = btn.getAttribute('data-modal-type');
+                const modalWrapper = btn.closest('.dropdown-container').querySelector(
+                    `.modal-wrapper[data-modal-type="${modalType}"]`);
+                modalWrapper.classList.remove('hidden');
+            });
+        });
+
+        document.querySelectorAll('.close-modal-btn').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent form submission
+                const modalWrapper = btn.closest('.modal-wrapper');
+                modalWrapper.classList.add('hidden');
+            });
+        });
+
+    });
     </script>
 
 

@@ -460,7 +460,18 @@ function get_file_bySection($id_course, $id_section) {
 
 
 
+// ----------------------------------------------QUIZ
+function get_quiz_bySection($id_section) {
+    global $koneksi;
+    $sql = "SELECT * FROM quiz WHERE id_section = '$id_section'";
+    $result = mysqli_query($koneksi, $sql);
 
+    $files = [];
+    while ($file = mysqli_fetch_assoc($result)) {
+        $files[] = $file;
+    }
+    return $files;
+}
 
 
 
@@ -562,6 +573,123 @@ function get_students_by_course($id_course) {
     }
 
     return $students;
+}
+
+
+
+
+
+
+// -----------------------------------------------------QUIZ----------------------------------------------
+
+function add_quiz($data){
+    global $koneksi;
+
+    $id_section = $data["section"];
+    $title = $data["title"];
+
+    $sql = mysqli_query($koneksi,"INSERT INTO quiz (id_section, title) VALUES ('$id_section', '$title')");
+
+    if ($sql) {
+        echo "
+        <script>
+            alert('Berhasil');
+            window.location.href = location.href;        
+        </script>
+        ";
+    } else {
+        echo "<script>alert('Gagal')</script>";
+    }
+} 
+
+
+
+function get_quiz_byCourse(){
+    global $koneksi;
+
+    $course = $_GET["id"];  
+    $sql =  mysqli_query($koneksi, "
+    SELECT quiz.id_quiz, quiz.id_section, quiz.title
+    FROM quiz 
+    INNER JOIN section ON quiz.id_section = section.id_section 
+    WHERE section.id_course = '$course'");
+    $quiz = [];
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $quiz[] = $row;
+    }
+
+    return $quiz;
+}
+
+
+
+function get_question_byQuiz(){
+    global $koneksi;
+
+    $quiz = $_GET["id"];  
+    $sql =  mysqli_query($koneksi, "SELECT * FROM question WHERE id_quiz = '$quiz'");
+    $question = [];
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $question[] = $row;
+    }
+    return $question;
+}
+
+
+function add_question($data){
+    global $koneksi;
+
+    // Mengambil id_quiz dari URL
+    $id_quiz = $_GET['id'];
+
+    // Mengambil soal dari form
+    $question = $data["question"];
+
+    // Menambahkan soal ke tabel question
+    $sql_question = mysqli_query($koneksi, "INSERT INTO question (id_quiz, question) VALUES ('$id_quiz', '$question')");
+
+    // Jika insert soal berhasil
+    if ($sql_question) {
+        // Mendapatkan id_question yang baru saja dimasukkan
+        $id_question = mysqli_insert_id($koneksi);
+
+        // Menambahkan opsi-opsi ke tabel quiz_option
+        $options = [
+            $data['option1'],
+            $data['option2'],
+            $data['option3'],
+            $data['option4']
+        ];
+
+        // Tentukan jawaban benar
+        $correct_answers = [
+            isset($data['correct_option1']) ? 1 : 0,
+            isset($data['correct_option2']) ? 1 : 0,
+            isset($data['correct_option3']) ? 1 : 0,
+            isset($data['correct_option4']) ? 1 : 0
+        ];
+
+        // Loop untuk memasukkan setiap option
+        foreach ($options as $index => $option) {
+            // Tentukan jika jawaban benar
+            $is_right = $correct_answers[$index] == 1 ? 1 : 0;
+
+            // Insert opsi ke tabel quiz_option
+            $sql_option = mysqli_query($koneksi, "INSERT INTO quiz_option (id_question, option, is_right) VALUES ('$id_question', '$option', '$is_right')");
+        }
+
+        // Periksa apakah opsi berhasil disimpan
+        if ($sql_option) {
+            echo "<script>
+                alert('Berhasil');
+                window.location.href = location.href;
+            </script>";
+        } else {
+            echo "<script>alert('Gagal Menambahkan Options')</script>";
+        }
+    } else {
+        echo "<script>alert('Gagal Menambahkan Question')</script>";
+    }
 }
 
 

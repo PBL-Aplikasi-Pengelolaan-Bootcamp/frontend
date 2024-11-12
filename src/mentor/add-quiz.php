@@ -14,9 +14,19 @@ if (isset($_POST['logout'])) {
     logout();
 }
 
+// get data dari course
+$course = get_course_by_id();
 
-// get course
-$course = get_course_by_mentor();
+$quiz = get_quiz_byCourse();
+
+//get data section by course
+$section = get_section_byCourseId();
+
+//buat quiz
+if (isset($_POST['add_quiz'])) {
+    add_quiz($_POST);
+}
+
 
 
 ?>
@@ -117,7 +127,7 @@ $course = get_course_by_mentor();
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz Course</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$course['title']?></h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -240,22 +250,69 @@ $course = get_course_by_mentor();
             <!-- Konten -->
             <!-- ANALISTIK -->
             <div class="flex flex-col">
+                <div x-data="{ open: true }" class="bg-white shadow-md w-full rounded-lg overflow-hidden">
+                    <button @click="open = !open"
+                        class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
+                        <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
+                        <span>Tambah Quiz</span>
+                    </button>
+                    <div x-show="open" class="px-4 py-2 border-t flex flex-col gap-4">
+                        <form method="post" enctype="multipart/form-data" class="flex flex-col gap-5 my-2 w-full">
 
+                            <div class="flex flex-col gap-2">
+                                <label for="section">Section</label>
+                                <select
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="section" name="section">
+                                    <option value="" disabled selected>Pilih Section</option>
+                                    <?php foreach ($section as $data) { ?>
+                                    <option value="<?=$data['id_section']?>"><?=$data['title']?></option>
+                                    <?php }?>
+
+                                </select>
+                            </div>
+
+                            <div class="flex flex-col gap-2">
+                                <label for="name">Title</label>
+                                <input
+                                    class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    id="name" name="title" type="text" placeholder="Quiz Title">
+                            </div>
+
+
+
+                            <div class="flex justify-end gap-2">
+                                <button id="close-modal-btn"
+                                    class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                <button type="submit" name="add_quiz"
+                                    class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
 
                 <div class="flex mt-10 justify-between gap-5 flex-wrap">
-                    <?php foreach ($course as $data) { ?>
-                    <a href="add-quiz.php?id=<?=$data['id_course']?>">
-                        <div class="flex rounded-md gap-2 bg-white w-full lg:w-80 h-20 m-auto sm:m-0 overflow-hidden">
+                    <?php foreach ($quiz as $data) { ?>
+                    <a href="quiz-question.php?id=<?=$data['id_quiz']?>" class="group block">
+                        <div class="flex rounded-md gap-2 bg-white w-full lg:w-64 h-20 m-auto sm:m-0 overflow-hidden">
                             <div class="bg-blue-300 text-blue-300 w-3">.</div>
                             <div class="flex w-full justify-between">
                                 <div class="font-poppins my-auto">
                                     <h1 class="my-auto font-semibold text-md"><?=$data['title']?></h1>
                                 </div>
+                                <div class="flex gap-2 my-auto p-2">
+                                    <i
+                                        class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md group-hover:bg-yellow-400 cursor-pointer"></i>
+                                    <i
+                                        class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md group-hover:bg-red-600 cursor-pointer"></i>
+                                </div>
                             </div>
                         </div>
                     </a>
-                    <?php }?>
+                    <?php } ?>
                 </div>
+
             </div>
         </div>
 
@@ -382,7 +439,7 @@ $course = get_course_by_mentor();
 
         hamburger.addEventListener('click', () => {
             sidebar.classList.toggle(
-            '-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+                '-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
         });
 
         closeSidebar.addEventListener('click', () => {
