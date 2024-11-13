@@ -622,6 +622,15 @@ function get_quiz_byCourse(){
 }
 
 
+function get_quiz_byId(){
+    global $koneksi;
+
+    $id_quiz = $_GET["id"];  
+    $sql =  mysqli_query($koneksi, "SELECT * FROM quiz WHERE id_quiz = '$id_quiz'");
+    $get = mysqli_fetch_assoc($sql);
+    return $get;
+}
+
 
 function get_question_byQuiz(){
     global $koneksi;
@@ -635,25 +644,29 @@ function get_question_byQuiz(){
     return $question;
 }
 
+function total_question_byQuiz($id_quiz) {
+    global $koneksi;
+
+    $sql = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM question WHERE id_quiz = '$id_quiz'");
+    $result = mysqli_fetch_assoc($sql);
+    
+    return $result['total'];
+}
+
+
+
+
 
 function add_question($data){
     global $koneksi;
 
-    // Mengambil id_quiz dari URL
     $id_quiz = $_GET['id'];
-
-    // Mengambil soal dari form
     $question = $data["question"];
 
-    // Menambahkan soal ke tabel question
     $sql_question = mysqli_query($koneksi, "INSERT INTO question (id_quiz, question) VALUES ('$id_quiz', '$question')");
 
-    // Jika insert soal berhasil
     if ($sql_question) {
-        // Mendapatkan id_question yang baru saja dimasukkan
         $id_question = mysqli_insert_id($koneksi);
-
-        // Menambahkan opsi-opsi ke tabel quiz_option
         $options = [
             $data['option1'],
             $data['option2'],
@@ -661,7 +674,6 @@ function add_question($data){
             $data['option4']
         ];
 
-        // Tentukan jawaban benar
         $correct_answers = [
             isset($data['correct_option1']) ? 1 : 0,
             isset($data['correct_option2']) ? 1 : 0,
@@ -669,16 +681,11 @@ function add_question($data){
             isset($data['correct_option4']) ? 1 : 0
         ];
 
-        // Loop untuk memasukkan setiap option
         foreach ($options as $index => $option) {
-            // Tentukan jika jawaban benar
             $is_right = $correct_answers[$index] == 1 ? 1 : 0;
-
-            // Insert opsi ke tabel quiz_option
             $sql_option = mysqli_query($koneksi, "INSERT INTO quiz_option (id_question, option, is_right) VALUES ('$id_question', '$option', '$is_right')");
         }
 
-        // Periksa apakah opsi berhasil disimpan
         if ($sql_option) {
             echo "<script>
                 alert('Berhasil');

@@ -84,7 +84,7 @@ if (isset($_POST['create_file'])) {
     <link rel="stylesheet" href="../../fontawesome-free-6.6.0-web/fontawesome/css/all.min.css">
     <script src="https://cdn.tiny.cloud/1/pmgg58idwi9ldov0ee6wpppin1sya5nrtpqm7pcjir11vckj/tinymce/7/tinymce.min.js"
         referrerpolicy="origin"></script>
-    
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
@@ -169,7 +169,7 @@ if (isset($_POST['create_file'])) {
             <header class="flex justify-end items-center">
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-semibold relative my-auto"><?= $_SESSION['username']?></h1>
+                        <h1 class="font-semibold relative my-auto"><?= $_SESSION['username'] ?></h1>
                         <img src="../foto_mentor/<?= isset($mentor['profil_picture']) ? $mentor['profil_picture'] : 'profil_default.png' ?>"
                             alt="" class="w-12 h-12 rounded-full object-cover">
                     </div>
@@ -189,36 +189,36 @@ if (isset($_POST['create_file'])) {
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="username" name="username" type="text" placeholder="Enter your username"
-                                        value="<?= $mentor['username']?>">
+                                        value="<?= $mentor['username'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="name">Nama</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                         id="name" name="name" type="text" placeholder="Enter your name"
-                                        value="<?= $mentor['name']?>">
+                                        value="<?= $mentor['name'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="bio">Bio</label>
                                     <textarea name="bio" id="bio"
-                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"><?= $mentor['bio']?></textarea>
+                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"><?= $mentor['bio'] ?></textarea>
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="expertise">Expertise</label>
                                     <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
-                                        value="<?= $mentor['expertise']?>"
+                                        value="<?= $mentor['expertise'] ?>"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="telp">Telp</label>
                                     <input type="text" name="telp" id="telp" placeholder="Masukkan keahlian anda"
-                                        value="<?= $mentor['telp']?>"
+                                        value="<?= $mentor['telp'] ?>"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="email">Email</label>
                                     <input type="email" name="email" id="email" placeholder="Masukkan keahlian anda"
-                                        value="<?= $mentor['email']?>"
+                                        value="<?= $mentor['email'] ?>"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
@@ -233,7 +233,7 @@ if (isset($_POST['create_file'])) {
                                     <input type="hidden" name="cropped_image" id="cropped_image">
 
                                     <div class="relative w-12 h-12">
-                                        <img src="../foto_mentor/<?=$mentor['profil_picture']?>" alt=""
+                                        <img src="../foto_mentor/<?= $mentor['profil_picture'] ?>" alt=""
                                             id="preview-image" class="w-12 h-12 object-cover rounded-full">
                                     </div>
                                 </div>
@@ -290,7 +290,7 @@ if (isset($_POST['create_file'])) {
             <div class="space-y-4 mt-10">
 
                 <div class="container flex gap-2">
-                    <h1 class="my-auto text-2xl font-bold font-poppins"><?=$course['title']?></h1>
+                    <h1 class="my-auto text-2xl font-bold font-poppins"><?= $course['title'] ?></h1>
 
                     <!-- Button untuk membuka modal -->
                     <button id="open-modal-btn-course" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">
@@ -318,13 +318,13 @@ if (isset($_POST['create_file'])) {
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="title" name="title" type="text" placeholder="Course Mysql"
-                                            value="<?=$course['title']?>">
+                                            value="<?= $course['title'] ?>">
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="title">Description</label>
                                         <textarea
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="description" id=""><?=$course['description']?></textarea>
+                                            name="description" id=""><?= $course['description'] ?></textarea>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <div class="flex flex-col gap-2 w-full">
@@ -332,14 +332,14 @@ if (isset($_POST['create_file'])) {
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                 id="start-date" name="start_date" type="date"
-                                                value="<?=$course['start_date']?>" placeholder="Course Mysql">
+                                                value="<?= $course['start_date'] ?>" placeholder="Course Mysql">
                                         </div>
                                         <div class="flex flex-col gap-2 w-full">
                                             <label for="end-date">End</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                 id="end-date" name="end_date" type="date"
-                                                value="<?=$course['end_date']?>" placeholder="Course Mysql">
+                                                value="<?= $course['end_date'] ?>" placeholder="Course Mysql">
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-2">
@@ -359,7 +359,7 @@ if (isset($_POST['create_file'])) {
                                         <label for="title">Quota</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="title" name="quota" type="number" value='<?= $course['quota']?>'
+                                            id="title" name="quota" type="number" value='<?= $course['quota'] ?>'
                                             placeholder="Course Mysql">
                                     </div>
 
@@ -371,10 +371,10 @@ if (isset($_POST['create_file'])) {
 
                                     <div class="flex flex-col gap-2">
                                         <form method="post">
-                                        <button type="submit" name="delete_course"
-                                            class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                            DELETE COURSE
-                                        </button>
+                                            <button type="submit" name="delete_course"
+                                                class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                DELETE COURSE
+                                            </button>
                                         </form>
                                     </div>
 
@@ -400,19 +400,19 @@ if (isset($_POST['create_file'])) {
 
 
                 <div class="bg-white shadow-md h-40 rounded-lg sm:h-60 overflow-hidden">
-                    <img src="../foto_cover_course/<?=$course['course_picture']?>" alt="Cover Course"
+                    <img src="../foto_cover_course/<?= $course['course_picture'] ?>" alt="Cover Course"
                         class="w-full h-full object-cover object-center">
                 </div>
 
 
                 <div class="flex gap-2 text-sm flex-wrap font-bold font-poppins text-slate-800">
-                    <h1 class="bg-white px-3 py-1 rounded-lg"><?=$course['course_type']?></h1>
-                    <h1 class="bg-white px-3 py-1 rounded-lg"><?=$course['start_date']?> - <?=$course['end_date']?>
+                    <h1 class="bg-white px-3 py-1 rounded-lg"><?= $course['course_type'] ?></h1>
+                    <h1 class="bg-white px-3 py-1 rounded-lg"><?= $course['start_date'] ?> - <?= $course['end_date'] ?>
                     </h1>
-                    <h1 class="bg-white px-3 py-1 rounded-lg"><?=$course['quota']?> Quota</h1>
+                    <h1 class="bg-white px-3 py-1 rounded-lg"><?= $course['quota'] ?> Quota</h1>
                 </div>
 
-                <p class="text-lg"><?=$course['description']?></p>
+                <p class="text-lg"><?= $course['description'] ?></p>
 
                 <div class="flex justify-end items-center">
                     <button id="open-modal-btn-section"
@@ -473,7 +473,7 @@ if (isset($_POST['create_file'])) {
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span><?=$section['title']?></span>
+                        <span><?= $section['title'] ?></span>
                     </button>
 
                     <!-- Section Content -->
@@ -495,7 +495,7 @@ if (isset($_POST['create_file'])) {
                             <!-- Dropdown Menu -->
                             <div x-show="dropdownOpen" @click.away="dropdownOpen = false"
                                 x-transition:enter="transition ease-out duration-100"
-                                class="absolute right-0 top-full w-48 bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5 z-50 overflow-visible">
+                                class=" right-0 ml-2 top-full w-48 h-full bg-white rounded-md shadow-lg ring-1 ring-black ring-opacity-5  overflow-visible">
                                 <div class="py-1">
                                     <a href="#" @click.prevent="openModal('information')"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Information</a>
@@ -518,10 +518,10 @@ if (isset($_POST['create_file'])) {
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
                                                     class="w-full p-2 bg-gray-200 rounded border">
                                                 <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
+                                                    value="<?= $section['id_section'] ?>" hidden>
                                                 <div class="space-y-2">
                                                     <label for="information">Information:</label>
                                                     <input type="text" name="information"
@@ -547,10 +547,10 @@ if (isset($_POST['create_file'])) {
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
                                                     class="w-full p-2 bg-gray-200 rounded border">
                                                 <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
+                                                    value="<?= $section['id_section'] ?>" hidden>
                                                 <div class="space-y-2">
                                                     <label for="video">Video URL:</label>
                                                     <input type="text" name="url" placeholder="Enter video URL"
@@ -575,10 +575,10 @@ if (isset($_POST['create_file'])) {
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
                                                     class="w-full p-2 bg-gray-200 rounded border">
                                                 <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
+                                                    value="<?= $section['id_section'] ?>" hidden>
                                                 <div class="space-y-2">
                                                     <label for="text">Content:</label>
                                                     <textarea name="text" placeholder="Enter text"
@@ -603,10 +603,10 @@ if (isset($_POST['create_file'])) {
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" enctype="multipart/form-data" class="space-y-4">
-                                                <input type="text" value="<?=$section['title']?>" readonly
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
                                                     class="w-full p-2 bg-gray-200 rounded border">
                                                 <input type="number" name="id_section"
-                                                    value="<?=$section['id_section']?>" hidden>
+                                                    value="<?= $section['id_section'] ?>" hidden>
                                                 <div class="space-y-2">
                                                     <label for="file">File:</label>
                                                     <input type="file" name="file"
@@ -644,7 +644,7 @@ if (isset($_POST['create_file'])) {
                             <?php if (!empty($video)) { ?>
                             <?php foreach ($video as $vid) { ?>
                             <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="<?=$vid['url']?>" class="w-full h-64 md:h-96" allowfullscreen
+                                <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96" allowfullscreen
                                     frameborder="0"></iframe>
                             </div>
                             <?php } ?>
@@ -656,7 +656,7 @@ if (isset($_POST['create_file'])) {
                             <?php if (!empty($text)) { ?>
                             <?php foreach ($text as $txt) { ?>
                             <div class="prose max-w-none">
-                                <p><?=$txt['content']?></p>
+                                <p><?= $txt['content'] ?></p>
                             </div>
                             <?php } ?>
                             <hr>
@@ -679,6 +679,44 @@ if (isset($_POST['create_file'])) {
                             <?php } ?>
                             <hr>
                             <?php } ?>
+
+
+                            <?php $quiz = get_quiz_bySection($section['id_section']); ?>
+                            <?php if (!empty($quiz)) { ?>
+                            <?php foreach ($quiz as $quizz) { ?>
+
+
+                            <a href="quiz-question.php?id=<?=$quizz['id_quiz']?>" class="block">
+                            <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
+                                <!-- Icon Quiz -->
+                                <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                                    <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                        viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                    </svg>
+                                </div>
+
+                                <!-- Konten Kanan (Judul dan Keterangan) -->
+                                <div class="ml-4">
+                                    <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
+                                    <div class="text-gray-500 text-sm space-y-1">
+                                        <p>Soal: 25</p>
+                                    </div>
+                                </div>
+                            </div>
+                            </a>
+
+                            <?php } ?>
+                            <hr>
+                            <?php } ?>
+
+
+
+
+
+
                         </div>
                     </div>
                 </div>
@@ -818,7 +856,7 @@ if (isset($_POST['create_file'])) {
     });
     </script>
 
-    
+
     <script>
     // Fungsi untuk toggle sidebar
     const hamburger = document.getElementById('hamburger');

@@ -15,6 +15,10 @@ if (isset($_POST['logout'])) {
 }
 
 
+// get quiz
+$quiz = get_quiz_byId();
+
+
 //get question
 $question = get_question_byQuiz();
 
@@ -121,7 +125,7 @@ if (isset($_POST['add_question'])) {
             </button>
 
             <header class="flex justify-between items-center">
-                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Buat Quiz</h2>
+                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$quiz['title']?></h2>
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -246,14 +250,19 @@ if (isset($_POST['add_question'])) {
             <div class="flex flex-col">
 
                 <div class="flex mt-10 justify-between gap-5 flex-wrap">
+                    <!-- Button untuk membuka modal -->
                     <button id="open-add-question"
-                        class="bg-blue-700 font-poppins font-semibold text-white px-2 py-3 text-sm rounded-md">Add Question</button>
+                        class="bg-blue-700 font-poppins font-semibold text-white px-2 py-3 text-sm rounded-md">
+                        Add Question
+                    </button>
+
+                    <!-- Modal -->
                     <div id="modal-add-question" class="fixed z-10 inset-0 hidden">
                         <div
                             class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
-                            <!-- MODAL BOX -->
                             <div
                                 class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[90vh] overflow-y-auto">
+                                <!-- Isi modal (form) -->
                                 <form method="post" enctype="multipart/form-data"
                                     class="flex flex-col gap-5 my-2 w-full">
                                     <div class="flex flex-col gap-2">
@@ -313,7 +322,7 @@ if (isset($_POST['add_question'])) {
 
                                         <!-- Submit button -->
                                         <div class="flex justify-end gap-2">
-                                            <button type="reset"
+                                            <button type="reset" id="close-modal"
                                                 class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">
                                                 Batal
                                             </button>
@@ -324,11 +333,34 @@ if (isset($_POST['add_question'])) {
                                         </div>
                                     </div>
                                 </form>
-
-
                             </div>
                         </div>
                     </div>
+
+                    <script>
+                    // Dapatkan elemen modal dan tombol
+                    const openButton = document.getElementById('open-add-question');
+                    const modal = document.getElementById('modal-add-question');
+                    const closeModalButton = document.getElementById('close-modal');
+
+                    // Fungsi untuk membuka modal
+                    openButton.addEventListener('click', function() {
+                        modal.classList.remove('hidden');
+                    });
+
+                    // Fungsi untuk menutup modal
+                    closeModalButton.addEventListener('click', function() {
+                        modal.classList.add('hidden');
+                    });
+
+                    // Menutup modal saat mengklik di luar modal
+                    window.addEventListener('click', function(event) {
+                        if (event.target === modal) {
+                            modal.classList.add('hidden');
+                        }
+                    });
+                    </script>
+
 
 
 
@@ -413,44 +445,6 @@ if (isset($_POST['add_question'])) {
                     </div>
                     <?php }?>
 
-
-
-
-
-
-                    <!-- <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
-                        <div class="flex w-full justify-between">
-                            <div class="font-poppins my-auto">
-                                <h1 class="my-auto font-semibold text-md">Question 2</h1>
-                            </div>
-                            <div class="flex gap-2 my-auto p-2">
-                                <a href="#"><i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i></a>
-                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
-                        <div class="flex w-full justify-between">
-                            <div class="font-poppins my-auto">
-                                <h1 class="my-auto font-semibold text-md">Question 3</h1>
-                            </div>
-                            <div class="flex gap-2 my-auto p-2">
-                                <a href="#"><i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i></a>
-                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
-                        <div class="flex w-full justify-between">
-                            <div class="font-poppins my-auto">
-                                <h1 class="my-auto font-semibold text-md">Question 4</h1>
-                            </div>
-                            <div class="flex gap-2 my-auto p-2">
-                                <a href="#"><i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i></a>
-                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>
