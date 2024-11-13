@@ -573,34 +573,65 @@ function quiz_answer($answer_data) {
     global $koneksi;
     $id_enroll = $_SESSION["id_enroll"];
     
-    // Debug: Print data yang diterima
-    echo "<pre>";
-    print_r($answer_data);  // Debug untuk melihat data yang diterima
-    echo "</pre>";
+    // Ambil id_course dari tabel enroll berdasarkan id_enroll
+    $query_enroll = mysqli_query($koneksi, "SELECT id_course FROM enroll WHERE id_enroll = '$id_enroll'");
+    $result_enroll = mysqli_fetch_assoc($query_enroll);
+    $id_course = $result_enroll['id_course'];
     
+    // Ambil slug dari tabel course berdasarkan id_course
+    $query_course = mysqli_query($koneksi, "SELECT slug FROM course WHERE id_course = '$id_course'");
+    $result_course = mysqli_fetch_assoc($query_course);
+    $slug = $result_course['slug'];
+
+    $total_questions = count($answer_data);
+    $correct_answers = 0;
+
     foreach ($answer_data as $id_question => $answer) {
         $id_quiz_option = $answer['id_quiz_option'];
-        $is_right = $answer['is_right'];  // Nilai is_right yang diterima dari form
-        
-        // Debug: Print nilai sebelum insert
-        echo "Question: $id_question, Option: $id_quiz_option, Is Right: $is_right<br>";
-        
+        $is_right = $answer['is_right'];
+
+        // Hitung jawaban benar
+        if ($is_right) {
+            $correct_answers++;
+        }
+
+        // Insert ke tabel quiz_answer
         $sql = mysqli_query($koneksi, 
             "INSERT INTO quiz_answer (id_enroll, id_quiz_option, is_right) 
              VALUES ('$id_enroll', '$id_quiz_option', '$is_right')"
         );
-        
+
         if (!$sql) {
             echo "<script>alert('Gagal menyimpan jawaban: " . mysqli_error($koneksi) . "');</script>";
             return;
         }
     }
-    
+
+    // Hitung skor berdasarkan jawaban benar
+    $score = ($correct_answers / $total_questions) * 100;
+
+    // Dapatkan id_quiz dari salah satu jawaban (karena diasumsikan semua jawaban terkait kuis yang sama)
+    $id_quiz = key($answer_data);
+
+    // Insert ke tabel quiz_submission
+    $insert_submission = mysqli_query($koneksi, 
+        "INSERT INTO quiz_submission (id_enroll, id_quiz, score) 
+         VALUES ('$id_enroll', '$id_quiz', '$score')"
+    );
+
+    if (!$insert_submission) {
+        echo "<script>alert('Gagal menyimpan submission: " . mysqli_error($koneksi) . "');</script>";
+        return;
+    }
+
+    // Redirect ke halaman kursus_materi.php dengan slug yang didapatkan
     echo "<script>
         alert('Berhasil mengirim jawaban!');
-        window.location.href = location.href;
+        window.location.href = 'kursus_materi.php?kursus=$slug';
     </script>";
 }
+
+
 
 
 
