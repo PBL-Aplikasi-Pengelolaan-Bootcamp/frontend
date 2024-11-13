@@ -351,6 +351,38 @@ function enroll() {
 
 
 
+// ---------------------------------------GET DATA ENROLL-------------------------------------------------
+function get_data_enroll_login() {
+    global $koneksi;
+    $slug= $_GET['kursus'];
+    $id_student = $_SESSION['id_user'];
+
+    // 1. Cari id_course berdasarkan slug
+    $query = "SELECT id_course FROM course WHERE slug = '$slug' LIMIT 1";
+    $result = mysqli_query($koneksi, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        $id_course = $row['id_course'];
+
+        // 2. Cari id_enroll berdasarkan id_course dan id_student
+        $query_enroll = "SELECT id_enroll FROM enroll WHERE id_student = '$id_student' AND id_course = '$id_course' LIMIT 1";
+        $result_enroll = mysqli_query($koneksi, $query_enroll);
+
+        // Jika id_enroll ditemukan
+        if ($row_enroll = mysqli_fetch_assoc($result_enroll)) {
+            $_SESSION['id_enroll'] = $row_enroll['id_enroll']; // Simpan id_enroll dalam session
+            return $_SESSION['id_enroll']; // Kembalikan id_enroll jika ditemukan
+        } else {
+            // Jika enrollment tidak ditemukan
+            echo "Enrollment not found for this course.";
+            return null;
+        }
+    } else {
+        // Jika id_course tidak ditemukan
+        echo "Course not found.";
+        return null;
+    }
+}
 
 
 
@@ -473,6 +505,101 @@ function get_file_by_course_and_section($id_course, $id_section) {
     }
     
     return $file;
+}
+
+
+
+//get quiz
+function get_quiz_bySection($id_section) {
+    global $koneksi;
+    $sql = "SELECT * FROM quiz WHERE id_section = '$id_section'";
+    $result = mysqli_query($koneksi, $sql);
+
+    $quiz = [];
+    while ($file = mysqli_fetch_assoc($result)) {
+        $quiz[] = $file;
+    }
+    return $quiz;
+}
+
+function get_quiz_byId() {
+    global $koneksi;
+    $id_quiz = $_GET['id'];
+    $sql = "SELECT * FROM quiz WHERE id_quiz = '$id_quiz'";
+    $result = mysqli_query($koneksi, $sql);
+
+    $quiz = [];
+    while ($file = mysqli_fetch_assoc($result)) {
+        $quiz[] = $file;
+    }
+    return $quiz[0];
+}
+
+function total_question_byQuiz($id_quiz) {
+    global $koneksi;
+
+    $sql = mysqli_query($koneksi, "SELECT COUNT(*) as total FROM question WHERE id_quiz = '$id_quiz'");
+    $result = mysqli_fetch_assoc($sql);
+    
+    return $result['total'];
+}
+
+function get_question_byQuiz(){
+    global $koneksi;
+
+    $quiz = $_GET["id"];  
+    $sql =  mysqli_query($koneksi, "SELECT * FROM question WHERE id_quiz = '$quiz'");
+    $question = [];
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $question[] = $row;
+    }
+    return $question;
+}
+
+
+function get_option_byQuestion($id_question){
+    global $koneksi;
+
+    $sql =  mysqli_query($koneksi, "SELECT * FROM quiz_option WHERE id_question = '$id_question'");
+    $option = [];
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $option[] = $row;
+    }
+    return $option;
+}
+
+
+function quiz_answer($answer_data) {
+    global $koneksi;
+    $id_enroll = $_SESSION["id_enroll"];
+    
+    // Debug: Print data yang diterima
+    echo "<pre>";
+    print_r($answer_data);  // Debug untuk melihat data yang diterima
+    echo "</pre>";
+    
+    foreach ($answer_data as $id_question => $answer) {
+        $id_quiz_option = $answer['id_quiz_option'];
+        $is_right = $answer['is_right'];  // Nilai is_right yang diterima dari form
+        
+        // Debug: Print nilai sebelum insert
+        echo "Question: $id_question, Option: $id_quiz_option, Is Right: $is_right<br>";
+        
+        $sql = mysqli_query($koneksi, 
+            "INSERT INTO quiz_answer (id_enroll, id_quiz_option, is_right) 
+             VALUES ('$id_enroll', '$id_quiz_option', '$is_right')"
+        );
+        
+        if (!$sql) {
+            echo "<script>alert('Gagal menyimpan jawaban: " . mysqli_error($koneksi) . "');</script>";
+            return;
+        }
+    }
+    
+    echo "<script>
+        alert('Berhasil mengirim jawaban!');
+        window.location.href = location.href;
+    </script>";
 }
 
 

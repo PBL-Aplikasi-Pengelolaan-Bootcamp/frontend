@@ -466,11 +466,11 @@ function get_quiz_bySection($id_section) {
     $sql = "SELECT * FROM quiz WHERE id_section = '$id_section'";
     $result = mysqli_query($koneksi, $sql);
 
-    $files = [];
+    $quiz = [];
     while ($file = mysqli_fetch_assoc($result)) {
-        $files[] = $file;
+        $quiz[] = $file;
     }
-    return $files;
+    return $quiz;
 }
 
 
@@ -663,6 +663,7 @@ function add_question($data){
     $id_quiz = $_GET['id'];
     $question = $data["question"];
 
+    // Insert pertanyaan ke database
     $sql_question = mysqli_query($koneksi, "INSERT INTO question (id_quiz, question) VALUES ('$id_quiz', '$question')");
 
     if ($sql_question) {
@@ -674,15 +675,12 @@ function add_question($data){
             $data['option4']
         ];
 
-        $correct_answers = [
-            isset($data['correct_option1']) ? 1 : 0,
-            isset($data['correct_option2']) ? 1 : 0,
-            isset($data['correct_option3']) ? 1 : 0,
-            isset($data['correct_option4']) ? 1 : 0
-        ];
+        // Mendapatkan nilai jawaban benar dari form
+        $correct_option = $data['correct_option'];
 
         foreach ($options as $index => $option) {
-            $is_right = $correct_answers[$index] == 1 ? 1 : 0;
+            // Sesuaikan nilai is_right berdasarkan pilihan correct_option
+            $is_right = ($index + 1) == $correct_option ? 1 : 0;
             $sql_option = mysqli_query($koneksi, "INSERT INTO quiz_option (id_question, option, is_right) VALUES ('$id_question', '$option', '$is_right')");
         }
 
@@ -698,6 +696,7 @@ function add_question($data){
         echo "<script>alert('Gagal Menambahkan Question')</script>";
     }
 }
+
 
 
 ?>
