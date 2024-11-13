@@ -10,11 +10,10 @@ $question = get_question_byQuiz();
 
 
 if (isset($_POST['submit_quiz'])) {
-    // Debug: Periksa apakah data yang diterima sudah benar
     echo "<pre>";
-    print_r($_POST['answer']);  // Debug untuk melihat data yang diterima
+    print_r($_POST['answer']); 
     echo "</pre>";
-    quiz_answer($_POST['answer']); // Kirim array answer saja
+    quiz_answer($_POST['answer']); 
 }
 
 
@@ -43,8 +42,8 @@ if (isset($_POST['submit_quiz'])) {
             <?php $i = 1; ?>
             <form method="post" action="" id="quizForm">
                 <?php foreach ($question as $data) { 
-        $option = get_option_byQuestion($data['id_question']);
-    ?>
+            $option = get_option_byQuestion($data['id_question']);
+        ?>
                 <div class="flex flex-col gap-5">
                     <div class="p-5 md:p-8 border-2 border-gray-400 rounded-xl">
                         <h1 class="font-poppins font-semibold">
@@ -57,12 +56,13 @@ if (isset($_POST['submit_quiz'])) {
                                     name="answer[<?=$data['id_question']?>][id_quiz_option]"
                                     value="<?=$opt['id_quiz_option']?>"
                                     onclick="setIsRight(<?=$data['id_question']?>, <?=$opt['is_right']?>)" required>
-                                <input type="hidden" id="is_right_<?=$data['id_question']?>"
-                                    name="answer[<?=$data['id_question']?>][is_right]" value="0">
                                 <label
                                     for="option_<?=$data['id_question']?>_<?=$opt['id_quiz_option']?>"><?=$opt['option']?></label>
                             </div>
                             <?php } ?>
+                            <!-- Hidden field for is_right, updated via setIsRight function -->
+                            <input type="hidden" id="is_right_<?=$data['id_question']?>"
+                                name="answer[<?=$data['id_question']?>][is_right]" value="">
                         </div>
                     </div>
                 </div>
@@ -76,13 +76,14 @@ if (isset($_POST['submit_quiz'])) {
                 </div>
             </form>
 
-
             <script>
             function setIsRight(questionId, isRight) {
                 console.log('Setting is_right for question ' + questionId + ' to ' + isRight);
+                // Update the hidden input value with the correct is_right status
                 document.getElementById('is_right_' + questionId).value = isRight;
             }
             </script>
+
 
 
 
