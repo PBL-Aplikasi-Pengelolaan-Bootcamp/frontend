@@ -338,7 +338,10 @@
                         <div class="flex flex-col gap-2">
                             <h1 class="text-2xl font-semibold"></h1>
                             <p>Klik link/tombol di bawah ini untuk mengunduh sertifikat Anda.</p>
-                            <p style="color: blue;">Unduh Sertifikat</p>
+                            <a href="download-certificate.php?course=<?= urlencode($id_course) ?>" 
+   class="mt-4 mb-4 inline-block px-6 py-3 bg-white border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-100 transition duration-200">
+   Unduh Sertifikat
+</a>
                         </div>
                        
                     </div>

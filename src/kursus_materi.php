@@ -576,7 +576,7 @@ $isEnrolled = !empty($enrolledCourses);
                             <span class="text-yellow-600">🥳</span>
                             <span><strong>Klik tombol di bawah ini untuk mengambil sertifikatmu!</strong></span>
                         </div>
-                        <a href="download-certificate.php?course=<?= urlencode($id_course) ?>"
+                        <a href="download-certificate.php?kursus=<?= urlencode($kursus['slug']) ?>"
                             class="mt-4 mb-4 inline-block px-6 py-3 bg-white border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-100 transition duration-200">
                             Unduh Sertifikat
                         </a>
