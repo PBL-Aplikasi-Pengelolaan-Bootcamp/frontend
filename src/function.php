@@ -544,6 +544,28 @@ function total_question_byQuiz($id_quiz) {
     return $result['total'];
 }
 
+function get_score($id_quiz){
+    global $koneksi;
+    
+    $id_enroll = $_SESSION['id_enroll'];
+    $sql = mysqli_query($koneksi, "SELECT * FROM quiz_submission WHERE id_enroll = '$id_enroll' AND id_quiz = $id_quiz");
+    $result = mysqli_fetch_assoc($sql);
+    return $result;
+}
+
+function get_score2($id_quiz) {
+    global $koneksi;
+    
+    $id_enroll = $_SESSION['id_enroll'];
+    $sql = "SELECT * FROM quiz_submission WHERE id_enroll = '$id_enroll' AND id_quiz = $id_quiz ORDER BY id_quiz_submission DESC";
+    $result = mysqli_query($koneksi, $sql);
+
+    return mysqli_fetch_assoc($result); // Mengembalikan satu baris
+}
+
+
+
+
 function get_question_byQuiz(){
     global $koneksi;
 
@@ -557,6 +579,7 @@ function get_question_byQuiz(){
 }
 
 
+
 function get_option_byQuestion($id_question){
     global $koneksi;
 
@@ -568,17 +591,15 @@ function get_option_byQuestion($id_question){
     return $option;
 }
 
-
 function quiz_answer($answer_data) {
     global $koneksi;
     $id_enroll = $_SESSION["id_enroll"];
     
-    // Ambil id_course dari tabel enroll berdasarkan id_enroll
+    // Mendapatkan id_course dan slug kursus
     $query_enroll = mysqli_query($koneksi, "SELECT id_course FROM enroll WHERE id_enroll = '$id_enroll'");
     $result_enroll = mysqli_fetch_assoc($query_enroll);
     $id_course = $result_enroll['id_course'];
     
-    // Ambil slug dari tabel course berdasarkan id_course
     $query_course = mysqli_query($koneksi, "SELECT slug FROM course WHERE id_course = '$id_course'");
     $result_course = mysqli_fetch_assoc($query_course);
     $slug = $result_course['slug'];
@@ -586,16 +607,23 @@ function quiz_answer($answer_data) {
     $total_questions = count($answer_data);
     $correct_answers = 0;
 
+    // Mendapatkan id_question pertama dari array answer_data
+    $first_question_id = array_key_first($answer_data);
+
+    // Mendapatkan id_quiz berdasarkan id_question pertama
+    $query_quiz = mysqli_query($koneksi, "SELECT id_quiz FROM question WHERE id_question = '$first_question_id'");
+    $result_quiz = mysqli_fetch_assoc($query_quiz);
+    $id_quiz = $result_quiz['id_quiz'];
+
+    // Memproses jawaban
     foreach ($answer_data as $id_question => $answer) {
         $id_quiz_option = $answer['id_quiz_option'];
         $is_right = $answer['is_right'];
 
-        // Hitung jawaban benar
         if ($is_right) {
             $correct_answers++;
         }
 
-        // Insert ke tabel quiz_answer
         $sql = mysqli_query($koneksi, 
             "INSERT INTO quiz_answer (id_enroll, id_quiz_option, is_right) 
              VALUES ('$id_enroll', '$id_quiz_option', '$is_right')"
@@ -607,13 +635,9 @@ function quiz_answer($answer_data) {
         }
     }
 
-    // Hitung skor berdasarkan jawaban benar
+    // Menghitung skor dan menyimpan submission
     $score = ($correct_answers / $total_questions) * 100;
 
-    // Dapatkan id_quiz dari salah satu jawaban (karena diasumsikan semua jawaban terkait kuis yang sama)
-    $id_quiz = key($answer_data);
-
-    // Insert ke tabel quiz_submission
     $insert_submission = mysqli_query($koneksi, 
         "INSERT INTO quiz_submission (id_enroll, id_quiz, score) 
          VALUES ('$id_enroll', '$id_quiz', '$score')"
@@ -624,11 +648,100 @@ function quiz_answer($answer_data) {
         return;
     }
 
-    // Redirect ke halaman kursus_materi.php dengan slug yang didapatkan
+    // Redirect setelah berhasil
     echo "<script>
         alert('Berhasil mengirim jawaban!');
         window.location.href = 'kursus_materi.php?kursus=$slug';
     </script>";
+}
+
+
+
+
+function count_quiz_by_course() {
+    global $koneksi;
+    $slug= $_GET['kursus'];
+
+    $query = "SELECT id_course FROM course WHERE slug = '$slug' LIMIT 1";
+    $result = mysqli_query($koneksi, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        $id_course = $row['id_course'];}
+        
+    $query = mysqli_query($koneksi, 
+            "SELECT COUNT(q.id_quiz) AS total_quiz
+            FROM quiz q
+            JOIN section cs ON q.id_section = cs.id_section
+            WHERE cs.id_course = '$id_course'"
+    );
+    $result = mysqli_fetch_assoc($query);
+    return $result['total_quiz'];
+}
+
+function count_submission_by_course_and_enroll() {
+    global $koneksi;
+    $slug = $_GET['kursus'];
+    $id_enroll = $_SESSION['id_enroll'];
+    $query = "SELECT id_course FROM course WHERE slug = '$slug' LIMIT 1";
+    $result = mysqli_query($koneksi, $query);
+    if ($row = mysqli_fetch_assoc($result)) {
+        $id_course = $row['id_course'];
+    }
+    $query = mysqli_query($koneksi, 
+        "SELECT COUNT(DISTINCT qs.id_quiz) AS total_submission
+         FROM quiz_submission qs
+         JOIN quiz q ON qs.id_quiz = q.id_quiz
+         JOIN section cs ON q.id_section = cs.id_section
+         WHERE cs.id_course = '$id_course' AND qs.id_enroll = '$id_enroll'"
+    );
+    $result = mysqli_fetch_assoc($query);
+    return $result['total_submission'];
+}
+
+function is_all_quiz_submitted_by_enroll() {
+    global $koneksi;
+    $slug = $_GET['kursus'];
+    $id_enroll = $_SESSION['id_enroll'];
+
+    // Ambil id_course berdasarkan slug
+    $query = "SELECT id_course FROM course WHERE slug = '$slug' LIMIT 1";
+    $result = mysqli_query($koneksi, $query);
+
+    if ($row = mysqli_fetch_assoc($result)) {
+        $id_course = $row['id_course'];
+    } else {
+        return false; // jika id_course tidak ditemukan
+    }
+
+    // Hitung total quiz di course
+    $query = mysqli_query($koneksi, 
+        "SELECT COUNT(q.id_quiz) AS total_quiz
+         FROM quiz q
+         JOIN section cs ON q.id_section = cs.id_section
+         WHERE cs.id_course = '$id_course'"
+    );
+    $result = mysqli_fetch_assoc($query);
+    $total_quiz = $result['total_quiz'];
+
+    // Hitung total submission berdasarkan course dan id_enroll
+    $query = mysqli_query($koneksi, 
+        "SELECT COUNT(DISTINCT qs.id_quiz) AS total_submission
+         FROM quiz_submission qs
+         JOIN quiz q ON qs.id_quiz = q.id_quiz
+         JOIN section cs ON q.id_section = cs.id_section
+         WHERE cs.id_course = '$id_course' AND qs.id_enroll = '$id_enroll'"
+    );
+    $result = mysqli_fetch_assoc($query);
+    $total_submission = $result['total_submission'];
+
+    // Jika semua quiz sudah dikumpulkan, update status menjadi 'complete'
+    if ($total_submission === $total_quiz) {
+        $update_query = "UPDATE enroll SET status = 'complete' WHERE id_enroll = '$id_enroll' AND id_course = '$id_course'";
+        mysqli_query($koneksi, $update_query);
+        return true;
+    }
+
+    return false;
 }
 
 

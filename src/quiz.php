@@ -8,14 +8,12 @@ $quiz = get_quiz_byId();
 $question = get_question_byQuiz();
 
 
-
 if (isset($_POST['submit_quiz'])) {
-    echo "<pre>";
-    print_r($_POST['answer']); 
-    echo "</pre>";
+    // echo "<pre>";
+    // print_r($_POST['answer']); 
+    // echo "</pre>";
     quiz_answer($_POST['answer']); 
 }
-
 
 
 ?>

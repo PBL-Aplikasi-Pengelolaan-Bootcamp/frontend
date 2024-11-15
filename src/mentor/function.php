@@ -130,7 +130,7 @@ function create_course($data){
     
     $course_picture = $_FILES['course_picture']['name'];
     $tmpname = $_FILES['course_picture']['tmp_name'];
-    $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_cover_course/' . $course_picture;
+    $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_cover_course/' . $course_picture;
 
 
     if  (move_uploaded_file($tmpname, $folder)) {
@@ -170,7 +170,7 @@ function edit_course($data) {
     if (!empty($_FILES['course_picture']['name'])) {
         $course_picture = $_FILES['course_picture']['name'];
         $tmpname = $_FILES['course_picture']['tmp_name'];
-        $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_cover_course/' . $course_picture;
+        $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_cover_course/' . $course_picture;
 
         // Get old picture name
         $query = mysqli_query($koneksi, "SELECT course_picture FROM course WHERE id_course = '$id_course'");
@@ -179,7 +179,7 @@ function edit_course($data) {
 
         // Delete old picture if exists
         if (!empty($old_picture)) {
-            $old_picture_path = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_cover_course/' . $old_picture;
+            $old_picture_path = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_cover_course/' . $old_picture;
             if (file_exists($old_picture_path)) {
                 unlink($old_picture_path);
             }
@@ -419,7 +419,7 @@ function create_file($data) {
     
     $file_name = $_FILES['file']['name']; // Nama file yang diupload
     $tmpname = $_FILES['file']['tmp_name']; // Temporary file path
-    $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/file_materi/' . basename($file_name); // Path untuk menyimpan file
+    $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/file_materi/' . basename($file_name); // Path untuk menyimpan file
 
     // Validasi file (ekstensi dan ukuran bisa ditambahkan sesuai kebutuhan)
     $allowed_extensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'sql', 'jpg', 'jpeg', 'png']; // Daftar ekstensi yang diizinkan

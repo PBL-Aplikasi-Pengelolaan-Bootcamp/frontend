@@ -23,6 +23,7 @@ $isEnrolled = !empty($enrolledCourses);
         edit_profil($_POST, $data_login['id_user']);
     }
 
+    
 
 
   // Cek apakah data profil lengkap
@@ -34,6 +35,11 @@ $isEnrolled = !empty($enrolledCourses);
       enroll();  // Panggil fungsi enroll
   }
 
+  //cek kelulusan
+  $jumlah_quiz = count_quiz_by_course();
+  $jumlah_submission = count_submission_by_course_and_enroll();
+  $cek_kelulusan = is_all_quiz_submitted_by_enroll();
+  
 
 ?>
 
@@ -372,6 +378,9 @@ $isEnrolled = !empty($enrolledCourses);
 
                 <h1 class="text-2xl font-poppins font-semibold"><?= $kursus['title']?></h1>
                 <hr>
+                <p><?=$jumlah_quiz?></p>
+                <p><?=$jumlah_submission?></p>
+                <p><?=$cek_kelulusan?></p>
 
                 <div class="flex items-center gap-4">
                     <!-- Foto Profil -->
@@ -504,11 +513,12 @@ $isEnrolled = !empty($enrolledCourses);
 
                         <!-- tampil quiz -->
                         <?php $quiz = get_quiz_bySection($data['section_id_section']);?>
-                            <?php if (!empty($quiz)) { ?>
-                            <?php foreach ($quiz as $quizz) { ?>
-                            <?php $total_question = total_question_byQuiz($quizz['id_quiz']); ?>
-                            <a href="quiz-start.php?id=<?=$quizz['id_quiz']?>" class="block">
-                            <div class="flex items-center w-80 border border-gray-300 p-4 rounded-md shadow-sm hover:shadow-md transition duration-200">
+                        <?php if (!empty($quiz)) { ?>
+                        <?php foreach ($quiz as $quizz) { ?>
+                        <?php $total_question = total_question_byQuiz($quizz['id_quiz']); ?>
+                        <a href="quiz-start.php?id=<?=$quizz['id_quiz']?>" class="block">
+                            <div
+                                class="flex items-center w-80 border border-gray-300 p-4 rounded-md shadow-sm hover:shadow-md transition duration-200">
                                 <!-- Icon Quiz -->
                                 <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
                                     <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
@@ -519,19 +529,23 @@ $isEnrolled = !empty($enrolledCourses);
                                     </svg>
                                 </div>
 
-                                <!-- Konten Kanan (Judul dan Keterangan) -->
                                 <div class="ml-4">
                                     <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
                                     <div class="text-gray-500 text-sm space-y-1">
                                         <p>Soal: <?=$total_question?></p>
-                                        <p>Skor Anda: 100</p>
+                                        <?php 
+                                            $skor = get_score2($quizz['id_quiz']); 
+                                        ?>
+                                        <p>Skor Anda: <?= isset($skor['score']) ? $skor['score'] : 'Belum Mengerjakan' ?>
+                                        </p>
+
                                     </div>
                                 </div>
                             </div>
-                            </a>
-                            <?php } ?>
-                            <hr>
-                            <?php } ?>
+                        </a>
+                        <?php } ?>
+                        <hr>
+                        <?php } ?>
 
 
                     </div>

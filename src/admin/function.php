@@ -28,7 +28,7 @@ function create_mentor($data)
 
     $profil_picture = $_FILES['profil_picture']['name'];
     $tmpname = $_FILES['profil_picture']['tmp_name'];
-    $folder = $_SERVER['DOCUMENT_ROOT'] . '/_pbl/frontend/src/foto_mentor/' . $profil_picture;
+    $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_mentor/' . $profil_picture;
 
 
     //cek apakah ada username yang sama
