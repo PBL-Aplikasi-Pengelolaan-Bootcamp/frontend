@@ -536,7 +536,8 @@ $isEnrolled = !empty($enrolledCourses);
                                         <?php 
                                             $skor = get_score2($quizz['id_quiz']); 
                                         ?>
-                                        <p>Skor Anda: <?= isset($skor['score']) ? $skor['score'] : 'Belum Mengerjakan' ?>
+                                        <p>Skor Anda:
+                                            <?= isset($skor['score']) ? $skor['score'] : 'Belum Mengerjakan' ?>
                                         </p>
 
                                     </div>
@@ -558,12 +559,31 @@ $isEnrolled = !empty($enrolledCourses);
 
 
                 <div x-data="{ open: false }" class="bg-white shadow-md rounded-lg overflow-hidden">
-                    <button @click="open = open"
+                    <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span>SERTIFIKAT PENYELESAIAN</span>
+                        <span>Sertifikat Penyelesaian</span>
                     </button>
+
+                    <div x-show="open" class="px-4 py-2 border-t">
+                        <h2 class="font-bold text-lg mb-2">"Selamat, Kamu Berhasil Menyelesaikan Course!"</h2>
+                        <p class="text-gray-700 mb-4">
+                            Kerja kerasmu terbayar! Sekarang saatnya mengunduh sertifikat sebagai bukti pencapaianmu.
+                            Sertifikat ini dapat kamu gunakan untuk meningkatkan portofolio dan menunjukkan keahlianmu
+                            kepada rekan, klien, atau pemberi kerja.
+                        </p>
+                        <div class="mb-2">
+                            <span class="text-yellow-600">🥳</span>
+                            <span><strong>Klik tombol di bawah ini untuk mengambil sertifikatmu!</strong></span>
+                        </div>
+                        <a href="download-certificate.php?course=<?= urlencode($id_course) ?>"
+                            class="mt-4 mb-4 inline-block px-6 py-3 bg-white border border-blue-600 text-blue-600 font-bold rounded-lg hover:bg-blue-100 transition duration-200">
+                            Unduh Sertifikat
+                        </a>
+                    </div>
                 </div>
+
+
             </div>
 
 
