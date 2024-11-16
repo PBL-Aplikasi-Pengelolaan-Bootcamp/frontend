@@ -127,7 +127,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                     <div class=" gap-5 font-semibold flex my-auto">
                         <a href="login.php"
                             class="border rounded-full py-1 px-6 font-medium md:font-semibold bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Masuk</a>
-                        <a href="#"
+                        <a href="buat-akun.php"
                             class="md:border hidden md:flex md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Daftar</a>
                     </div>
                 <?php endif ?>
@@ -168,35 +168,35 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                                     <label for="username">Username</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="username" name="username" type="text" placeholder="Masukkan username"
+                                        id="username" name="username" type="text" placeholder="Masukkan username" required
                                         value="<?= $data_login['username'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="name">Nama</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="name" name="name" type="text" placeholder="Masukkan nama"
+                                        id="name" name="name" type="text" placeholder="Masukkan nama" required
                                         value="<?= $data_login['name'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="email">Email</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="email" name="email" type="email" placeholder="Masukkan email"
+                                        id="email" name="email" type="email" placeholder="Masukkan email" required
                                         value="<?= $data_login['email'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="birth">Birth</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="birth" name="birth" type="date" placeholder="Masukkan tanggal lahir"
+                                        id="birth" name="birth" type="date" placeholder="Masukkan tanggal lahir" required
                                         value="<?= $data_login['birth'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="telp">Telp</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="telp" name="telp" type="text" placeholder="Masukkan nomor telp"
+                                        id="telp" name="telp" type="text" placeholder="Masukkan nomor telp" required
                                         value="<?= $data_login['telp'] ?>">
                                 </div>
 
@@ -281,7 +281,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 tentunya dengan mudah dan simpel. Tunggu apalagi? Daftar Sekarang.</p>
 
             <?php if (!isset($_SESSION['id_user'])) { ?>
-                <a href="login.php"
+                <a href="buat-akun.php"
                     class=" text-white transition-all py-3 px-5 rounded-sm w-max m-auto font-poppins font-semibold 
                 tracking-wide border bg-blue-700 border-slatetext-blue-700 hover:bg-white hover:border hover:text-blue-700 hover:border-blue-700">Daftar
                     Sekarang</a>

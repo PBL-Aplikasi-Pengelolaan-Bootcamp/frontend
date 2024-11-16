@@ -1,5 +1,12 @@
 <?php
 include 'function.php';
+
+//logout
+if (isset($_POST['logout'])) {
+    logout();
+}
+
+
 $course = getAll_Course();
 ?>
 
@@ -21,7 +28,6 @@ $course = getAll_Course();
     .sidebar {
         transition: transform 0.3s ease;
     }
-
     </style>
 </head>
 
@@ -46,15 +52,19 @@ $course = getAll_Course();
             </div>
             <nav>
                 <ul>
-
-                    <li class="hover:bg-gray-200"><a href="dashboard-mentor.php" class="block p-4 text-gray-700">
+                    <li class="hover:bg-gray-200"><a href="dashboard-admin.php" class="block p-4 text-gray-700">
                             <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Dashboard
+                            Dashoboard
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
                             <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Kursus
+                        </a>
+                    </li>   
+                    <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
+                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Mentor
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
@@ -62,14 +72,19 @@ $course = getAll_Course();
                             Student
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="quiz.php" class="block p-4 text-gray-700">
-                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Quiz
-                        </a>
-                    </li>
-                    <li class="hover:bg-gray-200"><a href="#" class="block p-4 text-gray-700">
-                            <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>Log
-                            Out
-                        </a></li>
+
+                    <form method="post">
+                        <li class="hover:bg-gray-200">
+                            <button type="submit" name="logout" class="block p-4 text-gray-700">
+                                <ion-icon name="log-out" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                                Log
+                                Out
+                            </button>
+                        </li>
+                    </form>
+
+
+
                 </ul>
             </nav>
         </aside>
@@ -161,27 +176,6 @@ $course = getAll_Course();
                     <?php foreach ($course as $data) { ?>
                     <div
                         class="flex flex-col m-auto h-max shadow-md rounded-lg w-full lg:w-72 overflow-hidden transition-all xl:m-0">
-                        <div class="flex p-3 absolute gap-1">
-                            <a href="tambah-materi.html">
-                                <ion-icon name="brush"
-                                    class="bg-yellow-300 p-2 text-xl rounded-md hover:scale-105 transition-all">
-                                </ion-icon>
-                            </a>
-
-                            <a href="?delete_id=<?= $data['id_course'] ?>"
-                                onclick="return confirm('Are you sure you want to delete this course?');">
-                                <ion-icon name="trash"
-                                    class="bg-red-600 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                                </ion-icon>
-                            </a>
-
-
-                            <a href="detail-kursus.html#1">
-                                <ion-icon name="information-circle"
-                                    class="bg-blue-700 text-white p-2 text-xl rounded-md hover:scale-105 transition-all">
-                                </ion-icon>
-                            </a>
-                        </div>
                         <img src="../foto_cover_course/<?= $data['course_picture']?>" alt=""
                             class="object-center md:h-40">
                         <div class="px-3 py-3 flex flex-col gap-2">

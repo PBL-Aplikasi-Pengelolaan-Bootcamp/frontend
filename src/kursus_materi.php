@@ -2,46 +2,45 @@
 
 include 'function.php';
 
-get_data_enroll_login();
+// Pastikan session id_user ada sebelum melanjutkan
+$id_user = $_SESSION['id_user'] ?? null;
+if ($id_user) {
+    get_data_enroll_login(); // Pastikan fungsi ini hanya dijalankan jika id_user ada
+}
 
 $section = get_section_by_slug();
 $kursus = get_course_by_slug();
-
 $data_login = get_data_user_login();
 
-$id_user = $_SESSION['id_user'] ?? null;
-$enrolledCourses = getEnrolledCourses($id_user);
-$isEnrolled = !empty($enrolledCourses);
+// Cek apakah user terdaftar di kursus
+$id_course = get_course_id_from_slug($_GET['kursus']);
+$isEnrolled = $id_user && isEnrolled($id_user, $id_course); // Cek enrollment
 
+// Logout jika tombol logout ditekan
+if (isset($_POST['logout'])) {
+    logout();
+}
 
-    //logout
-    if (isset($_POST['logout'])) {
-        logout();
-    }
+// Edit profil jika tombol edit profil ditekan
+if (isset($_POST['edit_profil'])) {
+    edit_profil($_POST, $data_login['id_user']);
+}
 
-    if (isset($_POST['edit_profil'])) {
-        edit_profil($_POST, $data_login['id_user']);
-    }
+// Cek apakah user sudah terdaftar dan lakukan proses terkait
+if ($isEnrolled) {
+    // Hanya jalankan ini jika user sudah terdaftar
+    $jumlah_quiz = count_quiz_by_course();
+    $jumlah_submission = count_submission_by_course_and_enroll();
+    $cek_kelulusan = is_all_quiz_submitted_by_enroll();
+} 
 
-    
-
-
-  // Cek apakah data profil lengkap
-  $id_course = get_course_id_from_slug($_GET['kursus']); 
-  $id_user = $_SESSION['id_user'] ?? null;
-  $isEnrolled = $id_user && isEnrolled($id_user, $id_course);
-
-  if (isset($_POST['enroll_course'])) {
-      enroll();  // Panggil fungsi enroll
-  }
-
-  //cek kelulusan
-  $jumlah_quiz = count_quiz_by_course();
-  $jumlah_submission = count_submission_by_course_and_enroll();
-  $cek_kelulusan = is_all_quiz_submitted_by_enroll();
-  
+// Enroll user ke kursus jika tombol enroll ditekan
+if (isset($_POST['enroll_course'])) {
+    enroll();  // Panggil fungsi enroll
+}
 
 ?>
+
 
 
 <!DOCTYPE html>
@@ -378,9 +377,7 @@ $isEnrolled = !empty($enrolledCourses);
 
                 <h1 class="text-2xl font-poppins font-semibold"><?= $kursus['title']?></h1>
                 <hr>
-                <p><?=$jumlah_quiz?></p>
-                <p><?=$jumlah_submission?></p>
-                <p><?=$cek_kelulusan?></p>
+
 
                 <div class="flex items-center gap-4">
                     <!-- Foto Profil -->
@@ -565,7 +562,7 @@ $isEnrolled = !empty($enrolledCourses);
                         <span>Sertifikat Penyelesaian</span>
                     </button>
 
-                    <div x-show="open" class="px-4 py-2 border-t">
+                    <div x-show="open" class="px-4 py-2 border-t <?= $shouldHide || $statusEnrollment === 'On going' ? 'hidden' : '' ?>">
                         <h2 class="font-bold text-lg mb-2">"Selamat, Kamu Berhasil Menyelesaikan Course!"</h2>
                         <p class="text-gray-700 mb-4">
                             Kerja kerasmu terbayar! Sekarang saatnya mengunduh sertifikat sebagai bukti pencapaianmu.

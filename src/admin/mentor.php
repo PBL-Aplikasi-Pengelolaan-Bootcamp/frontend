@@ -59,18 +59,22 @@ $mentor = getAll_mentor();
             <nav>
                 <ul>
                     <li class="hover:bg-gray-200"><a href="dashboard-admin.php" class="block p-4 text-gray-700">
-                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Dashoboar
+                            <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Dashoboard
                         </a>
                     </li>
-
+                    <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Kursus
+                        </a>
+                    </li>   
                     <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
-                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Student
                         </a>
                     </li>
@@ -242,7 +246,7 @@ $mentor = getAll_mentor();
                             <div class="flex items-center gap-2 font-poppins">
                                 <!-- Foto Profil -->
                                 <img src="../foto_mentor/nasyith.jpg" alt="Foto Profil Mentor"
-                                    class="w-16 h-16 object-cover border-2 border-blue-500 rounded-md">
+                                    class="w-16 h-16 object-cover rounded-full">
                                 <!-- Nama Mentor -->
                                 <h1 class="font-semibold text-xl"><?= $data['name']?></h1>
                             </div>

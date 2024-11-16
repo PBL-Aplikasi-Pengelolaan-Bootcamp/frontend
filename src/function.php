@@ -353,6 +353,9 @@ function enroll() {
 
 // ---------------------------------------GET DATA ENROLL-------------------------------------------------
 function get_data_enroll_login() {
+    if (!isset($_SESSION['id_user']) || !$_SESSION['id_user']) {
+        return false; // Jika tidak ada session id_user, fungsi tidak dijalankan
+    }
     global $koneksi;
     $slug= $_GET['kursus'];
     $id_student = $_SESSION['id_user'];
@@ -374,7 +377,6 @@ function get_data_enroll_login() {
             return $_SESSION['id_enroll']; // Kembalikan id_enroll jika ditemukan
         } else {
             // Jika enrollment tidak ditemukan
-            echo "Enrollment not found for this course.";
             return null;
         }
     } else {

@@ -80,17 +80,13 @@ function create_mentor($data)
 // get all course
 function getAll_Course() {
     global $koneksi;
-
-        // Jika user belum login, tampilkan semua kursus
         $sql = "SELECT * FROM course";
 
     $result = mysqli_query($koneksi, $sql);
-
     $courses = [];
     while ($course = mysqli_fetch_assoc($result)) {
         $courses[] = $course;
     }
-
     return $courses;
 }
 
@@ -99,16 +95,23 @@ function getAll_Course() {
 // get all mentor
 function getAll_mentor(){
     global $koneksi;
-
     $sql = mysqli_query($koneksi, "SELECT * FROM mentor");
-
     $mentors = [];
     while ($mentor = mysqli_fetch_assoc($sql)) {
         $mentors[] = $mentor;
     }
-
     return $mentors;
+}
 
+// get all student
+function getAll_student(){
+    global $koneksi;
+    $sql = mysqli_query($koneksi, "SELECT * FROM student");
+    $students = [];
+    while ($student = mysqli_fetch_assoc($sql)) {
+        $students[] = $student;
+    }
+    return $students;
 }
 
 

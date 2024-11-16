@@ -12,7 +12,7 @@ if (isset($_POST['create_mentor'])) {
     create_mentor($_POST);
 }
 
-$mentor = getAll_mentor();
+$student = getAll_student();
 
 ?>
 
@@ -59,18 +59,22 @@ $mentor = getAll_mentor();
             <nav>
                 <ul>
                     <li class="hover:bg-gray-200"><a href="dashboard-admin.php" class="block p-4 text-gray-700">
-                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Dashoboar
+                            <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Dashoboard
                         </a>
                     </li>
-
+                    <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
+                            <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            Kursus
+                        </a>
+                    </li>   
                     <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
-                            <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
+                            <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Student
                         </a>
                     </li>
@@ -168,11 +172,11 @@ $mentor = getAll_mentor();
 
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
-    <?php foreach ($mentor as $data) { ?>
+    <?php foreach ($student as $data) { ?>
         <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
             <div class="flex items-center gap-2 font-poppins">
                 <!-- Foto Profil -->
-                <img src="../foto_mentor/nasyith.jpg" alt="Foto Profil Mentor" class="w-16 h-16 object-cover border-2 border-blue-500 rounded-md">
+                <img src="../foto_student/<?= isset($data['profil_picture']) ? $data['profil_picture'] : 'profil_default.png' ?>" alt="Foto Profil Mentor" class="w-16 h-16 object-cover  rounded-full">
                 <!-- Nama Mentor -->
                 <h1 class="font-semibold text-xl"><?= $data['name']?></h1>
             </div>

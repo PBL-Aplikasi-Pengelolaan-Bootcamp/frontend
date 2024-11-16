@@ -5,7 +5,9 @@ include 'function.php';
 if (isset($_POST['logout'])) {
     logout();
 }
-
+$total_mentor = count(getAll_mentor());
+$total_course = count(getAll_course());
+$total_student = count(getAll_student());
 ?>
 
 <!DOCTYPE html>
@@ -51,9 +53,9 @@ if (isset($_POST['logout'])) {
             </div>
             <nav>
                 <ul>
-                    <li class="hover:bg-gray-200"><a href="#pengguna" class="block p-4 text-gray-700">
+                    <li class="hover:bg-gray-200"><a href="dashboard-admin.php" class="block p-4 text-gray-700">
                             <ion-icon name="home" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
-                            Dashoboar
+                            Dashoboard
                         </a>
                     </li>
                     <li class="hover:bg-gray-200"><a href="kursus.php" class="block p-4 text-gray-700">
@@ -66,7 +68,7 @@ if (isset($_POST['logout'])) {
                             Mentor
                         </a>
                     </li>
-                    <li class="hover:bg-gray-200"><a href="tambah_mentor.php" class="block p-4 text-gray-700">
+                    <li class="hover:bg-gray-200"><a href="student.php" class="block p-4 text-gray-700">
                             <ion-icon name="person" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Student
                         </a>
@@ -153,17 +155,17 @@ if (isset($_POST['logout'])) {
                     <ion-icon name="school" class="rounded-full bg-blue-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
                         <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">MENTOR</h1>
-                        <h1 class="font-bold text-lg">Mentor in total.</h1>
-                        <p class="text-xl">10</p>
+                        <h1 class="font-bold text-lg">Total mentor</h1>
+                        <p class="text-xl"><?=$total_mentor?></p>
                     </div>
                 </div>
                 <div
                     class="flex gap-3 p-3 flex-row-reverse bg-white justify-between w-full lg:w-80 2xl:w-96 py-8 px-6 rounded-lg shadow-md">
                     <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
-                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">SISWA</h1>
-                        <h1 class="font-bold text-lg">Siswa in total.</h1>
-                        <p class="text-xl">156</p>
+                        <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">STUDENT</h1>
+                        <h1 class="font-bold text-lg">Total student</h1>
+                        <p class="text-xl"><?=$total_student?></p>
                     </div>
                 </div>
                 <div
@@ -171,8 +173,8 @@ if (isset($_POST['logout'])) {
                     <ion-icon name="bookmarks" class="rounded-full bg-yellow-400 p-3 text-4xl my-auto"></ion-icon>
                     <div class="flex flex-col">
                         <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">COURSE</h1>
-                        <h1 class="font-bold text-lg">Course in total.</h1>
-                        <p class="text-xl">156</p>
+                        <h1 class="font-bold text-lg">Total course</h1>
+                        <p class="text-xl"><?=$total_course?></p>
                     </div>
                 </div>
             </div>
@@ -182,7 +184,7 @@ if (isset($_POST['logout'])) {
             <div class="flex flex-wrap gap-5 justify-between mt-10">
                 <!-- Selamat Datang -->
                 <div class="bg-white p-5 rounded-lg shadow-md w-full">
-                    <h2 class="font-bold text-2xl mb-3">Selamat Datang di Dashboard Admin Pengguna</h2>
+                    <h2 class="font-bold text-2xl mb-3">Selamat Datang di Dashboard Admin</h2>
                     <p class="text-gray-600">
                         Anda memiliki akses untuk menambah mentor baru dan mengedit data pengguna. Pastikan semua
                         informasi pengguna
@@ -194,7 +196,7 @@ if (isset($_POST['logout'])) {
                 <div class="bg-white p-5 rounded-lg shadow-md w-full">
                     <h2 class="font-bold text-xl mb-3">Pengelolaan Mentor</h2>
                     <ul class="list-disc pl-5 text-gray-600">
-                        <li>Tambahkan mentor baru melalui menu "Tambah Mentor".</li>
+                        <li>Tambahkan mentor baru melalui menu "Mentor"</li>
                         <li>Pastikan data mentor lengkap dan benar saat ditambahkan.</li>
                         <li>Edit informasi mentor jika terjadi perubahan, seperti email atau nomor telepon.</li>
                     </ul>
