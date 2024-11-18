@@ -2,9 +2,17 @@
 
 include 'function.php';
 
+//get data session login
+$login = get_data_user_login();
+
 //logout
 if (isset($_POST['logout'])) {
     logout();
+}
+
+//edit profil
+if (isset($_POST['edit_profil'])) {
+    edit_profil($_POST, $_SESSION['id_user']);
 }
 
 //create mentor
@@ -112,8 +120,8 @@ $mentor = getAll_mentor();
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
-                        <h1 class="font-semibold relative my-auto">Student1</h1>
-                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
+                        <h1 class="font-semibold relative my-auto"><?=$login['username']?></h1>
+                        <img src="../img/logo.png" alt="" class="w-12 h-12 rounded-full">
                     </div>
                 </button>
 
@@ -124,38 +132,61 @@ $mentor = getAll_mentor();
                         <!-- MODAL BOX -->
                         <div
                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3">
-                            <form action="" class="flex flex-col gap-5 my-2 w-full">
+                            <form method="post" class="flex flex-col gap-5 my-2 w-full">
                                 <div class="flex flex-col gap-2">
-                                    <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
-                                    <label for="img">Upload Gambar</label>
-                                    <input type="file" src="" alt="" name="img"
-                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <label for="nama-mentor">Nama</label>
+                                    <label for="nama-mentor">Username</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="nama-mentor" type="text" placeholder="Enter your name">
+                                        id="nama-mentor" type="text" placeholder="Enter your name" name="username"
+                                        value="<?=$login['username']?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
-                                    <label for="expertiser">Expertise</label>
-                                    <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
+                                    <div class="flex justify-between items-center">
+                                        <button type="button" id="change-password-btn"
+                                            class="ml-2 text-blue-500 hover:underline">Ganti Password</button>
+                                    </div>
+                                </div>
+
+                                <!-- Div untuk input password lama dan baru, default disembunyikan -->
+                                <div id="password-change-fields" class="hidden flex flex-col gap-2">
+                                    <label for="old-password">Password Lama</label>
+                                    <input type="password" id="old-password" name="old_password"
+                                        placeholder="Masukkan password lama"
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                </div>
-                                <div class="flex flex-col gap-2">
-                                    <label for="deskripsi">Bio</label>
-                                    <textarea name="deskripsi"
-                                        class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+
+                                    <label for="new-password">Password Baru</label>
+                                    <input type="password" id="new-password" name="new_password"
+                                        placeholder="Masukkan password baru"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                 </div>
 
                                 <div class="flex justify-between">
-                                    <button type="submit"
-                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
                                     <button id="close-modal-btn"
                                         class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                    <button type="submit" name="edit_profil"
+                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
                                 </div>
-
                             </form>
+
+                            <script>
+                            document.addEventListener("DOMContentLoaded", function() {
+                                const changePasswordBtn = document.getElementById("change-password-btn");
+                                const passwordChangeFields = document.getElementById("password-change-fields");
+
+                                changePasswordBtn.addEventListener("click", function() {
+                                    // Toggle visibility
+                                    if (passwordChangeFields.classList.contains("hidden")) {
+                                        passwordChangeFields.classList.remove("hidden");
+                                        changePasswordBtn.innerText = "Batal Ganti Password";
+                                    } else {
+                                        passwordChangeFields.classList.add("hidden");
+                                        changePasswordBtn.innerText = "Ganti Password";
+                                    }
+                                });
+                            });
+                            </script>
+
+
                         </div>
                     </div>
                 </div>
@@ -240,8 +271,7 @@ $mentor = getAll_mentor();
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                     <?php foreach ($mentor as $data) { ?>
-                    <a href="mentor-detail.php">
-
+                    <a href="mentor-detail.php?id=<?=$data['id_mentor']?>">
                         <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
                             <div class="flex items-center gap-2 font-poppins">
                                 <!-- Foto Profil -->
@@ -252,7 +282,6 @@ $mentor = getAll_mentor();
                             </div>
                         </div>
                     </a>
-
                     <?php } ?>
                 </div>
 
