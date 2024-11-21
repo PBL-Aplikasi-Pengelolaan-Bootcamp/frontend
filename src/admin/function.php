@@ -225,7 +225,34 @@ function edit_mentor($data)
     return true;
 }
 
+function delete_mentor() {
+    global $koneksi;
+    $id_mentor = $_GET['id'];
+    
+    // Mulai transaksi
+    mysqli_begin_transaction($koneksi);
+    
+    try {
+        // Hapus data terkait di tabel lain
+        mysqli_query($koneksi, "DELETE FROM course WHERE id_mentor = '$id_mentor'");
+        
+        // Hapus data mentor
+        $sql = mysqli_query($koneksi, "DELETE FROM mentor WHERE id_mentor = '$id_mentor'");
+        
+        // Commit transaksi jika semua berhasil
+        mysqli_commit($koneksi);
 
+
+        return mysqli_affected_rows($koneksi);
+        echo "<script>alert('Mentor di hapus'); window.location.href='mentor.php'</script>";    
+    } catch (Exception $e) {
+        // Rollback transaksi jika ada kesalahan
+        mysqli_rollback($koneksi);
+
+        // Kembalikan error atau log pesan
+        return false;
+    }
+}
 
 
 

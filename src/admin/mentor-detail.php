@@ -19,6 +19,11 @@ if (isset($_POST['edit_mentor'])) {
     edit_mentor($_POST);
 }
 
+//hapus mentor
+if (isset($_POST['delete_mentor'])) {
+    delete_mentor();
+}
+
 //get data mentor
 $mentor = get_mentor_byId(); 
 $course_mentor = get_mentor_course();
@@ -325,7 +330,7 @@ $course_mentor = get_mentor_course();
                                         </div>
 
                                         <div class="flex flex-col gap-2">
-                                            <button type="submit" name="delete_course"
+                                            <button type="submit" name="delete_mentor"
                                                 class="px-4 py-2 h-max my-auto text-red-500 bg-white border border-red-500 font-semibold w-max text-center rounded-md hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-300">
                                                 DELETE MENTOR
                                             </button>

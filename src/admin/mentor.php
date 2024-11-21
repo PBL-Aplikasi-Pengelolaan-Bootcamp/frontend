@@ -36,6 +36,9 @@ $mentor = getAll_mentor();
     <link href="../img/logo.png" rel="shortcut icon" />
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
     <title>Admin | Tambah Mentor</title>
     <style>
     /* Tambahkan gaya untuk transisi sidebar */
@@ -137,8 +140,7 @@ $mentor = getAll_mentor();
                                     <label for="nama-mentor">Username</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="nama-mentor" type="text" placeholder="Enter your name" name="username"
-                                        value="<?=$login['username']?>">
+                                        id="nama-mentor" type="text" placeholder="Enter your name" name="username">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <div class="flex justify-between items-center">
@@ -201,7 +203,132 @@ $mentor = getAll_mentor();
                     <button type="" id="tambahMentor" class="bg-blue-700 p-2 rounded-md font-semibold text-white">Tambah
                         Mentor</button>
                     <!-- Modal Tambah Mentor -->
-                    <div id="modalTambah"
+
+
+                    <div id="modalTambah" class="fixed z-10 inset-0 hidden">
+                        <div
+                            class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                            <div
+                                class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[80vh] overflow-y-auto">
+                                <form method="post" method="post" enctype="multipart/form-data"
+                                    class="flex flex-col gap-5 my-2 w-full">
+                                    <h1 class="my-auto text-2xl font-bold font-poppins">Profil</h1>
+
+                                    <div class="flex flex-col gap-2">
+                                        <label for="profil_picture">Foto Profil</label>
+                                        <input type="file" accept="image/*" name="profil_picture" id="profil_picture" "
+                                                class=" shadow appearance-none border rounded w-full py-2 px-3
+                                            text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                        <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
+                                        <input type="hidden" name="cropped_image" id="cropped_image">
+                                        <div class="relative w-12 h-12">
+                                            <img src="../foto_mentor/" alt="" id="preview-image"
+                                                class="w-12 h-12 object-cover rounded-full">
+                                        </div>
+                                    </div>
+
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex flex-col gap-2 w-full">
+                                            <label for="start-date">Name</label>
+                                            <input
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                id="start-date" name="name" type="text">
+                                        </div>
+                                        <div class="flex flex-col gap-2 w-full">
+                                            <label for="end-date">Expertise</label>
+                                            <input
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                id="" name="expertise" type="text">
+                                        </div>
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="title">Bio</label>
+                                        <textarea
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            name="bio" id=""></textarea>
+                                    </div>
+                                    <div class="flex items-center gap-2">
+                                        <div class="flex flex-col gap-2 w-full">
+                                            <label for="telp">No telp</label>
+                                            <input
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                id="telp" name="telp" type="text">
+                                        </div>
+                                        <div class="flex flex-col gap-2 w-full">
+                                            <label for="email">Email</label>
+                                            <input
+                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                                id="email" name="email" type="email">
+                                        </div>
+                                    </div>
+
+                                    <h1 class="my-auto text-2xl font-bold font-poppins mt-12">Akun</h1>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="username">Username</label>
+                                        <input
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="username" type="text" placeholder="Enter your name" name="username">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="password">Password</label>
+                                        <input
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="password" type="password" placeholder="Enter your name" name="password">
+                                    </div>
+                                    <div class="flex flex-col gap-2">
+                                        <label for="password2">Confirmation Password</label>
+                                        <input
+                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            id="password2" type="password" placeholder="Enter your name" name="password2">
+                                    </div>
+
+
+
+                                    <div class="flex justify-end items-center gap-2">
+                                        <button id="closeTambahMentor" type="button"
+                                            class="px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Close
+                                        </button>
+                                        <button type="submit" name="create_mentor"
+                                            class="px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Simpan
+                                        </button>
+                                    </div>
+                                </form>
+
+
+                                <div id="cropperModal"
+                                    class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                                    <div class="bg-white rounded-lg max-w-2xl w-full">
+                                        <div class="flex justify-between items-center p-4 border-b">
+                                            <h3 class="text-lg font-semibold">Crop Image</h3>
+                                            <button type="button" onclick="closeCropperModal()"
+                                                class="text-gray-500 hover:text-gray-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="p-4">
+                                            <div class="max-h-[60vh] overflow-hidden">
+                                                <img id="cropperImage" class="max-w-full">
+                                            </div>
+                                            <div class="mt-4 flex justify-end gap-2">
+                                                <button type="button" onclick="applyCrop()"
+                                                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                                    Apply Crop
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- <div id="modalTambah"
                         class="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 hidden">
                         <div
                             class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full max-h-screen overflow-y-auto">
@@ -264,7 +391,7 @@ $mentor = getAll_mentor();
                                 </form>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
 
 
@@ -342,6 +469,121 @@ $mentor = getAll_mentor();
 
     document.getElementById('closeTambahMentor').addEventListener('click', function() {
         document.getElementById('modalTambah').classList.add('hidden');
+    });
+    </script>
+
+
+
+<script>
+    let cropper = null;
+    const profileForm = document.getElementById('profileForm');
+    const fileInput = document.getElementById('profil_picture');
+    const previewImage = document.getElementById('preview-image');
+    const cropperModal = document.getElementById('cropperModal');
+    const cropperImage = document.getElementById('cropperImage');
+    const croppedImageInput = document.getElementById('cropped_image');
+
+    // File input change handler
+    fileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Initialize cropper
+                cropperImage.src = e.target.result;
+                cropperModal.classList.remove('hidden');
+
+                if (cropper) {
+                    cropper.destroy();
+                }
+
+                cropper = new Cropper(cropperImage, {
+                    aspectRatio: 1,
+                    viewMode: 2,
+                    dragMode: 'move',
+                    autoCropArea: 1,
+                    restore: false,
+                    guides: true,
+                    center: true,
+                    highlight: false,
+                    cropBoxMovable: true,
+                    cropBoxResizable: true,
+                    toggleDragModeOnDblclick: false,
+                    initialAspectRatio: 1,
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Apply crop function
+    function applyCrop() {
+        if (!cropper) return;
+
+        // Get cropped canvas
+        const canvas = cropper.getCroppedCanvas({
+            width: 300,
+            height: 300,
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        // Convert to blob
+        canvas.toBlob(function(blob) {
+            // Create file from blob
+            const fileName = fileInput.files[0].name;
+            const croppedFile = new File([blob], fileName, {
+                type: 'image/jpeg'
+            });
+
+            // Create FileList object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(croppedFile);
+            fileInput.files = dataTransfer.files;
+
+            // Update preview
+            previewImage.src = canvas.toDataURL('image/jpeg');
+
+            // Store base64 in hidden input
+            croppedImageInput.value = canvas.toDataURL('image/jpeg');
+
+            // Close modal
+            closeCropperModal();
+        }, 'image/jpeg', 0.9);
+    }
+
+    function closeCropperModal() {
+        cropperModal.classList.add('hidden');
+        if (cropper) {
+            cropper.destroy();
+            cropper = null;
+        }
+    }
+
+    // Handle form submission
+    profileForm.addEventListener('submit', function(e) {
+        if (fileInput.files.length > 0 && !croppedImageInput.value) {
+            e.preventDefault();
+            alert('Please crop the image before submitting');
+            return;
+        }
+    });
+
+    // Close modal when clicking outside
+    cropperModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeCropperModal();
+        }
+    });
+
+    // Close button handler
+    document.getElementById('close-modal-btn').addEventListener('click', function() {
+        window.history.back();
     });
     </script>
 </body>

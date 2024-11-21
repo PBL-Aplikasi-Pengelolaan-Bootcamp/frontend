@@ -369,10 +369,10 @@ if (isset($_POST['add_quiz'])) {
                                     </div>
 
                                     <div class="flex flex-col gap-2">
-                                            <button type="submit" name="delete_course"
-                                                class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
-                                                DELETE COURSE
-                                            </button>
+                                        <button type="submit" name="delete_course"
+                                            class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                            DELETE COURSE
+                                        </button>
                                     </div>
 
                                     <div class="flex justify-end items-center gap-2">
@@ -675,6 +675,11 @@ if (isset($_POST['add_quiz'])) {
                                 <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96" allowfullscreen
                                     frameborder="0"></iframe>
                             </div>
+                            <button id="open-modal-btn-course"
+                                class="block px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
+                                <i class="fa-solid fa-pen-to-square text-lg"></i>
+                            </button>
+
                             <?php } ?>
                             <hr>
                             <?php } ?>
