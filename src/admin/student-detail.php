@@ -19,8 +19,8 @@ if (isset($_POST['edit_mentor'])) {
     edit_mentor($_POST);
 }
 
-//get data mentor
-$mentor = get_mentor_byId(); 
+//get data student
+$student = get_student_byId(); 
 $course_mentor = get_mentor_course();
 
 ?>
@@ -220,12 +220,12 @@ $course_mentor = get_mentor_course();
             <!-- LIST -->
             <div class="flex flex-col md:flex-row items-center md:items-start gap-5 mt-10 w-full">
                 <div class="w-64 md:w-80 aspect-square overflow-hidden rounded-lg">
-                    <img src="../foto_mentor/<?=$mentor['profil_picture']?>" class="w-full h-full object-cover">
+                    <img src="../foto_mentor/<?=$student['profil_picture']?>" class="w-full h-full object-cover">
                 </div>
 
                 <div class="flex flex-col w-full text-center md:text-left space-y-3">
                     <div class="container flex gap-2">
-                        <h1 class="my-auto text-2xl font-bold font-poppins"><?=$mentor['name']?></h1>
+                        <h1 class="my-auto text-2xl font-bold font-poppins"><?=$student['name']?></h1>
 
                         <!-- Button untuk membuka modal -->
                         <button id="open-modal-btn-edit"
@@ -247,12 +247,12 @@ $course_mentor = get_mentor_course();
                                         <div class="flex flex-col gap-2">
                                             <label for="profil_picture">Foto Profil</label>
                                             <input type="file" accept="image/*" name="profil_picture"
-                                                id="profil_picture" value="<?=$mentor['profil_picture']?>"
+                                                id="profil_picture" value="<?=$student['profil_picture']?>"
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                             <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
                                             <input type="hidden" name="cropped_image" id="cropped_image">
                                             <div class="relative w-12 h-12">
-                                                <img src="../foto_mentor/<?=$mentor['profil_picture']?>" alt=""
+                                                <img src="../foto_mentor/<?=$student['profil_picture']?>" alt=""
                                                     id="preview-image" class="w-12 h-12 object-cover rounded-full">
                                             </div>
                                         </div>
@@ -263,21 +263,21 @@ $course_mentor = get_mentor_course();
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                     id="start-date" name="name" type="text"
-                                                    value="<?=$mentor['name']?>">
+                                                    value="<?=$student['name']?>">
                                             </div>
                                             <div class="flex flex-col gap-2 w-full">
                                                 <label for="end-date">Expertise</label>
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                     id="" name="expertise" type="text"
-                                                    value="<?=$mentor['expertise']?>">
+                                                    value="<?=$student['expertise']?>">
                                             </div>
                                         </div>
                                         <div class="flex flex-col gap-2">
                                             <label for="title">Bio</label>
                                             <textarea
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                name="bio" id=""><?=$mentor['bio']?></textarea>
+                                                name="bio" id=""><?=$student['bio']?></textarea>
                                         </div>
                                         <div class="flex items-center gap-2">
                                             <div class="flex flex-col gap-2 w-full">
@@ -285,14 +285,14 @@ $course_mentor = get_mentor_course();
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                     id="start-date" name="phone" type="text"
-                                                    value="<?=$mentor['telp']?>">
+                                                    value="<?=$student['telp']?>">
                                             </div>
                                             <div class="flex flex-col gap-2 w-full">
                                                 <label for="end-date">Email</label>
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                     id="end-date" name="email" type="email"
-                                                    value="<?=$mentor['email']?>">
+                                                    value="<?=$student['email']?>">
                                             </div>
                                         </div>
 
@@ -302,7 +302,7 @@ $course_mentor = get_mentor_course();
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                 id="nama-mentor" type="text" placeholder="Enter your name"
-                                                name="username" value="<?=$mentor['username']?>">
+                                                name="username" value="<?=$student['username']?>">
                                         </div>
                                         <div class="flex flex-col gap-2">
                                             <div class="flex justify-between items-center">
@@ -378,20 +378,17 @@ $course_mentor = get_mentor_course();
 
                     </div>
 
-                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins"><?=$mentor['expertise']?>
+                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins">Birth : <?=$student['birth']?>
                     </p>
-                    <p class="text-sm md:text-base font-poppins">
-                        <?=$mentor['bio']?>
-                    </p>
-
+                    
                     <div class="flex flex-col sm:flex-row md:flex-col sm:gap-5 gap-2">
                         <div class="flex gap-2 items-center">
                             <ion-icon name="call" class="text-lg"></ion-icon>
-                            <p class="font-semibold text-sm"><?=$mentor['telp']?></p>
+                            <p class="font-semibold text-sm"><?=$student['telp']?></p>
                         </div>
                         <div class="flex gap-2 items-center">
                             <ion-icon name="mail" class="text-lg"></ion-icon>
-                            <p class="font-semibold text-sm"><?=$mentor['email']?></p>
+                            <p class="font-semibold text-sm"><?=$student['email']?></p>
                         </div>
                     </div>
                 </div>

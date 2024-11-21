@@ -18,7 +18,7 @@ function get_data_user_login() {
 
     // Query untuk mendapatkan data dari user dan student
     $sql = mysqli_query($koneksi, 
-        "SELECT * FROM user"
+        "SELECT * FROM user WHERE id_user = '$id_user'"
     );
 
     // Periksa jika ada hasil yang ditemukan
@@ -148,12 +148,105 @@ function create_mentor($data)
 }
 
 
+//edit mentor
+function edit_mentor($data)
+{
+    global $koneksi;
+
+    $id_mentor = $_GET['id'];
+    $username = strtolower(stripslashes($data['username']));
+    $email = $data['email'];
+    $name = $data['name'];
+    $bio = $data['bio'];
+    $expertise = $data['expertise'];
+    $telp = $data['phone'];
+    
+    // Ambil password lama dan baru
+    $old_password = $data['old_password'];
+    $new_password = $data['new_password'];
+    
+    // Cek apakah password lama diisi dan password baru diisi
+    if (!empty($old_password) && !empty($new_password)) {
+        // Cek apakah password lama cocok dengan yang ada di database
+        $check_password = mysqli_query($koneksi, "SELECT password FROM user WHERE id_user = '$id_mentor'");
+        $data_password = mysqli_fetch_assoc($check_password);
+        
+        if (password_verify($old_password, $data_password['password'])) {
+            // Jika password lama cocok, enkripsi password baru
+            $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+            // Update password di tabel user
+            $update_password = mysqli_query($koneksi, "UPDATE user SET password = '$new_password_hash' WHERE id_user = '$id_mentor'");
+            if (!$update_password) {
+                echo "<script>alert('Gagal memperbarui password');</script>";
+                return false;
+            }
+        } else {
+            echo "<script>alert('Password lama tidak cocok');</script>";
+            return false;
+        }
+    }
+
+    // Cek apakah ada file gambar profil baru
+    $profil_picture = $_FILES['profil_picture']['name'];
+    $tmpname = $_FILES['profil_picture']['tmp_name'];
+    $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_mentor/' . $profil_picture;
+
+    // Update data pada tabel user
+    $update_user = mysqli_query($koneksi, "UPDATE user SET username = '$username', email = '$email' WHERE id_user = '$id_mentor'");
+    if (!$update_user) {
+        echo "<script>alert('Gagal memperbarui data user');</script>";
+        return false;
+    }
+
+    // Update data pada tabel mentor
+    if (!empty($profil_picture)) {
+        // Jika ada file profil baru, pindahkan file dan perbarui kolom profil_picture
+        if (move_uploaded_file($tmpname, $folder)) {
+            $update_mentor = mysqli_query($koneksi, "UPDATE mentor SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp', profil_picture = '$profil_picture' WHERE id_mentor = '$id_mentor'");
+            if (!$update_mentor) {
+                echo "<script>alert('Gagal memperbarui data mentor');</script>";
+                return false;
+            }
+        } else {
+            echo "<script>alert('Gagal mengupload file profil baru');</script>";
+            return false;
+        }
+    } else {
+        // Jika tidak ada file profil baru, hanya perbarui data lainnya
+        $update_mentor = mysqli_query($koneksi, "UPDATE mentor SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp' WHERE id_mentor = '$id_mentor'");
+        if (!$update_mentor) {
+            echo "<script>alert('Gagal memperbarui data mentor');</script>";
+            return false;
+        }
+    }
+
+    echo "<script>alert('Data mentor berhasil diperbarui!'); window.location.href='dashboard-admin.php';</script>";
+    return true;
+}
+
+
+
+
 
 // get all course
 function getAll_Course() {
     global $koneksi;
         $sql = "SELECT * FROM course";
 
+    $result = mysqli_query($koneksi, $sql);
+    $courses = [];
+    while ($course = mysqli_fetch_assoc($result)) {
+        $courses[] = $course;
+    }
+    return $courses;
+}
+
+// get course mentor
+function get_mentor_course() {
+    global $koneksi;
+    $id_mentor = $_GET['id'];
+        $sql = "SELECT * FROM course WHERE id_mentor = '$id_mentor'";
     $result = mysqli_query($koneksi, $sql);
     $courses = [];
     while ($course = mysqli_fetch_assoc($result)) {
@@ -176,16 +269,22 @@ function getAll_mentor(){
 }
 
 //get mentor detail
-function get_mentor_byId(){
+function get_mentor_byId() {
     global $koneksi;
     $id_mentor = $_GET['id'];
-    $sql = mysqli_query($koneksi, "SELECT * FROM mentor WHERE id_mentor = '$id_mentor'");
-    $mentors = [];
-    while ($mentor = mysqli_fetch_assoc($sql)) {
-        $mentors[] = $mentor;
-    }
-    return $mentors;
+
+    // Query untuk join tabel mentor dan user berdasarkan id_mentor dan id_user
+    $sql = mysqli_query($koneksi, "
+        SELECT * 
+        FROM mentor m
+        JOIN user u ON m.id_mentor = u.id_user
+        WHERE m.id_mentor = '$id_mentor'
+    ");
+    
+    $mentor = mysqli_fetch_assoc($sql);
+    return $mentor;
 }
+
 
 // get all student
 function getAll_student(){
@@ -196,6 +295,23 @@ function getAll_student(){
         $students[] = $student;
     }
     return $students;
+}
+
+//get student detail
+function get_student_byId() {
+    global $koneksi;
+    $id_student = $_GET['id'];
+
+    // Query untuk join tabel student dan user berdasarkan id_student dan id_user
+    $sql = mysqli_query($koneksi, "
+        SELECT * 
+        FROM student s
+        JOIN user u ON s.id_student = u.id_user
+        WHERE s.id_student = '$id_student'
+    ");
+    
+    $student = mysqli_fetch_assoc($sql);
+    return $student;
 }
 
 

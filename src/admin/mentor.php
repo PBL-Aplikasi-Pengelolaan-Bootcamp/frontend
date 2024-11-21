@@ -75,7 +75,7 @@ $mentor = getAll_mentor();
                             <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Kursus
                         </a>
-                    </li>   
+                    </li>
                     <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor
@@ -275,7 +275,7 @@ $mentor = getAll_mentor();
                         <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
                             <div class="flex items-center gap-2 font-poppins">
                                 <!-- Foto Profil -->
-                                <img src="../foto_mentor/nasyith.jpg" alt="Foto Profil Mentor"
+                                <img src="../foto_mentor/<?=$data['profil_picture']?>" alt="Foto Profil Mentor"
                                     class="w-16 h-16 object-cover rounded-full">
                                 <!-- Nama Mentor -->
                                 <h1 class="font-semibold text-xl"><?= $data['name']?></h1>

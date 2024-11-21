@@ -66,7 +66,7 @@ $course = getAll_Course();
                             <ion-icon name="list-box" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Kursus
                         </a>
-                    </li>   
+                    </li>
                     <li class="hover:bg-gray-200"><a href="mentor.php" class="block p-4 text-gray-700">
                             <ion-icon name="school" class="pr-2 relative top-1 text-xl text-slate-500"></ion-icon>
                             Mentor

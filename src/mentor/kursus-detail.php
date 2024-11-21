@@ -302,20 +302,14 @@ if (isset($_POST['add_quiz'])) {
                         <i class="fa-solid fa-pen-to-square text-2xl my-auto"></i>
                     </button>
 
-                    <!-- <button id="open-modal-btn">
-                        <div class="flex gap-2 w-max">
-                            <h1 class="font-semibold relative my-auto">Student1</h1>
-                            <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12 rounded-full">
-                        </div>
-                    </button> -->
 
                     <!-- Modal edit -->
                     <div id="modal-wrapper-course" class="fixed z-10 inset-0 hidden">
                         <div
                             class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
-                            <!-- MODAL BOX -->
                             <div
                                 class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[80vh] overflow-y-auto">
+
                                 <form method="post" enctype="multipart/form-data"
                                     class="flex flex-col gap-5 my-2 w-full">
                                     <div class="flex flex-col gap-2">
@@ -375,24 +369,22 @@ if (isset($_POST['add_quiz'])) {
                                     </div>
 
                                     <div class="flex flex-col gap-2">
-                                        <form method="post">
                                             <button type="submit" name="delete_course"
                                                 class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
                                                 DELETE COURSE
                                             </button>
-                                        </form>
                                     </div>
 
-                                    <div class="flex justify-end gap-2">
+                                    <div class="flex justify-end items-center gap-2">
                                         <button id="close-modal-btn-course" type="button"
-                                            class="ml-2 w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
+                                            class="px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                                            Close
+                                        </button>
                                         <button type="submit" name="edit_course"
-                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
-
+                                            class="px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
+                                            Simpan
+                                        </button>
                                     </div>
-
-
-
                                 </form>
                             </div>
                         </div>
@@ -505,9 +497,11 @@ if (isset($_POST['add_quiz'])) {
                                     <a href="#" @click.prevent="openModal('information')"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Information</a>
                                     <a href="#" @click.prevent="openModal('video')"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Video material</a>
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Video
+                                        material</a>
                                     <a href="#" @click.prevent="openModal('text')"
-                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Text material</a>
+                                        class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">Text
+                                        material</a>
                                     <a href="#" @click.prevent="openModal('file')"
                                         class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">File</a>
                                     <a href="#" @click.prevent="openModal('quiz')"
@@ -642,8 +636,7 @@ if (isset($_POST['add_quiz'])) {
                                                     value="<?= $section['id_section'] ?>" hidden>
                                                 <div class="space-y-2">
                                                     <label for="quiz">Quiz Title: </label>
-                                                    <input type="text" name="title"
-                                                        placeholder="Enter quiz"
+                                                    <input type="text" name="title" placeholder="Enter quiz"
                                                         class="w-full p-2 border rounded focus:outline-none focus:ring-2">
                                                 </div>
                                                 <div class="flex justify-end space-x-2">
@@ -721,25 +714,25 @@ if (isset($_POST['add_quiz'])) {
                             <?php foreach ($quiz as $quizz) { ?>
                             <?php $total_question = total_question_byQuiz($quizz['id_quiz']); ?>
                             <a href="quiz-question.php?id=<?=$quizz['id_quiz']?>" class="block">
-                            <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
-                                <!-- Icon Quiz -->
-                                <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
-                                    <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                    </svg>
-                                </div>
+                                <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
+                                    <!-- Icon Quiz -->
+                                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                                        <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                        </svg>
+                                    </div>
 
-                                <!-- Konten Kanan (Judul dan Keterangan) -->
-                                <div class="ml-4">
-                                    <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
-                                    <div class="text-gray-500 text-sm space-y-1">
-                                        <p>Soal: <?=$total_question?></p>
+                                    <!-- Konten Kanan (Judul dan Keterangan) -->
+                                    <div class="ml-4">
+                                        <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
+                                        <div class="text-gray-500 text-sm space-y-1">
+                                            <p>Soal: <?=$total_question?></p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </a>
                             <?php } ?>
                             <hr>
