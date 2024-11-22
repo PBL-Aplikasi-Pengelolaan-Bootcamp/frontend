@@ -359,7 +359,7 @@ function get_information_bySection($id_course, $id_section) {
 
 
 
-// ---------------------------------------------create video
+// -----------------------------------------------------------------------VIDEO MATERIAL 
 function create_video($data) {
     global $koneksi;
     $id_course = $_GET['id'];
@@ -372,6 +372,7 @@ function create_video($data) {
     }
     return mysqli_affected_rows($koneksi);
 }
+
 function get_video_bySection($id_course, $id_section) {
     global $koneksi;
     $sql = "SELECT * FROM materi_video WHERE id_course = '$id_course' AND id_section = '$id_section'";
@@ -384,7 +385,45 @@ function get_video_bySection($id_course, $id_section) {
     return $video;
 }
 
-// ---------------------------------------------create text
+function edit_video($data) {
+    global $koneksi;
+    $id_materi_video = $data['id_materi_video'];
+    $url = $data['url'];
+
+    $sql = mysqli_query($koneksi, "UPDATE materi_video SET url = '$url' WHERE id_materi_video = '$id_materi_video'");
+    if ($sql) {
+        echo "<script>alert('Video Updated!');</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+function delete_video($data) {
+    global $koneksi;
+    $id_materi_video = $data['id_materi_video'];
+    $sql = mysqli_query($koneksi, "DELETE FROM materi_video WHERE id_materi_video = '$id_materi_video'");
+    if ($sql) {
+        echo "<script>alert('Video Deleted!');</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// -----------------------------------------------------------------------TEXT MATERIAL 
+
 function create_text($data) {
     global $koneksi;
     $id_course = $_GET['id'];
@@ -434,14 +473,12 @@ function create_file($data) {
     if (move_uploaded_file($tmpname, $folder)) {
         // Simpan informasi file ke database
         $sql = mysqli_query($koneksi, "INSERT INTO materi_file (id_course, id_section, file) VALUES ('$id_course', '$id_section', '$file_name')");
-        
         if ($sql) {
             echo "<script>alert('File uploaded successfully!');</script>";
         } else {
             echo "<script>alert('Database insertion failed!');</script>";
         }
     } else {
-        // Jika gagal mengupload file
         echo "<script>alert('Gagal mengupload file');</script>";
     }
 }
@@ -457,6 +494,63 @@ function get_file_bySection($id_course, $id_section) {
     }
     return $files;
 }
+
+function edit_file($data) {
+    global $koneksi;
+    $id_materi_file = $data['id_materi_file']; // ID file yang akan diedit
+    if (!empty($_FILES['file']['name'])) {
+        $file_name = $_FILES['file']['name'];
+        $tmpname = $_FILES['file']['tmp_name']; 
+        $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/file_materi/' . basename($file_name); // Path untuk menyimpan file
+
+        $allowed_extensions = ['pdf', 'doc', 'docx', 'ppt', 'pptx', 'txt', 'sql', 'jpg', 'jpeg', 'png']; // Daftar ekstensi yang diizinkan
+        $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
+
+        if (!in_array($file_extension, $allowed_extensions)) {
+            echo "<script>alert('Format file tidak diizinkan!');</script>";
+            return;
+        }
+
+        // Ambil nama file lama yang ada di database
+        $result = mysqli_query($koneksi, "SELECT file FROM materi_file WHERE id_materi_file = '$id_materi_file'");
+        $existing_file = mysqli_fetch_assoc($result)['file'];
+
+        // Hapus file lama jika ada
+        if ($existing_file) {
+            $old_file_path = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/file_materi/' . $existing_file;
+            if (file_exists($old_file_path) && !is_dir($old_file_path)) {
+                unlink($old_file_path); 
+            }
+        }
+
+        if (move_uploaded_file($tmpname, $folder)) {
+            $sql = mysqli_query($koneksi, "UPDATE materi_file SET file = '$file_name' WHERE id_materi_file = '$id_materi_file'");
+            if ($sql) {
+                echo "<script>alert('File updated successfully!');</script>";
+            } else {
+                echo "<script>alert('Failed to update file in database!');</script>";
+            }
+        } else {
+            echo "<script>alert('Failed to upload new file!');</script>";
+        }
+    } else {
+        echo "<script>alert('No new file uploaded.');</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+function delete_file($data) {
+    global $koneksi;
+    $id_materi_file = $data['id_materi_file'];
+    $sql = mysqli_query($koneksi, "DELETE FROM materi_file WHERE id_materi_file = '$id_materi_file'");
+    if ($sql) {
+        echo "<script>alert('File Deleted!');</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+
+
 
 
 

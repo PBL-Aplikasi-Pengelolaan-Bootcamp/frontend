@@ -43,21 +43,53 @@ if (isset($_POST['create_information'])) {
     create_information($_POST);
 }
 
+
+//---------------------------------video
 // create video
 if (isset($_POST['create_video'])) {
     create_video($_POST);
 }
+// edit video
+if (isset($_POST['edit_video'])) {
+    edit_video($_POST);
+}
+//delete video
+if (isset($_POST['delete_video'])) {
+    delete_video($_POST);
+}
 
+
+//---------------------------------text
 // create text
 if (isset($_POST['create_text'])) {
     create_text($_POST);
 }
 
+
+
+
+
+
+
+//------------------------------------file
 // create file
 if (isset($_POST['create_file'])) {
     create_file($_POST);
 }
+//edit file
+if (isset($_POST['edit_file'])) {
+    edit_file($_POST);
+}
+//delete file
+if (isset($_POST['delete_file'])) {
+    delete_file($_POST);
+}
 
+
+
+
+
+//-------------------------------------quiz
 //create quiz
 if (isset($_POST['add_quiz'])) {
     add_quiz($_POST);
@@ -672,14 +704,55 @@ if (isset($_POST['add_quiz'])) {
                             <?php if (!empty($video)) { ?>
                             <?php foreach ($video as $vid) { ?>
                             <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96" allowfullscreen
+                                <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96 rounded-lg" allowfullscreen
                                     frameborder="0"></iframe>
                             </div>
-                            <button id="open-modal-btn-course"
-                                class="block px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
+
+                            <!-- Tombol untuk membuka modal -->
+                            <button data-modal-target="modal-edit-video-<?= $vid['id_materi_video'] ?>"
+                                class="open-modal-btn-edit-video block px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
                                 <i class="fa-solid fa-pen-to-square text-lg"></i>
                             </button>
 
+                            <!-- Modal -->
+                            <div id="modal-edit-video-<?= $vid['id_materi_video'] ?>"
+                                class="modal-wrapper fixed z-10 inset-0 hidden">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
+                                    <div class="flex items-center justify-center min-h-screen px-4">
+                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                            <form method="post" class="space-y-4">
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
+                                                    class="w-full p-2 bg-gray-200 rounded border">
+                                                <input type="number" name="id_materi_video"
+                                                    value="<?= $vid['id_materi_video'] ?>" hidden>
+                                                <div class="space-y-2">
+                                                    <label for="video">Video URL:</label>
+                                                    <input type="text" name="url" placeholder="Enter video URL"
+                                                        value="<?= $vid['url'] ?>"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                </div>
+                                                <div class="flex flex-col gap-2">
+                                                    <button type="submit" name="delete_video"
+                                                        class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                        DELETE VIDEO
+                                                    </button>
+                                                </div>
+                                                <div class="flex justify-end space-x-2">
+                                                    <button type="button"
+                                                        class="close-modal-btn-edit-video px-4 py-2 text-red-500 border rounded hover:bg-gray-50">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" name="edit_video"
+                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                             <?php } ?>
                             <hr>
                             <?php } ?>
@@ -701,17 +774,81 @@ if (isset($_POST['add_quiz'])) {
                             <?php foreach ($file as $f) { ?>
                             <div
                                 class="flex items-center justify-between p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition">
-                                <a href="../file_materi/<?= $f['file'] ?>" target="_blank"
-                                    class="text-blue-600 hover:text-blue-800 font-medium">
-                                    <?= $f['file'] ?>
-                                </a>
-                                <span class="text-sm text-gray-500">
-                                    <?= round(filesize('../file_materi/' . $f['file']) / 1024, 2) ?> KB
-                                </span>
+                                <!-- Informasi File -->
+                                <div class="flex items-center space-x-4">
+                                    <a href="../file_materi/<?= $f['file'] ?>" target="_blank"
+                                        class="text-blue-600 hover:text-blue-800 font-medium">
+                                        <?= $f['file'] ?>
+                                    </a>
+                                    <span class="text-sm text-gray-500">
+                                        <?= round(filesize('../file_materi/' . $f['file']) / 1024, 2) ?> KB
+                                    </span>
+                                </div>
+
+                                <!-- Tombol Edit File-->
+                                <div class="flex items-center space-x-2">
+                                    <button data-modal-target="modal-edit-file-<?= $f['id_materi_file'] ?>"
+                                        class="open-modal-btn-edit-file px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fa-solid fa-pen-to-square text-lg"></i>
+                                    </button>
+
+                                    <div id="modal-edit-file-<?= $f['id_materi_file'] ?>"
+                                        class="modal-wrapper fixed z-10 inset-0 hidden">
+                                        <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                            x-transition:enter="transition ease-out duration-300">
+                                            <div class="flex items-center justify-center min-h-screen px-4">
+                                                <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                                    <form method="post" enctype="multipart/form-data" class="space-y-4">
+                                                        <input type="text" value="<?= $section['title'] ?>" readonly
+                                                            class="w-full p-2 bg-gray-200 rounded border">
+                                                        <input type="number" name="id_materi_file"
+                                                            value="<?= $f['id_materi_file'] ?>" hidden>
+
+                                                        <!-- Menampilkan nama file yang ada -->
+                                                        <div class="space-y-2">
+                                                            <label for="file">Current File: </label>
+                                                            <span class="text-sm text-gray-500"><?= $f['file'] ?></span>
+                                                        </div>
+
+                                                        <!-- Input file untuk meng-upload file baru -->
+                                                        <div class="space-y-2">
+                                                            <label for="file">Upload New File:</label>
+                                                            <input type="file" name="file"
+                                                                class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                        </div>
+
+                                                        <!-- Tombol untuk menghapus file -->
+                                                        <div class="flex flex-col gap-2">
+                                                            <button type="submit" name="delete_file"
+                                                                class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                                DELETE FILE
+                                                            </button>
+                                                        </div>
+
+                                                        <!-- Tombol untuk menyimpan perubahan -->
+                                                        <div class="flex justify-end space-x-2">
+                                                            <button type="button"
+                                                                class="close-modal-btn-edit-file px-4 py-2 text-red-500 border rounded hover:bg-gray-50">
+                                                                Close
+                                                            </button>
+                                                            <button type="submit" name="edit_file"
+                                                                class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">
+                                                                Save
+                                                            </button>
+                                                        </div>
+                                                    </form>
+
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <?php } ?>
                             <hr>
                             <?php } ?>
+
 
 
                             <?php $quiz = get_quiz_bySection($section['id_section']);?>
@@ -895,7 +1032,8 @@ if (isset($_POST['add_quiz'])) {
     const closeSidebar = document.getElementById('close-sidebar');
 
     hamburger.addEventListener('click', () => {
-        sidebar.classList.toggle('-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
+        sidebar.classList.toggle(
+            '-translate-x-full'); // Toggle kelas untuk menampilkan/menyembunyikan sidebar
     });
 
     closeSidebar.addEventListener('click', () => {
@@ -922,6 +1060,28 @@ if (isset($_POST['add_quiz'])) {
     document.getElementById("close-modal-btn-course").addEventListener("click", () => {
         document.getElementById("modal-wrapper-course").classList.add("hidden");
     });
+
+
+    // Modal Edit Video Material
+    // Menangani tombol buka modal
+    document.querySelectorAll('.open-modal-btn').forEach(button => {
+        button.addEventListener('click', (event) => {
+            event.preventDefault();
+            const modalId = button.getAttribute(
+                'data-modal-target'); // Ambil target modal dari data attribute
+            document.getElementById(modalId).classList.remove('hidden'); // Tampilkan modal
+        });
+    });
+
+    // Menangani tombol tutup modal
+    document.querySelectorAll('.close-modal-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const modal = button.closest('.modal-wrapper'); // Cari modal terdekat
+            modal.classList.add('hidden'); // Sembunyikan modal
+        });
+    });
+
+
 
 
 
@@ -986,24 +1146,55 @@ if (isset($_POST['add_quiz'])) {
             });
         });
 
-        // Setup modals
-        document.querySelectorAll('.open-modal-btn').forEach(btn => {
+
+
+        //edit video    
+        document.querySelectorAll('.open-modal-btn-edit-video').forEach(btn => {
             btn.addEventListener('click', (event) => {
                 event.preventDefault();
-                const modalType = btn.getAttribute('data-modal-type');
-                const modalWrapper = btn.closest('.dropdown-container').querySelector(
-                    `.modal-wrapper[data-modal-type="${modalType}"]`);
-                modalWrapper.classList.remove('hidden');
+                const modalId = btn.getAttribute(
+                    'data-modal-target'); // Ambil ID modal dari data attribute
+                const modalWrapper = document.getElementById(
+                    modalId); // Cari modal berdasarkan ID
+                if (modalWrapper) {
+                    modalWrapper.classList.remove('hidden'); // Tampilkan modal
+                }
+            });
+        });
+        document.querySelectorAll('.close-modal-btn-edit-video').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent action default (opsional)
+                const modalWrapper = btn.closest('.modal-wrapper'); // Cari modal terdekat
+                if (modalWrapper) {
+                    modalWrapper.classList.add('hidden'); // Sembunyikan modal
+                }
             });
         });
 
-        document.querySelectorAll('.close-modal-btn').forEach(btn => {
+
+        //edit file    
+        document.querySelectorAll('.open-modal-btn-edit-file').forEach(btn => {
             btn.addEventListener('click', (event) => {
-                event.preventDefault(); // Prevent form submission
-                const modalWrapper = btn.closest('.modal-wrapper');
-                modalWrapper.classList.add('hidden');
+                event.preventDefault();
+                const modalId = btn.getAttribute(
+                    'data-modal-target'); // Ambil ID modal dari data attribute
+                const modalWrapper = document.getElementById(
+                    modalId); // Cari modal berdasarkan ID
+                if (modalWrapper) {
+                    modalWrapper.classList.remove('hidden'); // Tampilkan modal
+                }
             });
         });
+        document.querySelectorAll('.close-modal-btn-edit-file').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent action default (opsional)
+                const modalWrapper = btn.closest('.modal-wrapper'); // Cari modal terdekat
+                if (modalWrapper) {
+                    modalWrapper.classList.add('hidden'); // Sembunyikan modal
+                }
+            });
+        });
+
 
     });
     </script>
