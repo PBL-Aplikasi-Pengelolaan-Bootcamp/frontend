@@ -34,6 +34,7 @@ if ($isEnrolled) {
     $cek_kelulusan = is_all_quiz_submitted_by_enroll();
 } 
 
+
 // Enroll user ke kursus jika tombol enroll ditekan
 if (isset($_POST['enroll_course'])) {
     enroll();  // Panggil fungsi enroll
@@ -154,7 +155,7 @@ if (isset($_POST['enroll_course'])) {
                 <?php endif ?>
 
                 <!-- MODAL WRAPPER -->
-                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden overflow-y-auto max-h-[90vh]">
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden overflow-y-auto ">
                     <div
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
@@ -562,7 +563,7 @@ if (isset($_POST['enroll_course'])) {
                         <span>Sertifikat Penyelesaian</span>
                     </button>
 
-                    <div x-show="open" class="px-4 py-2 border-t <?= $shouldHide || $statusEnrollment === 'On going' ? 'hidden' : '' ?>">
+                    <div x-show="open" class="px-4 py-2 border-t <?= $shouldHide || $statusEnrollment === 'On going' || $cek_kelulusan === false ? 'hidden' : '' ?>">
                         <h2 class="font-bold text-lg mb-2">"Selamat, Kamu Berhasil Menyelesaikan Course!"</h2>
                         <p class="text-gray-700 mb-4">
                             Kerja kerasmu terbayar! Sekarang saatnya mengunduh sertifikat sebagai bukti pencapaianmu.

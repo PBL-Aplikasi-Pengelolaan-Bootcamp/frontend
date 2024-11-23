@@ -27,6 +27,11 @@ if (isset($_POST['add_quiz'])) {
     add_quiz($_POST);
 }
 
+//delete quiz
+if (isset($_POST['delete_quiz'])) {
+    delete_quiz($_POST);
+}
+
 
 
 ?>
@@ -126,8 +131,7 @@ if (isset($_POST['add_quiz'])) {
                     </svg>
             </button>
 
-            <header class="flex justify-between items-center">
-                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$course['title']?></h2>
+            <header class="flex justify-end items-center">
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -249,7 +253,9 @@ if (isset($_POST['add_quiz'])) {
 
             <!-- Konten -->
             <!-- ANALISTIK -->
-            <div class="flex flex-col">
+            <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$course['title']?></h2>
+
+            <div class="flex flex-col mt-5">
                 <div x-data="{ open: true }" class="bg-white shadow-md w-full rounded-lg overflow-hidden">
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
@@ -304,8 +310,13 @@ if (isset($_POST['add_quiz'])) {
                                 <div class="flex gap-2 my-auto p-2">
                                     <i
                                         class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md group-hover:bg-yellow-400 cursor-pointer"></i>
-                                    <i
-                                        class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md group-hover:bg-red-600 cursor-pointer"></i>
+                                    <form method="post">
+                                        <input type="number" value="<?=$data['id_quiz']?>" name="id_quiz" hidden>
+                                        <button type="submit" name="delete_quiz">
+                                            <i
+                                                class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md group-hover:bg-red-600 cursor-pointer"></i>
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </div>

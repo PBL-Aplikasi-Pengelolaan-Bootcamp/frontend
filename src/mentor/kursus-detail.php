@@ -30,21 +30,48 @@ if (isset($_POST['delete_course'])) {
 
 
 
-// get data section
-$section = get_section_byCourseId();
 
+
+// ------------------------------------SECTION
 // add section
 if (isset($_POST['add_section'])) {
     create_section($_POST);
 }
+// get data section
+$section = get_section_byCourseId();
+//edit_section
+if (isset($_POST['edit_section'])) {
+    edit_section($_POST);
+}
+//deletesection
+if (isset($_POST['delete_section'])) {
+    delete_section($_POST);
+}
 
+
+
+
+
+
+
+
+
+// ----------------------------------information
 // create information
 if (isset($_POST['create_information'])) {
     create_information($_POST);
 }
+//edit information
+if (isset($_POST['edit_information'])) {
+    edit_information($_POST);
+}
+//delete information
+if (isset($_POST['delete_information'])) {
+    delete_information($_POST);
+}
 
 
-//---------------------------------video
+//-------------------------------------video
 // create video
 if (isset($_POST['create_video'])) {
     create_video($_POST);
@@ -59,7 +86,7 @@ if (isset($_POST['delete_video'])) {
 }
 
 
-//---------------------------------text
+//--------------------------------------text
 // create text
 if (isset($_POST['create_text'])) {
     create_text($_POST);
@@ -71,7 +98,7 @@ if (isset($_POST['create_text'])) {
 
 
 
-//------------------------------------file
+//---------------------------------------file
 // create file
 if (isset($_POST['create_file'])) {
     create_file($_POST);
@@ -499,11 +526,64 @@ if (isset($_POST['add_quiz'])) {
                         }
                     }" class="bg-white shadow-md rounded-lg overflow-hidden mb-4">
                     <!-- Collapsible Header -->
+
                     <button @click="open = !open"
                         class="w-full flex items-center px-4 py-4 bg-blue-700 text-white font-bold focus:outline-none">
                         <ion-icon :name="open ? 'ios-arrow-up' : 'ios-arrow-down'" class="text-xl mr-2"></ion-icon>
-                        <span><?= $section['title'] ?></span>
+                        <div class="flex items-center">
+                            <span><?= $section['title'] ?></span>
+                            <span data-modal-target="modal-edit-section-<?= $section['id_section'] ?>"
+                                class="open-modal-btn-edit-section ml-2 px-2 py-1 text-xs text-white-700  rounded hover:bg-black-100 cursor-pointer flex items-center"
+                                @click.stop>
+                                <i class="fa-solid fa-pen-to-square text-lg"></i>
+                            </span>
+
+
+                        </div>
                     </button>
+
+                    <div id="modal-edit-section-<?= $section['id_section'] ?>"
+                        class="modal-wrapper fixed z-10 inset-0 hidden">
+                        <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                            x-transition:enter="transition ease-out duration-300">
+                            <div class="flex items-center justify-center min-h-screen px-4">
+                                <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                    <form method="post" enctype="multipart/form-data" class="space-y-4">
+                                        <input type="number" name="id_section" value="<?= $section['id_section'] ?>"
+                                            hidden>
+                                        <div class="space-y-2">
+                                            <label for="information">Section title:</label>
+                                            <input type="text" name="section"
+                                                value="<?= htmlspecialchars($section['title']) ?>"
+                                                class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                        </div>
+
+                                        <!-- Tombol untuk menghapus information -->
+                                        <div class="flex flex-col gap-2">
+                                            <button type="submit" name="delete_section"
+                                                class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                DELETE SECTION
+                                            </button>
+                                        </div>
+
+                                        <!-- Tombol untuk menyimpan perubahan -->
+                                        <div class="flex justify-end space-x-2">
+                                            <button type="button"
+                                                class="close-modal-btn-edit-section px-4 py-2 text-red-500 border rounded hover:bg-gray-50">
+                                                Close
+                                            </button>
+                                            <button type="submit" name="edit_section"
+                                                class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">
+                                                Save
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
 
                     <!-- Section Content -->
                     <div x-show="open" x-transition:enter="transition ease-out duration-200"
@@ -687,32 +767,95 @@ if (isset($_POST['add_quiz'])) {
 
                         <!-- Content Display Section -->
                         <div class="mt-4 space-y-6">
+
                             <!-- Information Display -->
                             <?php $information = get_information_bySection($_GET['id'], $section['id_section']); ?>
                             <?php if (!empty($information)) { ?>
-                            <div class="space-y-2">
+                            <div class="space-y-4">
                                 <h2 class="text-2xl font-semibold">Information</h2>
                                 <?php foreach ($information as $info) { ?>
-                                <p class="text-gray-700">• <?= htmlspecialchars($info['information']) ?></p>
+                                <!-- Container Flex untuk teks dan tombol -->
+                                <div class="flex items-center justify-between space-x-4">
+                                    <!-- Teks Informasi -->
+                                    <p class="text-gray-700 flex-grow">• <?= htmlspecialchars($info['information']) ?>
+                                    </p>
+                                    <!-- Tombol Edit -->
+                                    <button data-modal-target="modal-edit-information-<?= $info['id_information'] ?>"
+                                        class="open-modal-btn-edit-information px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fa-solid fa-pen-to-square text-lg"></i>
+                                    </button>
+                                </div>
+
+                                <!-- Modal -->
+                                <div id="modal-edit-information-<?= $info['id_information'] ?>"
+                                    class="modal-wrapper fixed z-10 inset-0 hidden">
+                                    <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                        x-transition:enter="transition ease-out duration-300">
+                                        <div class="flex items-center justify-center min-h-screen px-4">
+                                            <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                                <form method="post" enctype="multipart/form-data" class="space-y-4">
+                                                    <input type="text" value="<?= $section['title'] ?>" readonly
+                                                        class="w-full p-2 bg-gray-200 rounded border">
+                                                    <input type="number" name="id_information"
+                                                        value="<?= $info['id_information'] ?>" hidden>
+
+                                                    <div class="space-y-2">
+                                                        <label for="information">Information:</label>
+                                                        <input type="text" name="information"
+                                                            value="<?= htmlspecialchars($info['information']) ?>"
+                                                            class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                    </div>
+
+                                                    <!-- Tombol untuk menghapus information -->
+                                                    <div class="flex flex-col gap-2">
+                                                        <button type="submit" name="delete_information"
+                                                            class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                            DELETE INFORMATION
+                                                        </button>
+                                                    </div>
+
+                                                    <!-- Tombol untuk menyimpan perubahan -->
+                                                    <div class="flex justify-end space-x-2">
+                                                        <button type="button"
+                                                            class="close-modal-btn-edit-information px-4 py-2 text-red-500 border rounded hover:bg-gray-50">
+                                                            Close
+                                                        </button>
+                                                        <button type="submit" name="edit_information"
+                                                            class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">
+                                                            Save
+                                                        </button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                                 <?php } ?>
                             </div>
                             <hr>
                             <?php } ?>
 
+
                             <!-- Video Display -->
                             <?php $video = get_video_bySection($_GET['id'], $section['id_section']); ?>
                             <?php if (!empty($video)) { ?>
                             <?php foreach ($video as $vid) { ?>
-                            <div class="aspect-w-16 aspect-h-9">
-                                <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96 rounded-lg" allowfullscreen
-                                    frameborder="0"></iframe>
-                            </div>
+                            <!-- Container Flex -->
+                            <div class="flex items-start gap-4 mb-4">
+                                <!-- Video -->
+                                <div class="flex-grow">
+                                    <iframe src="<?= $vid['url'] ?>" class="w-full h-64 md:h-96 rounded-lg"
+                                        allowfullscreen frameborder="0"></iframe>
+                                </div>
 
-                            <!-- Tombol untuk membuka modal -->
-                            <button data-modal-target="modal-edit-video-<?= $vid['id_materi_video'] ?>"
-                                class="open-modal-btn-edit-video block px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
-                                <i class="fa-solid fa-pen-to-square text-lg"></i>
-                            </button>
+                                <!-- Tombol Edit -->
+                                <div class="flex items-center">
+                                    <button data-modal-target="modal-edit-video-<?= $vid['id_materi_video'] ?>"
+                                        class="open-modal-btn-edit-video px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
+                                        <i class="fa-solid fa-pen-to-square text-lg"></i>
+                                    </button>
+                                </div>
+                            </div>
 
                             <!-- Modal -->
                             <div id="modal-edit-video-<?= $vid['id_materi_video'] ?>"
@@ -756,6 +899,9 @@ if (isset($_POST['add_quiz'])) {
                             <?php } ?>
                             <hr>
                             <?php } ?>
+
+
+
 
                             <!-- Text Display -->
                             <?php $text = get_text_bySection($_GET['id'], $section['id_section']); ?>
@@ -1148,6 +1294,60 @@ if (isset($_POST['add_quiz'])) {
 
 
 
+
+
+
+        //edit section    
+        document.querySelectorAll('.open-modal-btn-edit-section').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event
+                    .stopPropagation(); // Mencegah event klik propagasi ke parent (tombol utama)
+                const modalId = btn.getAttribute(
+                    'data-modal-target'); // Ambil ID modal dari data attribute
+                const modalWrapper = document.getElementById(
+                    modalId); // Cari modal berdasarkan ID
+                if (modalWrapper) {
+                    modalWrapper.classList.remove('hidden'); // Tampilkan modal
+                }
+            });
+        });
+
+        document.querySelectorAll('.close-modal-btn-edit-section').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent action default (opsional)
+                const modalWrapper = btn.closest('.modal-wrapper'); // Cari modal terdekat
+                if (modalWrapper) {
+                    modalWrapper.classList.add('hidden'); // Sembunyikan modal
+                }
+            });
+        });
+
+
+
+        //edit information    
+        document.querySelectorAll('.open-modal-btn-edit-information').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault();
+                const modalId = btn.getAttribute(
+                    'data-modal-target'); // Ambil ID modal dari data attribute
+                const modalWrapper = document.getElementById(
+                    modalId); // Cari modal berdasarkan ID
+                if (modalWrapper) {
+                    modalWrapper.classList.remove('hidden'); // Tampilkan modal
+                }
+            });
+        });
+        document.querySelectorAll('.close-modal-btn-edit-information').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent action default (opsional)
+                const modalWrapper = btn.closest('.modal-wrapper'); // Cari modal terdekat
+                if (modalWrapper) {
+                    modalWrapper.classList.add('hidden'); // Sembunyikan modal
+                }
+            });
+        });
+
+
         //edit video    
         document.querySelectorAll('.open-modal-btn-edit-video').forEach(btn => {
             btn.addEventListener('click', (event) => {
@@ -1177,11 +1377,11 @@ if (isset($_POST['add_quiz'])) {
             btn.addEventListener('click', (event) => {
                 event.preventDefault();
                 const modalId = btn.getAttribute(
-                    'data-modal-target'); // Ambil ID modal dari data attribute
+                    'data-modal-target'); 
                 const modalWrapper = document.getElementById(
                     modalId); // Cari modal berdasarkan ID
                 if (modalWrapper) {
-                    modalWrapper.classList.remove('hidden'); // Tampilkan modal
+                    modalWrapper.classList.remove('hidden'); 
                 }
             });
         });

@@ -156,7 +156,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 <?php endif ?>
 
                 <!-- MODAL WRAPPER -->
-                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden overflow-y-auto max-h-[90vh]">
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden overflow-y-auto">
                     <div
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
@@ -516,6 +516,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 
 </body>
 
+<!-- cropper foto -->
 <script>
     let cropper = null;
     const profileForm = document.getElementById('profileForm');

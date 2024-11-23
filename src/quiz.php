@@ -40,8 +40,8 @@ if (isset($_POST['submit_quiz'])) {
             <?php $i = 1; ?>
             <form method="post" action="" id="quizForm">
                 <?php foreach ($question as $data) { 
-            $option = get_option_byQuestion($data['id_question']);
-        ?>
+                    $option = get_option_byQuestion($data['id_question']);
+                ?>
                 <div class="flex flex-col gap-5">
                     <div class="p-5 md:p-8 border-2 border-gray-400 rounded-xl">
                         <h1 class="font-poppins font-semibold">

@@ -17,7 +17,10 @@ if (isset($_POST['logout'])) {
 
 // get quiz
 $quiz = get_quiz_byId();
-
+//edit_quiz
+if (isset($_POST['edit_quiz'])) {
+    edit_quiz($_POST);
+}
 
 //get question
 $question = get_question_byQuiz();
@@ -27,6 +30,13 @@ if (isset($_POST['add_question'])) {
     add_question($_POST );
 }
 
+if (isset($_POST['edit_question'])) {
+    edit_question($_POST);
+}
+
+if (isset($_POST['delete_question'])) {
+    delete_question($_POST);
+}
 ?>
 
 <!DOCTYPE html>
@@ -124,8 +134,7 @@ if (isset($_POST['add_question'])) {
                     </svg>
             </button>
 
-            <header class="flex justify-between items-center">
-                <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$quiz['title']?></h2>
+            <header class="flex justify-end items-center">
 
                 <button id="open-modal-btn">
                     <div class="flex gap-2 w-max">
@@ -248,7 +257,49 @@ if (isset($_POST['add_question'])) {
             <!-- Konten -->
             <!-- ANALISTIK -->
             <div class="flex flex-col">
+                <div class="flex gap-5">
+                    <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$quiz['title']?></h2>
+                    <button id="open-modal-edit-quiz"
+                        class="open-modal-btn-edit-quiz px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center">
+                        <i class="fa-solid fa-pen-to-square text-lg"></i>
+                    </button>
 
+                    <!-- Modal -->
+                    <div id="modal-edit-quiz" class="modal-wrapper fixed z-10 inset-0 hidden">
+                        <div
+                            class="fixed inset-0 z-50 overflow-y-auto bg-black bg-opacity-50 flex items-center justify-center">
+                            <div class="bg-white rounded-xl w-full md:w-2/3 p-6 relative">
+                                <form method="post" enctype="multipart/form-data" class="space-y-4">
+
+                                    <input type="number" name="id_quiz" value="<?= $quiz['id_quiz'] ?>" hidden>
+                                    <div class="space-y-2">
+                                        <label for="quiz">Quiz Title :</label>
+                                        <input type="text" name="title" value="<?=$quiz['title']?>"
+                                            class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                    </div>
+
+                                    <div class="flex flex-col gap-2">
+                                        <button type="submit" name="delete_quiz"
+                                            class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                            DELETE QUIZ
+                                        </button>
+                                    </div>
+
+                                    <div class="flex justify-end space-x-2">
+                                        <button type="button" id="close-modal-edit-quiz"
+                                            class="close-modal-btn-edit-quiz px-4 py-2 text-red-500 border rounded hover:bg-gray-50">
+                                            Close
+                                        </button>
+                                        <button type="submit" name="edit_quiz"
+                                            class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">
+                                            Save
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 <div class="flex mt-10 justify-between gap-5 flex-wrap">
                     <!-- Button untuk membuka modal -->
                     <button id="open-add-question"
@@ -364,86 +415,95 @@ if (isset($_POST['add_question'])) {
 
 
 
-                    <?php foreach ($question as $data) { ?>
+                    <?php foreach ($question as $data) {                                                     
+                        $option = get_option_byQuestion($data['id_question']);
+                    ?>
                     <div class="flex rounded-md gap-2 bg-white w-full overflow-hidden p-4">
                         <div class="flex w-full justify-between">
                             <div class="font-poppins my-auto">
                                 <h1 class="my-auto font-semibold text-md"><?=$data['question']?></h1>
                             </div>
                             <div class="flex gap-2 my-auto p-2">
-                                <button id="open-edit-1">
+                                <button data-modal-target="modal-edit-question-<?= $data['id_question'] ?>"
+                                    class="open-modal-btn-edit-question">
                                     <i class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md"></i>
                                 </button>
-                                <a href="#"><i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i></a>
+
+                                <form method="post">
+                                <input type="number" value="<?=$data['id_question']?>" name="id_question" hidden>
+                                <button type="submit" name="delete_question">
+                                    <i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i>
+                                </button>
+                                </form>
 
                                 <!-- MODAL WRAPPER -->
-                                <div id="modal-edit-1" class="fixed z-10 inset-0 hidden">
+                                <div id="modal-edit-question-<?= $data['id_question'] ?>"
+                                    class="modal-wrapper fixed z-10 inset-0 hidden">
                                     <div
-                                        class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
+                                        class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75">
                                         <!-- MODAL BOX -->
                                         <div
                                             class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[90vh] overflow-y-auto">
-                                            <form method="post" enctype="multipart/form-data"
-                                                class="flex flex-col gap-5 my-2 w-full">
+                                            <form method="post" class="flex flex-col gap-5 my-2 w-full">
+                                                <!-- Input untuk mengedit soal -->
                                                 <div class="flex flex-col gap-2">
                                                     <label for="username" class="font-poppins font-semibold">Edit
                                                         Soal</label>
                                                     <input
                                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                        id="username" name="username" type="text" placeholder="">
+                                                        id="username" name="username" type="text" placeholder="Soal"
+                                                        value="<?= htmlspecialchars($data['question']) ?>">
+                                                    <input type="number" name="id_question"
+                                                        value="<?=$data['id_question']?>" hidden>
                                                 </div>
+
+                                                <!-- Input untuk mengedit opsi -->
                                                 <div class="flex flex-col gap-2">
                                                     <label for="bio" class="font-poppins font-semibold">Edit
                                                         Option</label>
                                                     <div class="flex flex-col gap-6">
+                                                        <?php foreach ($option as $opt) { ?>
                                                         <div class="flex flex-col gap-2">
-                                                            <textarea name="bio" id="bio" placeholder="Option 1"
-                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
+                                                            <!-- Textarea untuk setiap opsi -->
+                                                            <textarea name="option[]" placeholder="Option"
+                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"
+                                                                required><?= htmlspecialchars($opt['option']) ?></textarea>
+
+                                                            <!-- Hidden input untuk ID opsi -->
+                                                            <input type="hidden" name="option_ids[]"
+                                                                value="<?= $opt['id_quiz_option'] ?>">
+
+                                                            <!-- Radio button untuk jawaban benar -->
+                                                            <!-- Radio button untuk jawaban benar -->
                                                             <div class="flex gap-2 text-gray-400">
-                                                                <input type="radio" id="jawaban" value="">
-                                                                <label for="jawaban">Jawaban Benar</label>
+                                                                <input type="radio" name="is_right"
+                                                                    value="<?= htmlspecialchars($opt['id_quiz_option']) ?>"
+                                                                    <?= $opt['is_right'] ? 'checked' : '' ?>>
+                                                                <label>Jawaban Benar</label>
                                                             </div>
+
                                                         </div>
-                                                        <div class="flex flex-col gap-2">
-                                                            <textarea name="bio" id="bio" placeholder="Option 2"
-                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
-                                                            <div class="flex gap-2 text-gray-400">
-                                                                <input type="radio" id="jawaban" value="">
-                                                                <label for="jawaban">Jawaban Benar</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex flex-col gap-2">
-                                                            <textarea name="bio" id="bio" placeholder="Option 3"
-                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
-                                                            <div class="flex gap-2 text-gray-400">
-                                                                <input type="radio" id="jawaban" value="">
-                                                                <label for="jawaban">Jawaban Benar</label>
-                                                            </div>
-                                                        </div>
-                                                        <div class="flex flex-col gap-2">
-                                                            <textarea name="bio" id="bio" placeholder="Option 4"
-                                                                class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
-                                                            <div class="flex gap-2 text-gray-400">
-                                                                <input type="radio" id="jawaban" value="">
-                                                                <label for="jawaban">Jawaban Benar</label>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="flex justify-end gap-2">
-                                                        <button id="close-edit-1"
-                                                            class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
-                                                        <button type="submit" name=""
-                                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                                        <?php } ?>
                                                     </div>
                                                 </div>
+
+                                                <!-- Tombol untuk menyimpan atau membatalkan -->
+                                                <div class="flex justify-end gap-2">
+                                                    <button type="button"
+                                                        class="close-modal-btn-edit-information w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none">Close</button>
+                                                    <button type="submit" name="edit_question"
+                                                        class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
+                                                </div>
                                             </form>
+
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <?php }?>
+                    <?php } ?>
+
 
                 </div>
             </div>
@@ -606,6 +666,73 @@ if (isset($_POST['add_question'])) {
             document.getElementById("modal-add-question").classList.add("hidden")
         })
         </script>
+
+
+        <script>
+        document.addEventListener("DOMContentLoaded", () => {
+
+
+            // Select elements
+            const openModalBtn = document.getElementById('open-modal-edit-quiz');
+            const closeModalBtn = document.getElementById('close-modal-edit-quiz');
+            const modal = document.getElementById('modal-edit-quiz');
+
+            // Function to open modal
+            openModalBtn.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+
+            // Function to close modal
+            closeModalBtn.addEventListener('click', () => {
+                modal.classList.add('hidden');
+            });
+
+            // Close modal if clicked outside content
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    modal.classList.add('hidden');
+                }
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+            // Buka modal
+            document.querySelectorAll('.open-modal-btn-edit-question').forEach(btn => {
+                btn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const modalId = btn.getAttribute('data-modal-target');
+                    const modalWrapper = document.getElementById(modalId);
+                    if (modalWrapper) {
+                        modalWrapper.classList.remove('hidden');
+                    } else {
+                        console.error(`Modal dengan ID '${modalId}' tidak ditemukan.`);
+                    }
+                });
+            });
+
+            // Tutup modal
+            document.querySelectorAll('.close-modal-btn-edit-information').forEach(btn => {
+                btn.addEventListener('click', (event) => {
+                    event.preventDefault();
+                    const modalWrapper = btn.closest('.modal-wrapper');
+                    if (modalWrapper) {
+                        modalWrapper.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        </script>
+
 </body>
 
 </html>

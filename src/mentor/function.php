@@ -307,7 +307,7 @@ function get_total_course_mentor(){
 
 
 
-// create section
+// ---------------------------------------------------------------SECTION
 function create_section($data){
     global $koneksi;
 
@@ -326,10 +326,32 @@ function create_section($data){
         
     }
     return mysqli_affected_rows($koneksi);
-
 }
 
-// ---------------------------------------------create Information
+function edit_section($data) {
+    global $koneksi;
+    $id_section = $data['id_section'];
+    $section = $data['section'];
+
+    $sql = mysqli_query($koneksi, "UPDATE section SET title = '$section' WHERE id_section = '$id_section'");
+    if ($sql) {
+        echo "<script>alert('Section Updated!'); window.location.href=location.href</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+function delete_section($data) {
+    global $koneksi;
+    $id_section = $data['id_section'];
+    $sql = mysqli_query($koneksi, "DELETE FROM section WHERE id_section = '$id_section'");
+    if ($sql) {
+        echo "<script>alert('Section Deleted!'); window.location.href=location.href;</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+
+// ------------------------------------------------------------------INFORMATION
 function create_information($data) {
     global $koneksi;
     $id_course = $_GET['id'];
@@ -354,6 +376,32 @@ function get_information_bySection($id_course, $id_section) {
     }
     return $information;
 }
+
+
+function edit_information($data) {
+    global $koneksi;
+    $id_information = $data['id_information'];
+    $information = $data['information'];
+
+    $sql = mysqli_query($koneksi, "UPDATE information SET information = '$information' WHERE id_information = '$id_information'");
+    if ($sql) {
+        echo "<script>alert('Information Updated!');</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+function delete_information($data) {
+    global $koneksi;
+    $id_information = $data['id_information'];
+    $sql = mysqli_query($koneksi, "DELETE FROM information WHERE id_information = '$id_information'");
+    if ($sql) {
+        echo "<script>alert('Information Deleted!');</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+
+
 
 
 
@@ -791,6 +839,176 @@ function add_question($data){
     }
 }
 
+function edit_quiz($data) {
+    global $koneksi;
+    $id_quiz = $data['id_quiz'];
+    $title = $data['title'];
+
+    $sql = mysqli_query($koneksi, "UPDATE quiz SET title = '$title' WHERE id_quiz = '$id_quiz'");
+    if ($sql) {
+        echo "<script>alert('Quiz Updated!'); window.location.href=location.href</script>";
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+
+function get_option_byQuestion($id_question){
+    global $koneksi;
+
+    $sql =  mysqli_query($koneksi, "SELECT * FROM quiz_option WHERE id_question = '$id_question'");
+    $option = [];
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $option[] = $row;
+    }
+    return $option;
+}
+
+
+
+
+function edit_question($data) {
+    global $koneksi;
+
+    // Filter input data
+    $id_question = $data['id_question'];
+    $question = mysqli_real_escape_string($koneksi, htmlspecialchars($data['username'], ENT_QUOTES)); // Soal yang diupdate
+    $options = $data['option']; // Array dari opsi yang diupdate
+    $is_right = $data['is_right']; // Jawaban benar (ID opsi)
+
+    // Update soal di tabel `question`
+    $sql_question = "UPDATE question SET question = '$question' WHERE id_question = '$id_question'";
+    $query_question = mysqli_query($koneksi, $sql_question);
+
+    if ($query_question) {
+        // Perbarui opsi pada tabel `quiz_option`
+        foreach ($options as $index => $option) {
+            $option_id = $data['option_ids'][$index]; // Pastikan ID opsi dikirim dari form
+            $is_correct = ($option_id == $is_right) ? 1 : 0; // Set is_right berdasarkan ID yang dipilih
+
+            // Escape input option
+            $escaped_option = mysqli_real_escape_string($koneksi, htmlspecialchars($option, ENT_QUOTES));
+
+            // Update database
+            $sql_option = "UPDATE quiz_option 
+                           SET option = '$escaped_option', is_right = '$is_correct' 
+                           WHERE id_quiz_option = '$option_id'";
+            $query_option = mysqli_query($koneksi, $sql_option);
+
+            // Debug jika query gagal
+            if (!$query_option) {
+                echo "<script>alert('Gagal memperbarui opsi dengan ID $option_id: " . mysqli_error($koneksi) . "');</script>";
+                return false;
+            }
+        }
+
+        echo "<script>
+            alert('Berhasil memperbarui soal dan opsi');
+            window.location.href = location.href; 
+        </script>";
+        return true;
+    } else {
+        echo "<script>alert('Gagal memperbarui soal: " . mysqli_error($koneksi) . "');</script>";
+        return false;
+    }
+}
+
+function delete_question($data) {
+    global $koneksi;
+    $id_question = $data['id_question'];
+
+    // Hapus opsi terkait
+    $delete_options = mysqli_query($koneksi, "DELETE FROM quiz_option WHERE id_question = '$id_question'");
+    if (!$delete_options) {
+        // Jika gagal menghapus opsi, tampilkan alert
+        echo "<script>
+                alert('Gagal menghapus opsi. Silakan coba lagi.');
+                window.location.href = window.location.href; // Reload halaman
+              </script>";
+        return false;
+    }
+
+    // Hapus pertanyaan
+    $delete_question = mysqli_query($koneksi, "DELETE FROM question WHERE id_question = '$id_question'");
+    if ($delete_question) {
+        // Jika berhasil menghapus soal dan opsi, tampilkan alert
+        echo "<script>
+                alert('Soal dan opsi berhasil dihapus!');
+                window.location.href = window.location.href; // Reload halaman setelah berhasil
+              </script>";
+        return true; // Berhasil
+    } else {
+        // Jika gagal menghapus soal, tampilkan alert
+        echo "<script>
+                alert('Gagal menghapus soal. Silakan coba lagi.');
+                window.location.href = window.location.href; // Reload halaman
+              </script>";
+        return false; // Gagal
+    }
+}
+
+
+
+function delete_quiz($data) {
+    global $koneksi;
+    $id_quiz = $data['id_quiz'];
+
+    // Pertama, hapus semua opsi terkait dengan quiz ini berdasarkan id_quiz
+    // Langkah 1: Ambil semua id_question yang terkait dengan quiz ini
+    $sql_get_questions = mysqli_query($koneksi, "SELECT id_question FROM question WHERE id_quiz = '$id_quiz'");
+    if (!$sql_get_questions) {
+        echo "<script>
+                alert('Gagal mengambil data pertanyaan!');
+                window.location.href = window.location.href; // Reload halaman
+              </script>";
+        return false; // Gagal mengambil data pertanyaan
+    }
+
+    $question_ids = [];
+    while ($row = mysqli_fetch_assoc($sql_get_questions)) {
+        $question_ids[] = $row['id_question'];
+    }
+
+    // Langkah 2: Hapus opsi yang terkait dengan id_question
+    if (!empty($question_ids)) {
+        $question_ids_str = implode(",", $question_ids); // Gabungkan id_question menjadi satu string
+        $delete_options = mysqli_query($koneksi, "DELETE FROM quiz_option WHERE id_question IN ($question_ids_str)");
+        if (!$delete_options) {
+            echo "<script>
+                    alert('Gagal menghapus opsi terkait!');
+                    window.location.href = window.location.href; // Reload halaman
+                  </script>";
+            return false; // Gagal menghapus opsi
+        }
+    }
+
+    // Langkah 3: Hapus pertanyaan terkait dengan quiz ini
+    $delete_questions = mysqli_query($koneksi, "DELETE FROM question WHERE id_quiz = '$id_quiz'");
+    if (!$delete_questions) {
+        echo "<script>
+                alert('Gagal menghapus pertanyaan terkait quiz!');
+                window.location.href = window.location.href; // Reload halaman
+              </script>";
+        return false; // Gagal menghapus pertanyaan
+    }
+
+    // Langkah 4: Hapus quiz itu sendiri
+    $delete_quiz = mysqli_query($koneksi, "DELETE FROM quiz WHERE id_quiz = '$id_quiz'");
+    if ($delete_quiz) {
+        // Berhasil menghapus quiz dan semua pertanyaan serta opsi terkait
+        echo "<script>
+                alert('Quiz beserta soal dan opsi berhasil dihapus!');
+                window.location.href = window.location.href; // Reload halaman
+              </script>";
+        return true; // Berhasil
+    } else {
+        // Gagal menghapus quiz
+        echo "<script>
+                alert('Gagal menghapus quiz!');
+                window.location.href = window.location.href; // Reload halaman
+              </script>";
+        return false; // Gagal
+    }
+}
 
 
 ?>
