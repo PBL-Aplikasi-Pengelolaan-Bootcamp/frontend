@@ -403,6 +403,46 @@ if (isset($_POST['create_file'])) {
                     <img src="../foto_cover_course/<?= $course['course_picture'] ?>" alt="Cover Course"
                         class="w-full h-full object-cover object-center">
                 </div>
+                <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
+
+                <div class="space-y-2">
+                    <label for="editor-container">Content:</label>
+                    <div id="editor-container" class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32">
+                    </div>
+                </div>
+                <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
+                <script>
+                // Inisialisasi Quill Editor
+                var quill = new Quill('#editor-container', {
+                    theme: 'snow', // Tema 'snow' adalah default
+                    placeholder: 'Enter text',
+                    modules: {
+                        toolbar: [
+                            [{
+                                header: [1, 2, false]
+                            }],
+                            ['bold', 'italic', 'underline'],
+                            [{
+                                list: 'ordered'
+                            }, {
+                                list: 'bullet'
+                            }],
+                            ['link', 'image'],
+                            ['clean']
+                        ]
+                    }
+                });
+
+                // Untuk mendapatkan konten editor Quill sebagai teks mentah
+                function getEditorContent() {
+                    return quill.getText();
+                }
+
+                // Untuk mendapatkan konten editor Quill dalam format HTML
+                function getEditorHTML() {
+                    return quill.root.innerHTML;
+                }
+                </script>
 
 
                 <div class="flex gap-2 text-sm flex-wrap font-bold font-poppins text-slate-800">
@@ -687,25 +727,25 @@ if (isset($_POST['create_file'])) {
 
 
                             <a href="quiz-question.php?id=<?=$quizz['id_quiz']?>" class="block">
-                            <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
-                                <!-- Icon Quiz -->
-                                <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
-                                    <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                        viewBox="0 0 24 24" stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                    </svg>
-                                </div>
+                                <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
+                                    <!-- Icon Quiz -->
+                                    <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
+                                        <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                        </svg>
+                                    </div>
 
-                                <!-- Konten Kanan (Judul dan Keterangan) -->
-                                <div class="ml-4">
-                                    <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
-                                    <div class="text-gray-500 text-sm space-y-1">
-                                        <p>Soal: 25</p>
+                                    <!-- Konten Kanan (Judul dan Keterangan) -->
+                                    <div class="ml-4">
+                                        <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
+                                        <div class="text-gray-500 text-sm space-y-1">
+                                            <p>Soal: 25</p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
                             </a>
 
                             <?php } ?>

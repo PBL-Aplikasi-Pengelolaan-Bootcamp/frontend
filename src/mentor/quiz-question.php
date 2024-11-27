@@ -209,6 +209,25 @@ if (isset($_POST['delete_question'])) {
                                     </div>
                                 </div>
 
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between items-center">
+                                        <button type="button" id="change-password-btn"
+                                            class="ml-2 text-blue-500 hover:underline">Ganti Password</button>
+                                    </div>
+                                </div>
+
+                                <!-- Div untuk input password lama dan baru, default disembunyikan -->
+                                <div id="password-change-fields" class="hidden flex flex-col gap-2">
+                                    <label for="old-password">Password Lama</label>
+                                    <input type="password" id="old-password" name="old_password"
+                                        placeholder="Masukkan password lama"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <label for="new-password">Password Baru</label>
+                                    <input type="password" id="new-password" name="new_password"
+                                        placeholder="Masukkan password baru"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
 
 
                                 <div class="flex justify-end gap-2">
@@ -430,10 +449,10 @@ if (isset($_POST['delete_question'])) {
                                 </button>
 
                                 <form method="post">
-                                <input type="number" value="<?=$data['id_question']?>" name="id_question" hidden>
-                                <button type="submit" name="delete_question">
-                                    <i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i>
-                                </button>
+                                    <input type="number" value="<?=$data['id_question']?>" name="id_question" hidden>
+                                    <button type="submit" name="delete_question">
+                                        <i class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md"></i>
+                                    </button>
                                 </form>
 
                                 <!-- MODAL WRAPPER -->
@@ -622,6 +641,27 @@ if (isset($_POST['delete_question'])) {
             window.history.back();
         });
         </script>
+
+
+        <!-- Edit pw -->
+        <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const changePasswordBtn = document.getElementById("change-password-btn");
+            const passwordChangeFields = document.getElementById("password-change-fields");
+
+            changePasswordBtn.addEventListener("click", function() {
+                // Toggle visibility
+                if (passwordChangeFields.classList.contains("hidden")) {
+                    passwordChangeFields.classList.remove("hidden");
+                    changePasswordBtn.innerText = "Batal Ganti Password";
+                } else {
+                    passwordChangeFields.classList.add("hidden");
+                    changePasswordBtn.innerText = "Ganti Password";
+                }
+            });
+        });
+        </script>
+
 
 
         <script>

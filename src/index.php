@@ -113,7 +113,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                     <li><a href="#about" class="hover:text-blue-700">Tentang</a></li>
                     <li><a href="#kontak" class="hover:text-blue-700">Kontak</a></li>
                     <?php if (isset($_SESSION['id_user'])) : ?>
-                        <li><a href="course_anda.php" class="hover:text-blue-700">Kursus Anda</a></li>
+                    <li><a href="course_anda.php" class="hover:text-blue-700">Kursus Anda</a></li>
                     <?php endif ?>
                 </ul>
             </div>
@@ -124,35 +124,35 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 
             <div class="flex gap-5 w-max">
                 <?php if (!isset($_SESSION['id_user'])) : ?>
-                    <div class=" gap-5 font-semibold flex my-auto">
-                        <a href="login.php"
-                            class="border rounded-full py-1 px-6 font-medium md:font-semibold bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Masuk</a>
-                        <a href="buat-akun.php"
-                            class="md:border hidden md:flex md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Daftar</a>
-                    </div>
+                <div class=" gap-5 font-semibold flex my-auto">
+                    <a href="login.php"
+                        class="border rounded-full py-1 px-6 font-medium md:font-semibold bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">Masuk</a>
+                    <a href="buat-akun.php"
+                        class="md:border hidden md:flex md:border-blue-700 md:rounded-sm bg-blue-700 py-2 px-5 text-white hover">Daftar</a>
+                </div>
                 <?php endif ?>
 
 
                 <?php if (isset($_SESSION['id_user'])) : ?>
-                    <div class="gap-5 font-semibold flex my-auto">
-                        <form method="POST" action="">
-                            <button type="submit" name="logout"
-                                class="border rounded-full py-1 px-6 font-medium md:font-semibold bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
+                <div class="gap-5 font-semibold flex my-auto">
+                    <form method="POST" action="">
+                        <button type="submit" name="logout"
+                            class="border rounded-full py-1 px-6 font-medium md:font-semibold bg-blue-700 text-white md:bg-white md:border-blue-700 md:rounded-sm md:hover:bg-blue-700 md:py-2 md:px-5 md:text-black md:flex hover:bg-skytext-blue-700 hover:text-white">
+                            Logout
+                        </button>
+                    </form>
+                </div>
                 <?php endif ?>
 
 
                 <?php if (isset($_SESSION['id_user'])) : ?>
-                    <button id="open-modal-btn">
-                        <div class=" gap-2 w-max flex">
-                            <h1 class="font-semibold relative my-auto hidden sm:flex"><?= $data_login['username'] ?></h1>
-                            <img src="foto_student/<?= isset($data_login['profil_picture']) ? $data_login['profil_picture'] : 'profil_default.png' ?>"
-                                alt="" class="w-8 h-8 md:w-12 md:h-12 rounded-full">
-                        </div>
-                    </button>
+                <button id="open-modal-btn">
+                    <div class=" gap-2 w-max flex">
+                        <h1 class="font-semibold relative my-auto hidden sm:flex"><?= $data_login['username'] ?></h1>
+                        <img src="foto_student/<?= isset($data_login['profil_picture']) ? $data_login['profil_picture'] : 'profil_default.png' ?>"
+                            alt="" class="w-8 h-8 md:w-12 md:h-12 rounded-full">
+                    </div>
+                </button>
                 <?php endif ?>
 
                 <!-- MODAL WRAPPER -->
@@ -168,8 +168,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                                     <label for="username">Username</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="username" name="username" type="text" placeholder="Masukkan username" required
-                                        value="<?= $data_login['username'] ?>">
+                                        id="username" name="username" type="text" placeholder="Masukkan username"
+                                        required value="<?= $data_login['username'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="name">Nama</label>
@@ -189,8 +189,8 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                                     <label for="birth">Birth</label>
                                     <input
                                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                        id="birth" name="birth" type="date" placeholder="Masukkan tanggal lahir" required
-                                        value="<?= $data_login['birth'] ?>">
+                                        id="birth" name="birth" type="date" placeholder="Masukkan tanggal lahir"
+                                        required value="<?= $data_login['birth'] ?>">
                                 </div>
                                 <div class="flex flex-col gap-2">
                                     <label for="telp">Telp</label>
@@ -217,6 +217,28 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                                 </div>
 
 
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between items-center">
+                                        <button type="button" id="change-password-btn"
+                                            class="ml-2 text-blue-500 hover:underline">Ganti Password</button>
+                                    </div>
+                                </div>
+
+                                <!-- Div untuk input password lama dan baru, default disembunyikan -->
+                                <div id="password-change-fields" class="hidden flex flex-col gap-2">
+                                    <label for="old-password">Password Lama</label>
+                                    <input type="password" id="old-password" name="old_password"
+                                        placeholder="Masukkan password lama"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <label for="new-password">Password Baru</label>
+                                    <input type="password" id="new-password" name="new_password"
+                                        placeholder="Masukkan password baru"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+
+
+
                                 <div class="flex justify-end gap-2">
                                     <button id="close-modal-btn"
                                         class="w-auto inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
@@ -225,6 +247,7 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                                 </div>
 
                             </form>
+
 
                             <div id="cropperModal"
                                 class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
@@ -281,10 +304,10 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
                 tentunya dengan mudah dan simpel. Tunggu apalagi? Daftar Sekarang.</p>
 
             <?php if (!isset($_SESSION['id_user'])) { ?>
-                <a href="buat-akun.php"
-                    class=" text-white transition-all py-3 px-5 rounded-sm w-max m-auto font-poppins font-semibold 
+            <a href="buat-akun.php"
+                class=" text-white transition-all py-3 px-5 rounded-sm w-max m-auto font-poppins font-semibold 
                 tracking-wide border bg-blue-700 border-slatetext-blue-700 hover:bg-white hover:border hover:text-blue-700 hover:border-blue-700">Daftar
-                    Sekarang</a>
+                Sekarang</a>
             <?php } ?>
         </header>
 
@@ -376,29 +399,29 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
         <div class="flex flex-wrap gap-5 m-auto justify-between text-start mt-10 px-10">
 
             <?php foreach ($courses as $data) { ?>
-                <a href="<?= 'kursus_materi.php?kursus=' . $data['slug']; ?>"
-                    class="flex flex-col m-auto w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
-                    <img src="foto_cover_course/<?= $data['course_picture'] ?>" alt="" class="object-center md:h-40">
-                    <div class="px-3 py-3 flex flex-col gap-2">
-                        <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left"><?= $data['title'] ?>
-                        </h1>
+            <a href="<?= 'kursus_materi.php?kursus=' . $data['slug']; ?>"
+                class="flex flex-col m-auto w-36 h-max shadow-xl rounded-lg md:w-80 overflow-hidden transition-all hover:scale-105">
+                <img src="foto_cover_course/<?= $data['course_picture'] ?>" alt="" class="object-center md:h-40">
+                <div class="px-3 py-3 flex flex-col gap-2">
+                    <h1 class="font-poppins font-semibold text-sm md:text-base lg:text-left"><?= $data['title'] ?>
+                    </h1>
 
-                        <div class="flex flex-wrap gap-2 text-xs font-bold font-poppins text-slate-800">
-                            <h1 class="bg-green-300 px-2 py-0.5 rounded-lg"><?= $data['course_type'] ?></h1>
-                            <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?= $data['quota'] ?> Quota</h1>
-                            <?php
+                    <div class="flex flex-wrap gap-2 text-xs font-bold font-poppins text-slate-800">
+                        <h1 class="bg-green-300 px-2 py-0.5 rounded-lg"><?= $data['course_type'] ?></h1>
+                        <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?= $data['quota'] ?> Quota</h1>
+                        <?php
                             $formattedStartDate = date('j F Y', strtotime($data['start_date']));
                             $formattedEndDate = date('j F Y', strtotime($data['end_date']));
                             ?>
-                            <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?= $formattedStartDate ?> -
-                                <?= $formattedEndDate ?></h1>
-                        </div>
-
-                        <p class="hidden md:flex text-left">
-                            <?= strlen($data['description']) > 200 ? substr($data['description'], 0, 200) . '...' : $data['description'] ?>
-                        </p>
+                        <h1 class="bg-gray-300 px-2 py-0.5 rounded-lg hidden md:block"><?= $formattedStartDate ?> -
+                            <?= $formattedEndDate ?></h1>
                     </div>
-                </a>
+
+                    <p class="hidden md:flex text-left">
+                        <?= strlen($data['description']) > 200 ? substr($data['description'], 0, 200) . '...' : $data['description'] ?>
+                    </p>
+                </div>
+            </a>
             <?php } ?>
 
         </div>
@@ -518,142 +541,162 @@ if (isset($_SESSION['role']) && $_SESSION['role'] == 'admin') {
 
 <!-- cropper foto -->
 <script>
-    let cropper = null;
-    const profileForm = document.getElementById('profileForm');
-    const fileInput = document.getElementById('profil_picture');
-    const previewImage = document.getElementById('preview-image');
-    const cropperModal = document.getElementById('cropperModal');
-    const cropperImage = document.getElementById('cropperImage');
-    const croppedImageInput = document.getElementById('cropped_image');
+let cropper = null;
+const profileForm = document.getElementById('profileForm');
+const fileInput = document.getElementById('profil_picture');
+const previewImage = document.getElementById('preview-image');
+const cropperModal = document.getElementById('cropperModal');
+const cropperImage = document.getElementById('cropperImage');
+const croppedImageInput = document.getElementById('cropped_image');
 
-    // File input change handler
-    fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Please select an image file');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                // Initialize cropper
-                cropperImage.src = e.target.result;
-                cropperModal.classList.remove('hidden');
-
-                if (cropper) {
-                    cropper.destroy();
-                }
-
-                cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1,
-                    viewMode: 2,
-                    dragMode: 'move',
-                    autoCropArea: 1,
-                    restore: false,
-                    guides: true,
-                    center: true,
-                    highlight: false,
-                    cropBoxMovable: true,
-                    cropBoxResizable: true,
-                    toggleDragModeOnDblclick: false,
-                    initialAspectRatio: 1,
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Apply crop function
-    function applyCrop() {
-        if (!cropper) return;
-
-        // Get cropped canvas
-        const canvas = cropper.getCroppedCanvas({
-            width: 300,
-            height: 300,
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: 'high',
-        });
-
-        // Convert to blob
-        canvas.toBlob(function(blob) {
-            // Create file from blob
-            const fileName = fileInput.files[0].name;
-            const croppedFile = new File([blob], fileName, {
-                type: 'image/jpeg'
-            });
-
-            // Create FileList object
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            fileInput.files = dataTransfer.files;
-
-            // Update preview
-            previewImage.src = canvas.toDataURL('image/jpeg');
-
-            // Store base64 in hidden input
-            croppedImageInput.value = canvas.toDataURL('image/jpeg');
-
-            // Close modal
-            closeCropperModal();
-        }, 'image/jpeg', 0.9);
-    }
-
-    function closeCropperModal() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-            cropper.destroy();
-            cropper = null;
-        }
-    }
-
-    // Handle form submission
-    profileForm.addEventListener('submit', function(e) {
-        if (fileInput.files.length > 0 && !croppedImageInput.value) {
-            e.preventDefault();
-            alert('Please crop the image before submitting');
+// File input change handler
+fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
             return;
         }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Initialize cropper
+            cropperImage.src = e.target.result;
+            cropperModal.classList.remove('hidden');
+
+            if (cropper) {
+                cropper.destroy();
+            }
+
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 1,
+                viewMode: 2,
+                dragMode: 'move',
+                autoCropArea: 1,
+                restore: false,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                initialAspectRatio: 1,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Apply crop function
+function applyCrop() {
+    if (!cropper) return;
+
+    // Get cropped canvas
+    const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
     });
 
-    // Close modal when clicking outside
-    cropperModal.addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeCropperModal();
-        }
-    });
+    // Convert to blob
+    canvas.toBlob(function(blob) {
+        // Create file from blob
+        const fileName = fileInput.files[0].name;
+        const croppedFile = new File([blob], fileName, {
+            type: 'image/jpeg'
+        });
 
-    // Close button handler
-    document.getElementById('close-modal-btn').addEventListener('click', function() {
-        window.history.back();
-    });
+        // Create FileList object
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(croppedFile);
+        fileInput.files = dataTransfer.files;
+
+        // Update preview
+        previewImage.src = canvas.toDataURL('image/jpeg');
+
+        // Store base64 in hidden input
+        croppedImageInput.value = canvas.toDataURL('image/jpeg');
+
+        // Close modal
+        closeCropperModal();
+    }, 'image/jpeg', 0.9);
+}
+
+function closeCropperModal() {
+    cropperModal.classList.add('hidden');
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+}
+
+// Handle form submission
+profileForm.addEventListener('submit', function(e) {
+    if (fileInput.files.length > 0 && !croppedImageInput.value) {
+        e.preventDefault();
+        alert('Please crop the image before submitting');
+        return;
+    }
+});
+
+// Close modal when clicking outside
+cropperModal.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeCropperModal();
+    }
+});
+
+// Close button handler
+document.getElementById('close-modal-btn').addEventListener('click', function() {
+    window.history.back();
+});
 </script>
 
 
+<!-- Ganti password -->
 <script>
-    const dropdownButton = document.getElementById('dropdownButton');
-    const dropdownMenu = document.getElementById('dropdownMenu');
+document.addEventListener("DOMContentLoaded", function() {
+    const changePasswordBtn = document.getElementById("change-password-btn");
+    const passwordChangeFields = document.getElementById("password-change-fields");
 
-    dropdownButton.addEventListener('click', () => {
-        dropdownMenu.classList.toggle('hidden');
-    });
-
-    // Close dropdown when clicking outside of it
-    window.addEventListener('click', (event) => {
-        if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.add('hidden');
+    changePasswordBtn.addEventListener("click", function() {
+        if (passwordChangeFields.classList.contains("hidden")) {
+            passwordChangeFields.classList.remove("hidden");
+            changePasswordBtn.innerText = "Batal Ganti Password";
+        } else {
+            passwordChangeFields.classList.add("hidden");
+            changePasswordBtn.innerText = "Ganti Password";
         }
     });
+});
+</script>
 
-    // Modal PopUp Edit Profile
-    document.getElementById("open-modal-btn").addEventListener("click", () => {
-        document.getElementById("modal-wrapper").classList.remove("hidden")
-    })
 
-    document.getElementById("close-modal-btn").addEventListener("click", () => {
-        document.getElementById("modal-wrapper").classList.add("hidden")
-    })
+
+<script>
+const dropdownButton = document.getElementById('dropdownButton');
+const dropdownMenu = document.getElementById('dropdownMenu');
+
+dropdownButton.addEventListener('click', () => {
+    dropdownMenu.classList.toggle('hidden');
+});
+
+// Close dropdown when clicking outside of it
+window.addEventListener('click', (event) => {
+    if (!dropdownButton.contains(event.target) && !dropdownMenu.contains(event.target)) {
+        dropdownMenu.classList.add('hidden');
+    }
+});
+
+// Modal PopUp Edit Profile
+document.getElementById("open-modal-btn").addEventListener("click", () => {
+    document.getElementById("modal-wrapper").classList.remove("hidden")
+})
+
+document.getElementById("close-modal-btn").addEventListener("click", () => {
+    document.getElementById("modal-wrapper").classList.add("hidden")
+})
 </script>
 
 </html>

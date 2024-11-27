@@ -1,24 +1,5 @@
-<?php 
-include 'function.php';
-
-// get data mentor logged in
-$mentor = get_data_user_login();
-
-//edit profil
-if (isset($_POST['edit_profil'])) {
-    edit_profil($_POST, $mentor['id_user']);
-}
-
-//logout
-if (isset($_POST['logout'])) {
-    logout();
-}
-
-//total course si mentor
-$total_course_mentor = get_total_course_mentor();
 
 
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,7 +27,29 @@ $total_course_mentor = get_total_course_mentor();
     </style>
 </head>
 
+<?php 
+include 'function.php';
+
+// get data mentor logged in
+$mentor = get_data_user_login();
+
+//edit profil
+if (isset($_POST['edit_profil'])) {
+    edit_profil($_POST, $mentor['id_user']);
+}
+
+//logout
+if (isset($_POST['logout'])) {
+    logout();
+}
+
+//total course si mentor
+$total_course_mentor = get_total_course_mentor();
+
+
+?>
 <body class="bg-gray-100">
+    
     <div class="flex">
         <!-- Sidebar -->
         <aside id="sidebar"
@@ -188,6 +191,28 @@ $total_course_mentor = get_total_course_mentor();
                                             id="preview-image" class="w-12 h-12 object-cover rounded-full">
                                     </div>
                                 </div>
+
+
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between items-center">
+                                        <button type="button" id="change-password-btn"
+                                            class="ml-2 text-blue-500 hover:underline">Ganti Password</button>
+                                    </div>
+                                </div>
+
+                                <!-- Div untuk input password lama dan baru, default disembunyikan -->
+                                <div id="password-change-fields" class="hidden flex flex-col gap-2">
+                                    <label for="old-password">Password Lama</label>
+                                    <input type="password" id="old-password" name="old_password"
+                                        placeholder="Masukkan password lama"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <label for="new-password">Password Baru</label>
+                                    <input type="password" id="new-password" name="new_password"
+                                        placeholder="Masukkan password baru"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+
 
 
 
@@ -407,6 +432,25 @@ $total_course_mentor = get_total_course_mentor();
     });
     </script>
 
+
+    <!-- Edit pw -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const changePasswordBtn = document.getElementById("change-password-btn");
+        const passwordChangeFields = document.getElementById("password-change-fields");
+
+        changePasswordBtn.addEventListener("click", function() {
+            // Toggle visibility
+            if (passwordChangeFields.classList.contains("hidden")) {
+                passwordChangeFields.classList.remove("hidden");
+                changePasswordBtn.innerText = "Batal Ganti Password";
+            } else {
+                passwordChangeFields.classList.add("hidden");
+                changePasswordBtn.innerText = "Ganti Password";
+            }
+        });
+    });
+    </script>
 
     <script>
     // Fungsi untuk toggle sidebar

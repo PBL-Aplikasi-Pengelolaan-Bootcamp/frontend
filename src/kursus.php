@@ -180,6 +180,26 @@ if (isset($_POST['edit_profil'])) {
                                     </div>
                                 </div>
 
+                                <div class="flex flex-col gap-2">
+                                    <div class="flex justify-between items-center">
+                                        <button type="button" id="change-password-btn"
+                                            class="ml-2 text-blue-500 hover:underline">Ganti Password</button>
+                                    </div>
+                                </div>
+
+                                <!-- Div untuk input password lama dan baru, default disembunyikan -->
+                                <div id="password-change-fields" class="hidden flex flex-col gap-2">
+                                    <label for="old-password">Password Lama</label>
+                                    <input type="password" id="old-password" name="old_password"
+                                        placeholder="Masukkan password lama"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+
+                                    <label for="new-password">Password Baru</label>
+                                    <input type="password" id="new-password" name="new_password"
+                                        placeholder="Masukkan password baru"
+                                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                </div>
+
 
                                 <div class="flex justify-end gap-2">
                                     <button id="close-modal-btn"
@@ -332,6 +352,12 @@ if (isset($_POST['edit_profil'])) {
 
 </body>
 
+
+
+
+
+
+<!-- cropper foto -->
 <script>
     let cropper = null;
     const profileForm = document.getElementById('profileForm');
@@ -444,6 +470,27 @@ if (isset($_POST['edit_profil'])) {
         window.history.back();
     });
 </script>
+
+
+<!-- ganti pw -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const changePasswordBtn = document.getElementById("change-password-btn");
+        const passwordChangeFields = document.getElementById("password-change-fields");
+
+        changePasswordBtn.addEventListener("click", function() {
+            // Toggle visibility
+            if (passwordChangeFields.classList.contains("hidden")) {
+                passwordChangeFields.classList.remove("hidden");
+                changePasswordBtn.innerText = "Batal Ganti Password";
+            } else {
+                passwordChangeFields.classList.add("hidden");
+                changePasswordBtn.innerText = "Ganti Password";
+            }
+        });
+    });
+</script>
+
 
 <script>
 const dropdownButton = document.getElementById('dropdownButton');

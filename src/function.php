@@ -1,8 +1,44 @@
-<?php
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
+
+
+
+    <title>Document</title>
+
+</head>
+
+<body>
+
+
+
+    <?php
 
 session_start();
 //koneksi ke mysql
 include 'koneksi.php';
+
+function iziToastAlert($type, $message, $redirect = null) {
+    echo "<script>
+            iziToast.$type({
+                title: '',
+                message: '$message',
+                position: 'topRight',
+                timeout: 1500,
+                onClosing: function() {";
+    if ($redirect) {
+        echo "window.location.href = '$redirect';";
+    }
+    echo "}
+            });
+          </script>";
+}
+
 
 
 // register function
@@ -34,9 +70,7 @@ function register($data)
 
     // 1. Ke tabel user
     $ke_user = mysqli_query($koneksi, "INSERT INTO user (id_user, username, email, password, role) VALUES (NULL, '$username', '$email', '$password', 'student')");
-    if ($ke_user) {
-        echo "<script>alert('Berhasil update data ke user')</script>";
-    }
+   
     
 
     // 2. Ke tabel student
@@ -44,7 +78,7 @@ function register($data)
         
     $sql = mysqli_query($koneksi, "INSERT INTO student (id_student, name) VALUES ('$id_dari_user', '$name')");
     if ($sql) {
-        echo "<script>alert('Register Success!'); window.location.href='login.php';</script>";
+        iziToastAlert('success', 'Register Berhasil !', 'login.php');
         return mysqli_affected_rows($koneksi);
     }
 }
@@ -56,22 +90,42 @@ function register($data)
 function edit_profil($data, $id_user) {
     global $koneksi;
 
+    // Ambil data form
     $username = strtolower(stripslashes($data['username']));
     $email = strtolower(stripslashes($data['email']));
     $name = mysqli_real_escape_string($koneksi, $data['name']);
     $birth = mysqli_real_escape_string($koneksi, $data['birth']);
     $telp = mysqli_real_escape_string($koneksi, $data['telp']);
+    $old_password = mysqli_real_escape_string($koneksi, $data['old_password'] ?? '');
+    $new_password = mysqli_real_escape_string($koneksi, $data['new_password'] ?? '');
+    $isPasswordChanged = !empty($old_password) && !empty($new_password);
 
     // Penanganan upload foto profil
     $img = $_FILES['profil_picture']['name'];
     $tmp = $_FILES['profil_picture']['tmp_name'];
-    $imgFolder = "foto_student/";  // Hanya path folder
-    $imgPath = $imgFolder . $img;  // Path lengkap dengan nama file
+    $imgFolder = "foto_student/";
+    $imgPath = $imgFolder . $img;
 
+    // Validasi perubahan password
+    if ($isPasswordChanged) {
+        // Ambil password lama dari database
+        $result = mysqli_query($koneksi, "SELECT password FROM user WHERE id_user = '$id_user'");
+        $user = mysqli_fetch_assoc($result);
+
+        // Validasi password lama
+        if (!$user || !password_verify($old_password, $user['password'])) {
+            echo "<script>alert('Password lama tidak sesuai!');</script>";
+            return false;
+        }
+
+        // Enkripsi password baru
+        $new_password_hashed = password_hash($new_password, PASSWORD_DEFAULT);
+    }
+
+    // Update tabel student
     if ($img) {
         if (move_uploaded_file($tmp, $imgPath)) {
-            // Update hanya dengan nama file
-            $updateStudent = mysqli_query($koneksi, 
+            $updateStudent = mysqli_query($koneksi,
                 "UPDATE student 
                  SET name = '$name', birth = '$birth', telp = '$telp', profil_picture = '$img' 
                  WHERE id_student = '$id_user'");
@@ -80,20 +134,22 @@ function edit_profil($data, $id_user) {
             return false;
         }
     } else {
-        // Update tanpa mengubah kolom foto
-        $updateStudent = mysqli_query($koneksi, 
+        $updateStudent = mysqli_query($koneksi,
             "UPDATE student 
              SET name = '$name', birth = '$birth', telp = '$telp' 
              WHERE id_student = '$id_user'");
     }
 
-    // Update data di tabel user
-    $updateUser = mysqli_query($koneksi, 
-        "UPDATE user 
-         SET username = '$username', email = '$email' 
-         WHERE id_user = '$id_user'");
+    // Update tabel user
+    $query = "UPDATE user SET username = '$username', email = '$email'";
+    if ($isPasswordChanged) {
+        $query .= ", password = '$new_password_hashed'";
+    }
+    $query .= " WHERE id_user = '$id_user'";
 
-    // Cek apakah update berhasil di kedua tabel
+    $updateUser = mysqli_query($koneksi, $query);
+
+    // Cek apakah update berhasil
     if ($updateUser && $updateStudent) {
         $_SESSION['username'] = $username;
         echo "<script>alert('Account updated successfully!'); window.location.href = window.location.href;</script>";
@@ -101,6 +157,7 @@ function edit_profil($data, $id_user) {
         echo "<script>alert('Failed to update account.');</script>";
     }
 }
+
 
 
 
@@ -137,31 +194,25 @@ function login($data)
             $_SESSION['id_user'] = $data_from_username['id_user'];
 
             if ($data_from_username['role'] == 'student') {
-                echo"<script>
-                        alert('Login success !');
-                        window.location.href= 'index.php'
-                    </script>"; 
+                iziToastAlert('success', 'Login Berhasil!', 'index.php');
+
             exit;
 
             } else if ($data_from_username['role'] == 'mentor'){
-                echo"<script>
-                        alert('Login success !');
-                        window.location.href= 'mentor/dashboard-mentor.php'
-                    </script>";
+                iziToastAlert('success', 'Login Berhasil!', 'mentor/dashboard-mentor.php');
+
             exit;
             } else {
-                echo"<script>
-                        alert('Login success !');
-                        window.location.href= 'admin/dashboard-admin.php'
-                    </script>";
+                iziToastAlert('success', 'Login Berhasil!', 'admin/dashboard-admin.php');
+
                 exit;
             }
                 
         } else {
-            echo "<script>alert('Wrong Password')</script>";
+            iziToastAlert('error', 'Password Salah !');
         }
     } else {
-        echo "<script>alert('Username doesn't exist')</script>";
+        iziToastAlert('error', 'Username Salah !');
     }
 }
 
@@ -173,7 +224,9 @@ function login($data)
 function logout(){
     session_unset();
     session_destroy();
-    echo "<script>alert('Logout'); window.location.href='login.php'</script>";
+    iziToastAlert('success', 'Logout !', 'login.php');
+    // echo"<script>window.location.reload()</script>";
+    exit;
 }
 
 
@@ -775,3 +828,11 @@ function getEnrollmentStatus($id_student, $id_course) {
     
     return null; // Tidak terdaftar
 }
+
+?>
+
+
+
+</body>
+
+</html>
