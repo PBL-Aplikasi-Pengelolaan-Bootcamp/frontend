@@ -461,8 +461,8 @@ if (isset($_POST['enroll_course'])) {
 
                         <!-- Tampil Information -->
                         <?php 
-                        $id_course = get_course_id_from_slug($_GET['kursus']);
-                        $information = get_information_by_course_and_section($id_course, $data['section_id_section']);
+                        // $id_course = get_course_id_from_slug($_GET['kursus']);
+                        $information = get_information_by_course_and_section($data['section_id_section']);
                         ?>
                         <?php if (!empty($information)) { ?>
                         <div class="flex flex-col gap-2">
@@ -477,8 +477,7 @@ if (isset($_POST['enroll_course'])) {
 
                         <!--Tampil Video -->
                         <?php 
-                        $id_course = get_course_id_from_slug($_GET['kursus']);
-                        $video = get_video_by_course_and_section($id_course, $data['section_id_section']);
+                        $video = get_video_by_course_and_section($data['section_id_section']);
                         ?>
                         <?php if (!empty($video)) { ?>
                         <?php foreach ($video as $video) { ?>
@@ -495,8 +494,7 @@ if (isset($_POST['enroll_course'])) {
 
                         <!-- Tampil text -->
                         <?php 
-                        $id_course = get_course_id_from_slug($_GET['kursus']);
-                        $text = get_text_by_course_and_section($id_course, $data['section_id_section']);
+                        $text = get_text_by_course_and_section($data['section_id_section']);
                         ?>
                         <?php if (!empty($text)) { ?>
                         <?php foreach ($text as $text) { ?>
@@ -510,8 +508,7 @@ if (isset($_POST['enroll_course'])) {
 
                         <!-- Tampil File -->
                         <?php 
-                        $id_course = get_course_id_from_slug($_GET['kursus']);
-                        $file = get_file_by_course_and_section($id_course, $data['section_id_section']);
+                        $file = get_file_by_course_and_section($data['section_id_section']);
                         ?>
                         <?php if (!empty($file)) { ?>
                         <?php foreach ($file as $file) { ?>

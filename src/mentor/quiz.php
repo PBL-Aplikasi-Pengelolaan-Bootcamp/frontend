@@ -1,25 +1,4 @@
-<?php 
-include 'function.php';
 
-// get data mentor logged in
-$mentor = get_data_user_login();
-
-//edit profil
-if (isset($_POST['edit_profil'])) {
-    edit_profil($_POST, $mentor['id_user']);
-}
-
-//logout
-if (isset($_POST['logout'])) {
-    logout();
-}
-
-
-// get course
-$course = get_course_by_mentor();
-
-
-?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -46,6 +25,29 @@ $course = get_course_by_mentor();
     }
     </style>
 </head>
+
+<?php 
+include 'function.php';
+
+// get data mentor logged in
+$mentor = get_data_user_login();
+
+//edit profil
+if (isset($_POST['edit_profil'])) {
+    edit_profil($_POST, $mentor['id_user']);
+}
+
+//logout
+if (isset($_POST['logout'])) {
+    logout();
+}
+
+
+// get course
+$course = get_course_by_mentor();
+
+
+?>
 
 <body class="bg-gray-100">
     <div class="flex">

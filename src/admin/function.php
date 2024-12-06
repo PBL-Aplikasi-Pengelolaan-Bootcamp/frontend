@@ -96,56 +96,63 @@ function create_mentor($data)
     $bio = $data['bio'];
     $expertise = $data['expertise'];
     $telp = $data['telp'];
-    // $profil_picture = $data['profil_picture'];
 
     $profil_picture = $_FILES['profil_picture']['name'];
     $tmpname = $_FILES['profil_picture']['tmp_name'];
     $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_mentor/' . $profil_picture;
 
-    //cek apakah ada username yang sama
-    $cek_username = mysqli_query($koneksi, "SELECT * from user WHERE username = '$username';");
+    // Cek apakah username sudah ada
+    $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username';");
     if (mysqli_fetch_assoc($cek_username)) {
         echo "<script>alert('Username Tidak Tersedia');</script>";
         return false;
     }
 
-    // cek konfirmasi password
-    if ($password !== $password2) {
-        echo "<script>alert('Mohon konfirmasikan password dengna benar')</script>";
+    // Cek apakah email sudah ada
+    $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email';");
+    if (mysqli_fetch_assoc($cek_email)) {
+        echo "<script>alert('Email Sudah Terdaftar');</script>";
         return false;
     }
 
-    // enkripsi password 
+    // Cek konfirmasi password
+    if ($password !== $password2) {
+        echo "<script>alert('Mohon konfirmasikan password dengan benar')</script>";
+        return false;
+    }
+
+    // Enkripsi password 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-
-
-    // insert ke database
+    // Insert ke database
     // 1. Ke tabel user
     $ke_user = mysqli_query($koneksi, "INSERT INTO user (id_user, username, email, password, role) VALUES (NULL, '$username', '$email', '$password', '$role')");
-    if ($ke_user) {
-        echo "<script>alert('Berhasil update data ke user')</script>";
+    if (!$ke_user) {
+        echo "<script>alert('Gagal menambahkan ke tabel user');</script>";
+        return false;
     }
-    
 
     // 2. Ke tabel mentor
     $id_dari_user = mysqli_insert_id($koneksi);
 
-    if  (move_uploaded_file($tmpname, $folder)) {
+    if (move_uploaded_file($tmpname, $folder)) {
         $sql = mysqli_query($koneksi, "INSERT INTO mentor (id_mentor, name, bio, expertise, telp, profil_picture) VALUES ('$id_dari_user', '$name', '$bio', '$expertise', '$telp', '$profil_picture')");
-        if ($sql) {
-            echo "<script>alert('Register Success!'); window.location.href='dashboard-admin.php';</script>";
-            // return mysqli_affected_rows($koneksi);
-        } else {
-            echo "<script>alert('gagal')</script>";
+        if (!$sql) {
+            echo "<script>alert('Gagal menambahkan ke tabel mentor');</script>";
+            return false;
         }
-
     } else {
         // Jika gagal mengupload file
         echo "<script>alert('Gagal mengupload file');</script>";
+        return false;
     }
-    
+
+    // Jika semua berhasil
+    echo "<script>alert('Register Berhasil!'); window.location.href='mentor.php';</script>";
+    return true;
 }
+
+
 
 
 //edit mentor
@@ -160,17 +167,31 @@ function edit_mentor($data)
     $bio = $data['bio'];
     $expertise = $data['expertise'];
     $telp = $data['phone'];
-    
+
+    // Validasi username
+    $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username' AND id_user != '$id_mentor'");
+    if (mysqli_fetch_assoc($cek_username)) {
+        echo "<script>alert('Username sudah digunakan oleh pengguna lain');</script>";
+        return false;
+    }
+
+    // Validasi email
+    $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email' AND id_user != '$id_mentor'");
+    if (mysqli_fetch_assoc($cek_email)) {
+        echo "<script>alert('Email sudah digunakan oleh pengguna lain');</script>";
+        return false;
+    }
+
     // Ambil password lama dan baru
     $old_password = $data['old_password'];
     $new_password = $data['new_password'];
-    
+
     // Cek apakah password lama diisi dan password baru diisi
     if (!empty($old_password) && !empty($new_password)) {
         // Cek apakah password lama cocok dengan yang ada di database
         $check_password = mysqli_query($koneksi, "SELECT password FROM user WHERE id_user = '$id_mentor'");
         $data_password = mysqli_fetch_assoc($check_password);
-        
+
         if (password_verify($old_password, $data_password['password'])) {
             // Jika password lama cocok, enkripsi password baru
             $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
@@ -221,38 +242,30 @@ function edit_mentor($data)
         }
     }
 
-    echo "<script>alert('Data mentor berhasil diperbarui!'); window.location.href='dashboard-admin.php';</script>";
+    echo "<script>alert('Data mentor berhasil diperbarui!'); window.location.href=location.href;</script>";
     return true;
 }
+
 
 function delete_mentor() {
     global $koneksi;
     $id_mentor = $_GET['id'];
-    
-    // Mulai transaksi
-    mysqli_begin_transaction($koneksi);
-    
-    try {
-        // Hapus data terkait di tabel lain
-        mysqli_query($koneksi, "DELETE FROM course WHERE id_mentor = '$id_mentor'");
-        
-        // Hapus data mentor
-        $sql = mysqli_query($koneksi, "DELETE FROM mentor WHERE id_mentor = '$id_mentor'");
-        
-        // Commit transaksi jika semua berhasil
-        mysqli_commit($koneksi);
 
+    // Hapus data terkait di tabel lain
+    $query = "DELETE FROM user WHERE id_user = '$id_mentor'";
+    mysqli_query($koneksi, $query);
 
-        return mysqli_affected_rows($koneksi);
-        echo "<script>alert('Mentor di hapus'); window.location.href='mentor.php'</script>";    
-    } catch (Exception $e) {
-        // Rollback transaksi jika ada kesalahan
+    // Periksa apakah ada baris yang terpengaruh
+    if (mysqli_affected_rows($koneksi) > 0) {
+        echo "<script>alert('Mentor dihapus'); window.location.href='mentor.php';</script>";
+        return true;
+    } else {
         mysqli_rollback($koneksi);
-
-        // Kembalikan error atau log pesan
+        echo "<script>alert('Gagal menghapus mentor'); window.location.href='mentor.php';</script>";
         return false;
     }
 }
+
 
 
 
@@ -341,6 +354,114 @@ function get_student_byId() {
     return $student;
 }
 
+//edit_student
+function edit_student($data)
+{
+    global $koneksi;
+
+    $id_student = $_GET['id'];
+    $username = strtolower(stripslashes($data['username']));
+    $email = $data['email'];
+    $name = $data['name'];
+    $birth = $data['birth'];
+    $telp = $data['phone'];
+
+    // Validasi username
+    $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username' AND id_user != '$id_student'");
+    if (mysqli_fetch_assoc($cek_username)) {
+        echo "<script>alert('Username sudah digunakan oleh pengguna lain');</script>";
+        return false;
+    }
+
+    // Validasi email
+    $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email' AND id_user != '$id_student'");
+    if (mysqli_fetch_assoc($cek_email)) {
+        echo "<script>alert('Email sudah digunakan oleh pengguna lain');</script>";
+        return false;
+    }
+
+    // Ambil password lama dan baru
+    $old_password = $data['old_password'];
+    $new_password = $data['new_password'];
+
+    // Cek apakah password lama diisi dan password baru diisi
+    if (!empty($old_password) && !empty($new_password)) {
+        // Cek apakah password lama cocok dengan yang ada di database
+        $check_password = mysqli_query($koneksi, "SELECT password FROM user WHERE id_user = '$id_student'");
+        $data_password = mysqli_fetch_assoc($check_password);
+
+        if (password_verify($old_password, $data_password['password'])) {
+            // Jika password lama cocok, enkripsi password baru
+            $new_password_hash = password_hash($new_password, PASSWORD_DEFAULT);
+
+            // Update password di tabel user
+            $update_password = mysqli_query($koneksi, "UPDATE user SET password = '$new_password_hash' WHERE id_user = '$id_student'");
+            if (!$update_password) {
+                echo "<script>alert('Gagal memperbarui password');</script>";
+                return false;
+            }
+        } else {
+            echo "<script>alert('Password lama tidak cocok');</script>";
+            return false;
+        }
+    }
+
+    // Cek apakah ada file gambar profil baru
+    $profil_picture = $_FILES['profil_picture']['name'];
+    $tmpname = $_FILES['profil_picture']['tmp_name'];
+    $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_student/' . $profil_picture;
+
+    // Update data pada tabel user
+    $update_user = mysqli_query($koneksi, "UPDATE user SET username = '$username', email = '$email' WHERE id_user = '$id_student'");
+    if (!$update_user) {
+        echo "<script>alert('Gagal memperbarui data user');</script>";
+        return false;
+    }
+
+    // Update data pada tabel student
+    if (!empty($profil_picture)) {
+        // Jika ada file profil baru, pindahkan file dan perbarui kolom profil_picture
+        if (move_uploaded_file($tmpname, $folder)) {
+            $update_student = mysqli_query($koneksi, "UPDATE student SET name = '$name', birth = '$birth', telp = '$telp', profil_picture = '$profil_picture' WHERE id_student = '$id_student'");
+            if (!$update_student) {
+                echo "<script>alert('Gagal memperbarui data student');</script>";
+                return false;
+            }
+        } else {
+            echo "<script>alert('Gagal mengupload file profil baru');</script>";
+            return false;
+        }
+    } else {
+        // Jika tidak ada file profil baru, hanya perbarui data lainnya
+        $update_student = mysqli_query($koneksi, "UPDATE student SET name = '$name', birth = '$birth', telp = '$telp' WHERE id_student = '$id_student'");
+        if (!$update_student) {
+            echo "<script>alert('Gagal memperbarui data student');</script>";
+            return false;
+        }
+    }
+
+    echo "<script>alert('Data student berhasil diperbarui!'); window.location.href=location.href;</script>";
+    return true;
+}
+
+function delete_student() {
+    global $koneksi;
+    $id_student = $_GET['id'];
+
+    // Hapus data terkait di tabel lain
+    $query = "DELETE FROM user WHERE id_user = '$id_student'";
+    mysqli_query($koneksi, $query);
+
+    // Periksa apakah ada baris yang terpengaruh
+    if (mysqli_affected_rows($koneksi) > 0) {
+        echo "<script>alert('Student dihapus'); window.location.href='student.php';</script>";
+        return true;
+    } else {
+        mysqli_rollback($koneksi);
+        echo "<script>alert('Gagal menghapus student'); window.location.href='student.php';</script>";
+        return false;
+    }
+}
 
 //logout
 function logout(){

@@ -7,7 +7,12 @@ $data_login = get_data_user_login();
 if (isset($_POST['edit_profil'])) {
     edit_profil($_POST, $data_login['id_user']);
 }
+
+if (isset($_POST['logout'])) {
+    logout();
+}
 ?>
+
 
 
 <!DOCTYPE html>

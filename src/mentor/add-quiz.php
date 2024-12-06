@@ -342,7 +342,6 @@ if (isset($_POST['delete_quiz'])) {
                     </a>
                     <?php } ?>
                 </div>
-
             </div>
         </div>
 

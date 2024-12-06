@@ -52,36 +52,46 @@ function register($data)
     $password = mysqli_real_escape_string($koneksi, $data["password"]);
     $password2 = mysqli_real_escape_string($koneksi, $data["password2"]);
 
-    //cek apakah ada username yang sama
-    $cek_username = mysqli_query($koneksi, "SELECT * from user WHERE username = '$username';");
+    // Cek apakah ada username yang sama
+    $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username'");
     if (mysqli_fetch_assoc($cek_username)) {
-        echo "<script>alert('Username Tidak Tersedia');</script>";
+        echo "<script>alert('Username tidak tersedia');</script>";
         return false;
     }
 
-    // cek konfirmasi password
+    // Cek apakah ada email yang sama
+    $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email'");
+    if (mysqli_fetch_assoc($cek_email)) {
+        echo "<script>alert('Email sudah terdaftar');</script>";
+        return false;
+    }
+
+    // Cek konfirmasi password
     if ($password !== $password2) {
-        echo "<script>alert('Mohon konfirmasikan password dengna benar')</script>";
+        echo "<script>alert('Mohon konfirmasikan password dengan benar');</script>";
         return false;
     }
 
-    // enkripsi password 
+    // Enkripsi password 
     $password = password_hash($password, PASSWORD_DEFAULT);
 
-    // 1. Ke tabel user
+    // 1. Masukkan data ke tabel user
     $ke_user = mysqli_query($koneksi, "INSERT INTO user (id_user, username, email, password, role) VALUES (NULL, '$username', '$email', '$password', 'student')");
-   
-    
 
-    // 2. Ke tabel student
-    $id_dari_user = mysqli_insert_id($koneksi);
-        
-    $sql = mysqli_query($koneksi, "INSERT INTO student (id_student, name) VALUES ('$id_dari_user', '$name')");
-    if ($sql) {
-        iziToastAlert('success', 'Register Berhasil !', 'login.php');
-        return mysqli_affected_rows($koneksi);
+    // 2. Masukkan data ke tabel student
+    if ($ke_user) {
+        $id_dari_user = mysqli_insert_id($koneksi);
+        $sql = mysqli_query($koneksi, "INSERT INTO student (id_student, name) VALUES ('$id_dari_user', '$name')");
+
+        if ($sql) {
+            iziToastAlert('success', 'Register berhasil!', 'login.php');
+            return mysqli_affected_rows($koneksi);
+        }
     }
+
+    return false;
 }
+
 
 
 
@@ -99,6 +109,24 @@ function edit_profil($data, $id_user) {
     $old_password = mysqli_real_escape_string($koneksi, $data['old_password'] ?? '');
     $new_password = mysqli_real_escape_string($koneksi, $data['new_password'] ?? '');
     $isPasswordChanged = !empty($old_password) && !empty($new_password);
+
+    // Cek username untuk duplikasi
+    $checkUsernameQuery = "SELECT * FROM user WHERE username = '$username' AND id_user != '$id_user'";
+    $checkUsernameResult = mysqli_query($koneksi, $checkUsernameQuery);
+
+    if (mysqli_num_rows($checkUsernameResult) > 0) {
+        echo "<script>alert('Username tidak tersedia!');</script>";
+        return false;
+    }
+
+    // Cek email untuk duplikasi
+    $checkEmailQuery = "SELECT * FROM user WHERE email = '$email' AND id_user != '$id_user'";
+    $checkEmailResult = mysqli_query($koneksi, $checkEmailQuery);
+
+    if (mysqli_num_rows($checkEmailResult) > 0) {
+        echo "<script>alert('Email tidak tersedia!');</script>";
+        return false;
+    }
 
     // Penanganan upload foto profil
     $img = $_FILES['profil_picture']['name'];
@@ -157,6 +185,7 @@ function edit_profil($data, $id_user) {
         echo "<script>alert('Failed to update account.');</script>";
     }
 }
+
 
 
 
@@ -375,16 +404,28 @@ function enroll() {
         return;
     }
 
-    // Cek tanggal mulai kursus
-    $query_course = mysqli_query($koneksi, "SELECT start_date FROM course WHERE id_course = '$id_course'");
+    // Cek jumlah peserta yang sudah mendaftar di kursus
+    $query_enroll_count = mysqli_query($koneksi, "SELECT COUNT(*) as total_enroll FROM enroll WHERE id_course = '$id_course'");
+    $enroll_data = mysqli_fetch_assoc($query_enroll_count);
+    $total_enroll = $enroll_data['total_enroll'] ?? 0;
+
+    // Cek kuota kursus
+    $query_course = mysqli_query($koneksi, "SELECT start_date, quota FROM course WHERE id_course = '$id_course'");
     $course_data = mysqli_fetch_assoc($query_course);
 
     if ($course_data) {
         $start_date = $course_data['start_date'];
+        $quota = $course_data['quota'];
+
+        if ($total_enroll >= $quota) {
+            echo "<script>alert('Kuota kursus sudah penuh.');</script>";
+            return;
+        }
+
         $current_date = date('Y-m-d');
 
         // Tentukan status enrollment
-        $status = ($current_date >= $start_date) ? 'On going' : 'pending';
+        $status = ($current_date >= $start_date) ? 'On going' : 'Pending';
 
         // Insert ke tabel enroll
         $sql = mysqli_query($koneksi, 
@@ -401,6 +442,7 @@ function enroll() {
         echo "Data kursus tidak ditemukan.";
     }
 }
+
 
 
 
@@ -503,10 +545,10 @@ function get_course_id_from_slug($course_slug) {
 }
 
 // get information section
-function get_information_by_course_and_section($id_course, $id_section) {
+function get_information_by_course_and_section($id_section) {
     global $koneksi;
     
-    $info_query = "SELECT * FROM information WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $info_query = "SELECT * FROM information WHERE id_section = '$id_section'";
     $info_result = mysqli_query($koneksi, $info_query);
     
     $information = [];
@@ -518,10 +560,10 @@ function get_information_by_course_and_section($id_course, $id_section) {
 }
 
 // get video section
-function get_video_by_course_and_section($id_course, $id_section) {
+function get_video_by_course_and_section($id_section) {
     global $koneksi;
     
-    $vid_query = "SELECT * FROM materi_video WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $vid_query = "SELECT * FROM materi_video WHERE id_section = '$id_section'";
     $vid_result = mysqli_query($koneksi, $vid_query);
     
     $video = [];
@@ -533,10 +575,10 @@ function get_video_by_course_and_section($id_course, $id_section) {
 }
 
 // get text section
-function get_text_by_course_and_section($id_course, $id_section) {
+function get_text_by_course_and_section($id_section) {
     global $koneksi;
     
-    $tex_query = "SELECT * FROM materi_text WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $tex_query = "SELECT * FROM materi_text WHERE id_section = '$id_section'";
     $tex_result = mysqli_query($koneksi, $tex_query);
     
     $text = [];
@@ -548,10 +590,10 @@ function get_text_by_course_and_section($id_course, $id_section) {
 }
 
 // get file section
-function get_file_by_course_and_section($id_course, $id_section) {
+function get_file_by_course_and_section($id_section) {
     global $koneksi;
     
-    $files_query = "SELECT * FROM materi_file WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $files_query = "SELECT * FROM materi_file WHERE id_section = '$id_section'";
     $files_result = mysqli_query($koneksi, $files_query);
     
     $file = [];

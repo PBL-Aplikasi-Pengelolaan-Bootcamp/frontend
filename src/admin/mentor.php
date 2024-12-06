@@ -216,9 +216,9 @@ $mentor = getAll_mentor();
 
                                     <div class="flex flex-col gap-2">
                                         <label for="profil_picture">Foto Profil</label>
-                                        <input type="file" accept="image/*" name="profil_picture" id="profil_picture" "
+                                        <input type="file" accept="image/*" name="profil_picture" id="profil_picture"
                                                 class=" shadow appearance-none border rounded w-full py-2 px-3
-                                            text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                                            text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
                                         <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
                                         <input type="hidden" name="cropped_image" id="cropped_image">
                                         <div class="relative w-12 h-12">
@@ -232,33 +232,33 @@ $mentor = getAll_mentor();
                                             <label for="start-date">Name</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="start-date" name="name" type="text">
+                                                id="start-date" name="name" type="text" required>
                                         </div>
                                         <div class="flex flex-col gap-2 w-full">
                                             <label for="end-date">Expertise</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="" name="expertise" type="text">
+                                                id="" name="expertise" type="text" required>
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="title">Bio</label>
                                         <textarea
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="bio" id=""></textarea>
+                                            name="bio" id="" required></textarea>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <div class="flex flex-col gap-2 w-full">
                                             <label for="telp">No telp</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="telp" name="telp" type="text">
+                                                id="telp" name="telp" type="text" required>
                                         </div>
                                         <div class="flex flex-col gap-2 w-full">
                                             <label for="email">Email</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="email" name="email" type="email">
+                                                id="email" name="email" type="email" required>
                                         </div>
                                     </div>
 
@@ -267,19 +267,19 @@ $mentor = getAll_mentor();
                                         <label for="username">Username</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="username" type="text" placeholder="Enter your name" name="username">
+                                            id="username" type="text" placeholder="Enter your name" name="username" required>
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="password">Password</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="password" type="password" placeholder="Enter your name" name="password">
+                                            id="password" type="password" placeholder="Enter your name" name="password" required>
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="password2">Confirmation Password</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="password2" type="password" placeholder="Enter your name" name="password2">
+                                            id="password2" type="password" placeholder="Enter your name" name="password2" required>
                                     </div>
 
 

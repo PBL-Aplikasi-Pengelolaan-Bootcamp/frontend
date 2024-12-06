@@ -15,8 +15,13 @@ if (isset($_POST['edit_profil'])) {
 }
 
 //edit mentor
-if (isset($_POST['edit_mentor'])) {
-    edit_mentor($_POST);
+if (isset($_POST['edit_student'])) {
+    edit_student($_POST);
+}
+
+//delete student
+if (isset($_POST['delete_student'])) {
+    delete_student();
 }
 
 //get data student
@@ -220,7 +225,7 @@ $course_mentor = get_mentor_course();
             <!-- LIST -->
             <div class="flex flex-col md:flex-row items-center md:items-start gap-5 mt-10 w-full">
                 <div class="w-64 md:w-80 aspect-square overflow-hidden rounded-lg">
-                    <img src="../foto_mentor/<?=$student['profil_picture']?>" class="w-full h-full object-cover">
+                    <img src="../foto_student/<?= isset($student['profil_picture']) ? $student['profil_picture'] : 'profil_default.png' ?>" class="w-full h-full object-cover">
                 </div>
 
                 <div class="flex flex-col w-full text-center md:text-left space-y-3">
@@ -252,7 +257,7 @@ $course_mentor = get_mentor_course();
                                             <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
                                             <input type="hidden" name="cropped_image" id="cropped_image">
                                             <div class="relative w-12 h-12">
-                                                <img src="../foto_mentor/<?=$student['profil_picture']?>" alt=""
+                                                <img src="../foto_student/<?=$student['profil_picture']?>" alt=""
                                                     id="preview-image" class="w-12 h-12 object-cover rounded-full">
                                             </div>
                                         </div>
@@ -266,19 +271,14 @@ $course_mentor = get_mentor_course();
                                                     value="<?=$student['name']?>">
                                             </div>
                                             <div class="flex flex-col gap-2 w-full">
-                                                <label for="end-date">Expertise</label>
+                                                <label for="end-date">Birth</label>
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                    id="" name="expertise" type="text"
-                                                    value="<?=$student['expertise']?>">
+                                                    id="" name="birth" type="date"
+                                                    value="<?=$student['birth']?>">
                                             </div>
                                         </div>
-                                        <div class="flex flex-col gap-2">
-                                            <label for="title">Bio</label>
-                                            <textarea
-                                                class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                name="bio" id=""><?=$student['bio']?></textarea>
-                                        </div>
+                                        
                                         <div class="flex items-center gap-2">
                                             <div class="flex flex-col gap-2 w-full">
                                                 <label for="start-date">Phone</label>
@@ -325,9 +325,9 @@ $course_mentor = get_mentor_course();
                                         </div>
 
                                         <div class="flex flex-col gap-2">
-                                            <button type="submit" name="delete_course"
+                                            <button type="submit" name="delete_student"
                                                 class="px-4 py-2 h-max my-auto text-red-500 bg-white border border-red-500 font-semibold w-max text-center rounded-md hover:bg-red-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition duration-300">
-                                                DELETE MENTOR
+                                                DELETE STUDENT
                                             </button>
                                         </div>
 
@@ -336,7 +336,7 @@ $course_mentor = get_mentor_course();
                                                 class="px-4 py-2 text-sm font-medium text-red-500 bg-white border border-gray-300 rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                                                 Close
                                             </button>
-                                            <button type="submit" name="edit_mentor"
+                                            <button type="submit" name="edit_student"
                                                 class="px-4 py-2 text-sm font-medium text-white bg-blue-700 rounded-md hover:bg-blue-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
                                                 Simpan
                                             </button>

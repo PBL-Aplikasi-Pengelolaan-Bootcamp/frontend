@@ -372,37 +372,37 @@ if (isset($_POST['add_quiz'])) {
                                 <form method="post" enctype="multipart/form-data"
                                     class="flex flex-col gap-5 my-2 w-full">
                                     <div class="flex flex-col gap-2">
-                                        <label for="title">Title</label>
+                                        <label for="title">Judul</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="title" name="title" type="text" placeholder="Course Mysql"
-                                            value="<?= $course['title'] ?>">
+                                            id="title" name="title" type="text" placeholder="Course Mysql" required
+                                            value="<?= $course['title'] ?>"> 
                                     </div>
                                     <div class="flex flex-col gap-2">
-                                        <label for="title">Description</label>
+                                        <label for="title">Deskripsi</label>
                                         <textarea
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="description" id=""><?= $course['description'] ?></textarea>
+                                            name="description" id="" required><?= $course['description'] ?></textarea>
                                     </div>
                                     <div class="flex items-center gap-2">
                                         <div class="flex flex-col gap-2 w-full">
-                                            <label for="start-date">Start</label>
+                                            <label for="start-date">Mulai</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="start-date" name="start_date" type="date"
+                                                id="start-date" name="start_date" type="date" required
                                                 value="<?= $course['start_date'] ?>" placeholder="Course Mysql">
                                         </div>
                                         <div class="flex flex-col gap-2 w-full">
-                                            <label for="end-date">End</label>
+                                            <label for="end-date">Berakhir</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                                id="end-date" name="end_date" type="date"
+                                                id="end-date" name="end_date" type="date" required
                                                 value="<?= $course['end_date'] ?>" placeholder="Course Mysql">
                                         </div>
                                     </div>
                                     <div class="flex flex-col gap-2">
-                                        <label for="type">Type</label>
-                                        <select id="type" name="course_type"
+                                        <label for="type">Tipe Kursus</label>
+                                        <select id="type" name="course_type" required
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                             <option value="" disabled hidden>Pilih tipe kursus</option>
                                             <option value="online"
@@ -414,16 +414,16 @@ if (isset($_POST['add_quiz'])) {
                                         </select>
                                     </div>
                                     <div class="flex flex-col gap-2">
-                                        <label for="title">Quota</label>
-                                        <input
+                                        <label for="title">Kuota</label>
+                                        <input required
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                             id="title" name="quota" type="number" value='<?= $course['quota'] ?>'
                                             placeholder="Course Mysql">
                                     </div>
 
                                     <div class="flex flex-col gap-2">
-                                        <label for="img">Image Cover</label>
-                                        <input type="file" src="" alt="" name="course_picture"
+                                        <label for="img">Foto Sampul</label>
+                                        <input type="file" src="" alt="" name="course_picture" required
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                     </div>
 
@@ -474,7 +474,7 @@ if (isset($_POST['add_quiz'])) {
                     <button id="open-modal-btn-section"
                         class="bg-blue-500 text-white p-3 rounded-full shadow-lg hover:bg-blue-600 focus:outline-none"
                         data-modal-type="fund" role="menuitem">
-                        Add Section
+                        Tambah Section
                     </button>
 
                     <!-- Modal Section -->
@@ -769,7 +769,7 @@ if (isset($_POST['add_quiz'])) {
                         <div class="mt-4 space-y-6">
 
                             <!-- Information Display -->
-                            <?php $information = get_information_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php $information = get_information_bySection( $section['id_section']); ?>
                             <?php if (!empty($information)) { ?>
                             <div class="space-y-4">
                                 <h2 class="text-2xl font-semibold">Information</h2>
@@ -837,7 +837,7 @@ if (isset($_POST['add_quiz'])) {
 
 
                             <!-- Video Display -->
-                            <?php $video = get_video_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php $video = get_video_bySection($section['id_section']); ?>
                             <?php if (!empty($video)) { ?>
                             <?php foreach ($video as $vid) { ?>
                             <!-- Container Flex -->
@@ -904,7 +904,7 @@ if (isset($_POST['add_quiz'])) {
 
 
                             <!-- Text Display -->
-                            <?php $text = get_text_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php $text = get_text_bySection($section['id_section']); ?>
                             <?php if (!empty($text)) { ?>
                             <?php foreach ($text as $txt) { ?>
                             <div class="prose max-w-none">
@@ -915,7 +915,7 @@ if (isset($_POST['add_quiz'])) {
                             <?php } ?>
 
                             <!-- File Display -->
-                            <?php $file = get_file_bySection($_GET['id'], $section['id_section']); ?>
+                            <?php $file = get_file_bySection($section['id_section']); ?>
                             <?php if (!empty($file)) { ?>
                             <?php foreach ($file as $f) { ?>
                             <div

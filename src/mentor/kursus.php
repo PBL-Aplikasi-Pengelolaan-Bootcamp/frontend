@@ -283,31 +283,31 @@ $course = get_course_by_mentor();
                         <form method="post" enctype="multipart/form-data"
                             class="flex flex-col gap-6 p-6 bg-gray-50 shadow-lg rounded-lg">
                             <div class="flex flex-col gap-2">
-                                <label for="title" class="font-medium text-gray-700">Title</label>
-                                <input type="text" name="title"
+                                <label for="title" class="font-medium text-gray-700">Judul</label>
+                                <input type="text" name="title" required
                                     class="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-300">
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label for="description" class="font-medium text-gray-700">Description</label>
-                                <textarea name="description" rows="4"
+                                <label for="description" class="font-medium text-gray-700">Deskripsi</label>
+                                <textarea name="description" rows="4" required
                                     class="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-300"></textarea>
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label for="schedule" class="font-medium text-gray-700">Schedule</label>
+                                <label for="schedule" class="font-medium text-gray-700">Jadwal</label>
                                 <div class="flex gap-4">
-                                    <input type="date" id="start_date" name="start_date"
+                                    <input type="date" id="start_date" name="start_date" required
                                         class="border border-gray-300 rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
                                     <span class="self-center text-gray-600">to</span>
-                                    <input type="date" id="end_date" name="end_date"
+                                    <input type="date" id="end_date" name="end_date" required
                                         class="border border-gray-300 rounded-md py-2 px-3 w-full focus:outline-none focus:ring-2 focus:ring-blue-300">
                                 </div>
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label for="course_type" class="font-medium text-gray-700">Course Type</label>
-                                <select id="course_type" name="course_type"
+                                <label for="course_type" class="font-medium text-gray-700">Tipe Kursus</label>
+                                <select id="course_type" name="course_type" required
                                     class="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-300">
                                     <option value="online">Online</option>
                                     <option value="offline">Offline</option>
@@ -315,14 +315,14 @@ $course = get_course_by_mentor();
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label for="quota" class="font-medium text-gray-700">Quota</label>
-                                <input type="number" name="quota"
+                                <label for="quota" class="font-medium text-gray-700">Kuota</label>
+                                <input type="number" name="quota" required
                                     class="border border-gray-300 rounded-md py-2 px-3 focus:outline-none focus:ring-2 focus:ring-blue-300">
                             </div>
 
                             <div class="flex flex-col gap-2">
-                                <label for="course_picture" class="font-medium text-gray-700">Image Cover</label>
-                                <input type="file" name="course_picture"
+                                <label for="course_picture" class="font-medium text-gray-700">Foto Sampul</label>
+                                <input type="file" name="course_picture" required
                                     class="border border-gray-300 rounded-md py-2 px-3 cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-300">
                             </div>
 

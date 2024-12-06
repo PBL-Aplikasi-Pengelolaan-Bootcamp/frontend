@@ -42,8 +42,9 @@ function iziToastAlert($type, $message, $redirect = null) {
 function logout(){
     session_unset();
     session_destroy();
+    echo "<script>window.location.href='../login.php'</script>";
     // echo "<script>alert('Logout'); window.location.href='../login.php'</script>";
-    iziToastAlert('success', 'Logout !', '../login.php');
+    // iziToastAlert('success', 'Logout !', '../login.php');
 
 }
 
@@ -195,7 +196,7 @@ function create_course($data){
     if  (move_uploaded_file($tmpname, $folder)) {
         $sql = mysqli_query($koneksi, "INSERT INTO course (id_course, id_mentor, title, slug, description, start_date, end_date, course_type, quota, course_picture) VALUES ('', '$id_mentor', '$title', '$slug', '$description', '$start_date', '$end_date', '$course_type', '$quota', '$course_picture')");
         if ($sql) {
-            echo "<script>alert('Course Created!'); window.location.href='kursus.php';</script>";
+            echo "<script>alert('Kursus Berhasil Dibuat!'); window.location.href='kursus.php';</script>";
         } else {
             echo "<script>alert('gagal')</script>";
         }
@@ -275,7 +276,7 @@ function edit_course($data) {
     }
 
     if ($sql) {
-        echo "<script>alert('Course Updated!'); window.location.href='kursus.php';</script>";
+        echo "<script>alert('Kursus Berhasil Diubah!'); window.location.href=location.href;</script>";
         return true;
     } else {
         echo "<script>alert('Gagal mengupdate course');</script>";
@@ -380,7 +381,7 @@ function create_section($data){
     //insert ke db section
     $sql = mysqli_query($koneksi, "INSERT INTO section (id_course, title) VALUES ('$id_course', '$section')");
     if ($sql) {
-        echo "<script>alert('Section Created!'); window.location.href = window.location.href; // Mengarahkan kembali ke halaman yang sama
+        echo "<script>alert('Berhasil Menambah Section!'); window.location.href = window.location.href; // Mengarahkan kembali ke halaman yang sama
             </script>";
         
     }
@@ -394,7 +395,7 @@ function edit_section($data) {
 
     $sql = mysqli_query($koneksi, "UPDATE section SET title = '$section' WHERE id_section = '$id_section'");
     if ($sql) {
-        echo "<script>alert('Section Updated!'); window.location.href=location.href</script>";
+        echo "<script>alert('Berhasil Merubah Section!'); window.location.href=location.href</script>";
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -404,7 +405,7 @@ function delete_section($data) {
     $id_section = $data['id_section'];
     $sql = mysqli_query($koneksi, "DELETE FROM section WHERE id_section = '$id_section'");
     if ($sql) {
-        echo "<script>alert('Section Deleted!'); window.location.href=location.href;</script>";
+        echo "<script>alert('Section Berhasil Dihapus!'); window.location.href=location.href;</script>";
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -413,20 +414,19 @@ function delete_section($data) {
 // ------------------------------------------------------------------INFORMATION
 function create_information($data) {
     global $koneksi;
-    $id_course = $_GET['id'];
     $id_section = $data['id_section'];
     $information = $data['information'];
     
-    $sql = mysqli_query($koneksi, "INSERT INTO information (id_course, id_section, information) VALUES ('$id_course','$id_section', '$information')");
+    $sql = mysqli_query($koneksi, "INSERT INTO information (id_section, information) VALUES ('$id_section', '$information')");
     if ($sql) {
         echo "<script>alert('Information Created!');</script>";
     }
     return mysqli_affected_rows($koneksi);
 }
 
-function get_information_bySection($id_course, $id_section) {
+function get_information_bySection($id_section) {
     global $koneksi;
-    $sql = "SELECT * FROM information WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $sql = "SELECT * FROM information WHERE id_section = '$id_section'";
     $result = mysqli_query($koneksi, $sql); // Jalankan query
 
     $information = [];
@@ -469,20 +469,19 @@ function delete_information($data) {
 // -----------------------------------------------------------------------VIDEO MATERIAL 
 function create_video($data) {
     global $koneksi;
-    $id_course = $_GET['id'];
     $id_section = $data['id_section'];
     $url = $data['url'];
     
-    $sql = mysqli_query($koneksi, "INSERT INTO materi_video (id_course, id_section, url) VALUES ('$id_course','$id_section', '$url')");
+    $sql = mysqli_query($koneksi, "INSERT INTO materi_video (id_section, url) VALUES ('$id_section', '$url')");
     if ($sql) {
         echo "<script>alert('Video Created!');</script>";
     }
     return mysqli_affected_rows($koneksi);
 }
 
-function get_video_bySection($id_course, $id_section) {
+function get_video_bySection($id_section) {
     global $koneksi;
-    $sql = "SELECT * FROM materi_video WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $sql = "SELECT * FROM materi_video WHERE id_section = '$id_section'";
     $result = mysqli_query($koneksi, $sql); // Jalankan query
 
     $video = [];
@@ -533,19 +532,18 @@ function delete_video($data) {
 
 function create_text($data) {
     global $koneksi;
-    $id_course = $_GET['id'];
     $id_section = $data['id_section'];
     $content = $data['text'];
     
-    $sql = mysqli_query($koneksi, "INSERT INTO materi_text (id_course, id_section, content) VALUES ('$id_course','$id_section', '$content')");
+    $sql = mysqli_query($koneksi, "INSERT INTO materi_text (id_section, content) VALUES ('$id_section', '$content')");
     if ($sql) {
         echo "<script>alert('text Created!');</script>";
     }
     return mysqli_affected_rows($koneksi);
 }
-function get_text_bySection($id_course, $id_section) {
+function get_text_bySection($id_section) {
     global $koneksi;
-    $sql = "SELECT * FROM materi_text WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $sql = "SELECT * FROM materi_text WHERE id_section = '$id_section'";
     $result = mysqli_query($koneksi, $sql); // Jalankan query
 
     $text = [];
@@ -560,7 +558,6 @@ function get_text_bySection($id_course, $id_section) {
 function create_file($data) {
     global $koneksi;
 
-    $id_course = $_GET['id']; // Ambil ID course dari URL
     $id_section = $data['id_section'];
     
     $file_name = $_FILES['file']['name']; // Nama file yang diupload
@@ -579,7 +576,7 @@ function create_file($data) {
     // Proses upload file
     if (move_uploaded_file($tmpname, $folder)) {
         // Simpan informasi file ke database
-        $sql = mysqli_query($koneksi, "INSERT INTO materi_file (id_course, id_section, file) VALUES ('$id_course', '$id_section', '$file_name')");
+        $sql = mysqli_query($koneksi, "INSERT INTO materi_file (id_section, file) VALUES ('$id_section', '$file_name')");
         if ($sql) {
             echo "<script>alert('File uploaded successfully!');</script>";
         } else {
@@ -590,9 +587,9 @@ function create_file($data) {
     }
 }
 
-function get_file_bySection($id_course, $id_section) {
+function get_file_bySection($id_section) {
     global $koneksi;
-    $sql = "SELECT * FROM materi_file WHERE id_course = '$id_course' AND id_section = '$id_section'";
+    $sql = "SELECT * FROM materi_file WHERE id_section = '$id_section'";
     $result = mysqli_query($koneksi, $sql);
 
     $files = [];

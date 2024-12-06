@@ -20,7 +20,7 @@
 <body class="">
   <div class="contanier">
     <!-- FORM -->
-    <div class="container login-width md:login-width-md m-auto flex relative top-10 flex-col gap-8 leading-3">
+    <div class="container login-width md:login-width-md m-auto flex relative top-10 flex-col gap-8 leading-3" style="width: 500px; margin-top: 13vh;">
       <div class="hero m-auto mb-5">
         <img src="img/logo.png" alt="" />
       </div>
@@ -41,7 +41,7 @@
         <header
           class="border border-b-slate-300 w-44 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
         </header>
-        <h3 class="text-center text-slate-500">atau</h3>
+        <h3 class="text-center text-slate-500 m-auto">atau</h3>
         <header
           class="border border-b-slate-300 w-44 border-l-transparent border-t-transparent border-r-transparent relative bottom-1">
         </header>
