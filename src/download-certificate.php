@@ -96,9 +96,9 @@ if ($mentor_signature) {
     $pdf->Image($mentor_signature, 190, 150, 40, 0, 'PNG');
 }
 $pdf->SetXY(150, 170);
-$pdf->Cell(80, 7, $mentor, 0, 1, 'C');
+$pdf->Cell(130, 7, $mentor, 0, 1, 'C');
 $pdf->SetX(150);
-$pdf->Cell(80, 7, "Course Mentor", 0, 1, 'C');
+$pdf->Cell(130, 7, "Course Mentor", 0, 1, 'C');
 
 // Tambahkan garis horizontal untuk tanda tangan
 $pdf->SetDrawColor(0, 64, 128);

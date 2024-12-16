@@ -221,6 +221,11 @@ function edit_mentor($data)
     $tmpname = $_FILES['profil_picture']['tmp_name'];
     $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_mentor/' . $profil_picture;
 
+    // Handle signature
+    $signature = $_FILES['signature']['name'];
+    $tmpname_signature = $_FILES['signature']['tmp_name'];
+    $folder_signature = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_signature/' . $signature;
+
     // Update data pada tabel user
     $update_user = mysqli_query($koneksi, "UPDATE user SET username = '$username', email = '$email' WHERE id_user = '$id_mentor'");
     if (!$update_user) {
@@ -229,26 +234,37 @@ function edit_mentor($data)
     }
 
     // Update data pada tabel mentor
-    if (!empty($profil_picture)) {
-        // Jika ada file profil baru, pindahkan file dan perbarui kolom profil_picture
-        if (move_uploaded_file($tmpname, $folder)) {
-            $update_mentor = mysqli_query($koneksi, "UPDATE mentor SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp', profil_picture = '$profil_picture' WHERE id_mentor = '$id_mentor'");
-            if (!$update_mentor) {
-                echo "<script>alert('Gagal memperbarui data mentor');</script>";
-                return false;
-            }
-        } else {
+    if (!empty($profil_picture) || !empty($signature)) {
+        // Jika ada file baru, pindahkan file dan perbarui kolom terkait
+        if (!empty($profil_picture) && !move_uploaded_file($tmpname, $folder)) {
             echo "<script>alert('Gagal mengupload file profil baru');</script>";
             return false;
         }
+        if (!empty($signature) && !move_uploaded_file($tmpname_signature, $folder_signature)) {
+            echo "<script>alert('Gagal mengupload file signature baru');</script>";
+            return false;
+        }
+    
+        // Bangun query untuk update data mentor
+        $query = "UPDATE mentor SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp'";
+        if (!empty($profil_picture)) $query .= ", profil_picture = '$profil_picture'";
+        if (!empty($signature)) $query .= ", signature = '$signature'";
+        $query .= " WHERE id_mentor = '$id_mentor'";
+    
+        $update_mentor = mysqli_query($koneksi, $query);
+        if (!$update_mentor) {
+            echo "<script>alert('Gagal memperbarui data mentor');</script>";
+            return false;
+        }
     } else {
-        // Jika tidak ada file profil baru, hanya perbarui data lainnya
+        // Jika tidak ada file baru, perbarui data lainnya
         $update_mentor = mysqli_query($koneksi, "UPDATE mentor SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp' WHERE id_mentor = '$id_mentor'");
         if (!$update_mentor) {
             echo "<script>alert('Gagal memperbarui data mentor');</script>";
             return false;
         }
     }
+    
 
     echo "<script>alert('Data mentor berhasil diperbarui!'); window.location.href=location.href;</script>";
     return true;
