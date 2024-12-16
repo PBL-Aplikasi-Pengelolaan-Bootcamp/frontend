@@ -6,17 +6,27 @@ ob_start();
 require 'fpdf/fpdf.php';
 include 'function.php';
 
-// Pastikan session dimulai sebelum ada output lain
-session_start();
-
 // Ambil data pengguna dan kursus
 $data_login = get_data_user_login();
 $kursus = get_course_by_slug();
 $participant_name = isset($data_login['name']) ? $data_login['name'] : 'Peserta Tidak Dikenal';
 $course = $kursus['title'] ?? '';
+$mentor = $kursus['name'] ?? 'Mentor Tidak Dikenal';
 
 // Nama file sertifikat
 $certificate_file = "Certificate_Course_{$course}.pdf";
+
+// Path tanda tangan director dan mentor
+$director_signature = "./foto_signature/ttd_nasyith.png"; 
+$mentor_signature = "./foto_mentor/Signature.png"; 
+
+// Pastikan file gambar ada
+if (!file_exists($director_signature)) {
+    $director_signature = false;
+}
+if (!file_exists($mentor_signature)) {
+    $mentor_signature = false;
+}
 
 // Buat file PDF dengan FPDF
 $pdf = new FPDF('L', 'mm', 'A4'); // Orientasi Landscape
@@ -24,60 +34,80 @@ $pdf->AddPage();
 $pdf->SetMargins(20, 20, 20);
 
 // Desain Border
-$pdf->SetLineWidth(1);
+$pdf->SetFillColor(240, 240, 255);
+$pdf->Rect(10, 10, 277, 190, 'DF'); // Border dengan fill
+
+$pdf->SetLineWidth(0.5);
 $pdf->SetDrawColor(0, 64, 128);
-$pdf->Rect(10, 10, 277, 190, 'D'); // Border luar
 $pdf->Rect(15, 15, 267, 180, 'D'); // Border dalam
 
-// Header Sertifikat
-$pdf->SetFont('Arial', 'B', 30);
-$pdf->SetTextColor(0, 64, 128);
-$pdf->Cell(0, 50, 'Certificate of Completion', 0, 1, 'C');
-$pdf->Ln(5);
 
-// Sub-header
-$pdf->SetFont('Arial', '', 14);
-$pdf->SetTextColor(50, 50, 50);
-$pdf->Cell(0, 10, "This certificate is proudly presented to", 0, 1, 'C');
-$pdf->Ln(10);
+$pdf->Cell(0, 10, '', 0, 1, 'C');
+
+// Header Sertifikat
+$pdf->SetFont('Courier', 'B', 30  );
+$pdf->SetTextColor(0, 64, 128);
+$pdf->Cell(0, 50, 'CERTIFICATE of COMPLETION', 0, 1, 'C');
 
 // Nama Peserta
-$pdf->SetFont('Arial', 'B', 24);
-$pdf->SetTextColor(0, 102, 204);
-$pdf->Cell(0, 10, $participant_name, 0, 1, 'C');
-$pdf->Ln(10);
+$pdf->SetFont('Arial', 'B', 20);
+$pdf->SetTextColor(0, 0, 0);
+$participant_name_uppercase = strtoupper($participant_name);
+$pdf->Cell(0, 5, $participant_name_uppercase, 0, 1, 'C');
+
+// Garis Pemisah
+$pdf->SetLineWidth(0.5);
+$pdf->SetDrawColor(0, 64, 128);
+$pdf->Line(70, $pdf->GetY() + 5, 220, $pdf->GetY() + 5);
+
 
 // Pesan Penyelesaian
 $pdf->SetFont('Arial', '', 12);
 $pdf->SetTextColor(50, 50, 50);
-$pdf->MultiCell(0, 8, "For successfully completing the course:", 0, 'C');
-$pdf->SetFont('Arial', 'B', 16);
-$pdf->Cell(0, 10, $course, 0, 1, 'C');
-$pdf->Ln(15);
+$pdf->MultiCell(0, 30, "For successfully completing the course", 0, 'C');
 
-// Garis Pemisah
-// Menyusun garis pemisah agar lebih rata
-$pdf->SetLineWidth(0.5);           // Ketebalan garis
-$pdf->SetDrawColor(0, 64, 128);    // Warna garis
-$pdf->Line(70, 125, 220, 125);     // Panjang dan margin atas (disesuaikan)
-$pdf->Ln(15);                      // Jarak setelah garis
+// Nama Kursus
+$pdf->SetFont('Arial', 'B', 18);
+$pdf->SetTextColor(0, 0, 0);
+$pdf->Cell(0, 10, $course, 0, 1, 'C');
+
+$pdf->SetFont('Arial', '', 12);
+$pdf->SetTextColor(50, 50, 50);
+$start_date = date("d F Y", strtotime($kursus['start_date']));
+$end_date = date("d F Y", strtotime($kursus['end_date']));
+$pdf->MultiCell(0, 30, "Conducted from ". $start_date. " to ". $end_date, 0, 'C');
+
 
 // Bagian Tanda Tangan
-$pdf->SetFont('Arial', '', 12);
-$pdf->SetTextColor(0, 0, 0);
-$pdf->Cell(0, 10, "Issued on: " . date('d-m-Y'), 0, 1, 'C');
-$pdf->Ln(10);
+$pdf->SetFont('Arial', '', 11);
+$pdf->SetTextColor(50, 50, 50);
 
-// Menyesuaikan posisi tanda tangan agar rata kiri dan kanan
-$pdf->SetFont('Arial', '', 12);
-$pdf->Cell(90, 10, "Instructor Signature", 0, 0, 'C');
-$pdf->Cell(90, 10, "", 0, 0, 'C'); // Spacer
-$pdf->Cell(90, 10, "Course Director Signature", 0, 1, 'C');
+// Tanda Tangan Director
+if ($director_signature) {
+    $pdf->Image($director_signature, 40, 150, 40, 0, 'PNG');
+}
+$pdf->SetXY(30, 170);
+$pdf->Cell(80, 7, "Nasyith Aditya", 0, 1, 'C');
+$pdf->SetX(30);
+$pdf->Cell(80, 7, "Director of Simplify", 0, 1, 'C');
 
-// Garis Tanda Tangan
-$pdf->SetLineWidth(0.2);
-$pdf->Line(40, 160, 120, 160);
-$pdf->Line(180, 160, 260, 160);
+// Tanda Tangan Mentor
+if ($mentor_signature) {
+    $pdf->Image($mentor_signature, 190, 150, 40, 0, 'PNG');
+}
+$pdf->SetXY(150, 170);
+$pdf->Cell(80, 7, $mentor, 0, 1, 'C');
+$pdf->SetX(150);
+$pdf->Cell(80, 7, "Course Mentor", 0, 1, 'C');
+
+// Tambahkan garis horizontal untuk tanda tangan
+$pdf->SetDrawColor(0, 64, 128);
+// Garis pertama (Garis untuk bagian pertama tanda tangan)
+$pdf->Line(35, 165, 115, 165);  // X1, Y1, X2, Y2
+
+// Garis kedua (Garis untuk bagian kedua tanda tangan, disesuaikan agar sejajar)
+$pdf->Line(175, 165, 255, 165); // Geser ke kanan dengan menambah 20 pada X1 dan X2
+
 
 // Bersihkan output buffer sebelum mengirim PDF
 ob_end_clean();
@@ -85,6 +115,6 @@ ob_end_clean();
 // Output PDF sebagai unduhan
 header('Content-Type: application/pdf');
 header("Content-Disposition: attachment; filename={$certificate_file}");
-$pdf->Output(); 
+$pdf->Output();
 exit;
 ?>

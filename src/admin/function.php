@@ -97,9 +97,15 @@ function create_mentor($data)
     $expertise = $data['expertise'];
     $telp = $data['telp'];
 
+    // Handle profil picture
     $profil_picture = $_FILES['profil_picture']['name'];
-    $tmpname = $_FILES['profil_picture']['tmp_name'];
-    $folder = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_mentor/' . $profil_picture;
+    $tmpname_picture = $_FILES['profil_picture']['tmp_name'];
+    $folder_picture = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_mentor/' . $profil_picture;
+
+    // Handle signature
+    $signature = $_FILES['signature']['name'];
+    $tmpname_signature = $_FILES['signature']['tmp_name'];
+    $folder_signature = $_SERVER['DOCUMENT_ROOT'] . '/pbl/frontend/src/foto_signature/' . $signature;
 
     // Cek apakah username sudah ada
     $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username';");
@@ -135,8 +141,9 @@ function create_mentor($data)
     // 2. Ke tabel mentor
     $id_dari_user = mysqli_insert_id($koneksi);
 
-    if (move_uploaded_file($tmpname, $folder)) {
-        $sql = mysqli_query($koneksi, "INSERT INTO mentor (id_mentor, name, bio, expertise, telp, profil_picture) VALUES ('$id_dari_user', '$name', '$bio', '$expertise', '$telp', '$profil_picture')");
+    // Upload profil picture dan signature
+    if (move_uploaded_file($tmpname_picture, $folder_picture) && move_uploaded_file($tmpname_signature, $folder_signature)) {
+        $sql = mysqli_query($koneksi, "INSERT INTO mentor (id_mentor, name, bio, expertise, telp, profil_picture, signature) VALUES ('$id_dari_user', '$name', '$bio', '$expertise', '$telp', '$profil_picture', '$signature')");
         if (!$sql) {
             echo "<script>alert('Gagal menambahkan ke tabel mentor');</script>";
             return false;
@@ -151,6 +158,7 @@ function create_mentor($data)
     echo "<script>alert('Register Berhasil!'); window.location.href='mentor.php';</script>";
     return true;
 }
+
 
 
 

@@ -217,15 +217,30 @@ $mentor = getAll_mentor();
                                     <div class="flex flex-col gap-2">
                                         <label for="profil_picture">Foto Profil</label>
                                         <input type="file" accept="image/*" name="profil_picture" id="profil_picture"
-                                                class=" shadow appearance-none border rounded w-full py-2 px-3
-                                            text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                            class=" shadow appearance-none border rounded w-full py-2 px-3
+                                            text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                            required>
                                         <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
                                         <input type="hidden" name="cropped_image" id="cropped_image">
-                                        <div class="relative w-12 h-12">
-                                            <img src="../foto_mentor/" alt="" id="preview-image"
-                                                class="w-12 h-12 object-cover rounded-full">
+                                        <div class="relative w-24 h-24">
+                                            <img src="../foto_mentor/profil_default.png" alt="" id="preview-image"
+                                                class="w-24 h-24 object-cover rounded-full">
                                         </div>
                                     </div>
+
+                                    <div class="flex flex-col gap-2">
+                                        <label for="signature-input">Signature</label>
+                                        <input type="file" accept="image/*" name="signature" id="signature-input" class="shadow appearance-none border rounded w-full py-2 px-3
+                                        text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                        <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
+                                        <input type="hidden" name="cropped-signature" id="cropped-signature">
+                                        <div class="relative w-24">
+                                            <img src="../foto_signature/signature.png" alt="Preview Signature"
+                                                id="preview-signature" class="w-24 object-contain rounded">
+                                        </div>
+                                    </div>
+
+
 
                                     <div class="flex items-center gap-2">
                                         <div class="flex flex-col gap-2 w-full">
@@ -267,19 +282,22 @@ $mentor = getAll_mentor();
                                         <label for="username">Username</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="username" type="text" placeholder="Enter your name" name="username" required>
+                                            id="username" type="text" placeholder="Enter your name" name="username"
+                                            required>
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="password">Password</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="password" type="password" placeholder="Enter your name" name="password" required>
+                                            id="password" type="password" placeholder="Enter your name" name="password"
+                                            required>
                                     </div>
                                     <div class="flex flex-col gap-2">
                                         <label for="password2">Confirmation Password</label>
                                         <input
                                             class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            id="password2" type="password" placeholder="Enter your name" name="password2" required>
+                                            id="password2" type="password" placeholder="Enter your name"
+                                            name="password2" required>
                                     </div>
 
 
@@ -324,74 +342,37 @@ $mentor = getAll_mentor();
                                         </div>
                                     </div>
                                 </div>
+
+                                <div id="signatureCropperModal"
+                                    class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                                    <div class="bg-white rounded-lg max-w-2xl w-full">
+                                        <div class="flex justify-between items-center p-4 border-b">
+                                            <h3 class="text-lg font-semibold">Crop Image</h3>
+                                            <button type="button" onclick="closeSignatureCropperModal()"
+                                                class="text-gray-500 hover:text-gray-700">
+                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                    viewBox="0 0 24 24" stroke="currentColor">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                        <div class="p-4">
+                                            <div class="max-h-[60vh] overflow-hidden">
+                                                <img id="signatureCropperImage" class="max-w-full">
+                                            </div>
+                                            <div class="mt-4 flex justify-end gap-2">
+                                                <button type="button" onclick="applySignatureCrop()"
+                                                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                                    Apply Crop
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
-
-                    <!-- <div id="modalTambah"
-                        class="fixed inset-0 z-20 flex items-center justify-center bg-black bg-opacity-50 hidden">
-                        <div
-                            class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full max-h-screen overflow-y-auto">
-                            <div class="px-4 py-5 sm:p-6 flex flex-col gap-3">
-                                <form method="post" enctype="multipart/form-data" name="create_mentor"
-                                    class="grid grid-cols-2 gap-5 my-2 w-full">
-                                    <div class="flex flex-col gap-2 col-span-2">
-                                        <img src="../img/pp-profile.jpg" alt="" class="w-12 h-12">
-                                        <label for="img">Upload Profil Picture</label>
-                                        <input type="file" name="profil_picture"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="nama-mentor">Name</label>
-                                        <input
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                                            name="name" id="nama-mentor" type="text" placeholder="Enter your name">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="expertise">Expertise</label>
-                                        <input type="text" name="expertise" placeholder="Masukkan keahlian anda"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex flex-col gap-2 col-span-2">
-                                        <label for="bio">Bio</label>
-                                        <textarea name="bio"
-                                            class="shadow appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline w-full"></textarea>
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="telp">Phone</label>
-                                        <input type="text" name="telp" placeholder="Phone number"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="email">Email</label>
-                                        <input type="email" name="email" placeholder="Email address"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="username">Username</label>
-                                        <input type="text" name="username" placeholder="Masukkan username"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="password">Password</label>
-                                        <input type="password" name="password" placeholder="Masukkan password"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex flex-col gap-2">
-                                        <label for="password2">Confirmation Password</label>
-                                        <input type="password" name="password2" placeholder="Masukkan password"
-                                            class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
-                                    </div>
-                                    <div class="flex justify-between col-span-2">
-                                        <button type="submit" name="create_mentor"
-                                            class="px-4 py-2 h-max my-auto text-white bg-blue-700 font-semibold w-max text-center rounded-md">Simpan</button>
-                                        <button id="closeTambahMentor"
-                                            class="inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-red-500 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 sm:mt-0 sm:w-auto sm:text-sm">Close</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
-                    </div> -->
                 </div>
 
 
@@ -474,7 +455,9 @@ $mentor = getAll_mentor();
 
 
 
-<script>
+
+    <!-- ----------------------------------------------------------Foto mentor -->
+    <script>
     let cropper = null;
     const profileForm = document.getElementById('profileForm');
     const fileInput = document.getElementById('profil_picture');
@@ -583,6 +566,129 @@ $mentor = getAll_mentor();
 
     // Close button handler
     document.getElementById('close-modal-btn').addEventListener('click', function() {
+        window.history.back();
+    });
+    </script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- -------------------------------------------------------------Foto signature -->
+    <script>
+    let cropperInstance = null;
+    const signatureForm = document.getElementById('signatureForm');
+    const signatureFileInput = document.getElementById('signature-input');
+    const signaturePreview = document.getElementById('preview-signature');
+    const signatureCropperModal = document.getElementById('signatureCropperModal');
+    const signatureCropperImage = document.getElementById('signatureCropperImage');
+    const signatureCroppedInput = document.getElementById('cropped-signature');
+
+    // File input change handler
+    signatureFileInput.addEventListener('change', function(e) {
+        const file = e.target.files[0];
+        if (file) {
+            if (!file.type.startsWith('image/')) {
+                alert('Please select an image file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                // Initialize cropper
+                signatureCropperImage.src = e.target.result;
+                signatureCropperModal.classList.remove('hidden');
+
+                if (cropperInstance) {
+                    cropperInstance.destroy();
+                }
+
+                cropperInstance = new Cropper(signatureCropperImage, {
+                    viewMode: 2, // View mode for better control
+                    dragMode: 'move', // Allow moving the image inside the canvas
+                    autoCropArea: 1, // Default crop area
+                    restore: false, // Do not restore to the last crop
+                    guides: true, // Show crop guides
+                    center: true, // Center the crop box
+                    highlight: false, // Remove highlighting
+                    cropBoxMovable: true, // Allow the user to move the crop box
+                    cropBoxResizable: true, // Allow resizing the crop box
+                    toggleDragModeOnDblclick: false // Disable toggle drag on double-click
+                });
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // Apply crop function
+    function applySignatureCrop() {
+        if (!cropperInstance) return;
+
+        // Get cropped canvas
+        const canvas = cropperInstance.getCroppedCanvas({
+            imageSmoothingEnabled: true,
+            imageSmoothingQuality: 'high',
+        });
+
+        // Convert to blob
+        canvas.toBlob(function(blob) {
+            // Create file from blob
+            const fileName = signatureFileInput.files[0].name;
+            const croppedFile = new File([blob], fileName, {
+                type: 'image/jpeg'
+            });
+
+            // Create FileList object
+            const dataTransfer = new DataTransfer();
+            dataTransfer.items.add(croppedFile);
+            signatureFileInput.files = dataTransfer.files;
+
+            // Update preview
+            signaturePreview.src = canvas.toDataURL('image/jpeg');
+
+            // Store base64 in hidden input
+            signatureCroppedInput.value = canvas.toDataURL('image/jpeg');
+
+            // Close modal
+            closeSignatureCropperModal();
+        }, 'image/jpeg', 0.9);
+    }
+
+    function closeSignatureCropperModal() {
+        signatureCropperModal.classList.add('hidden');
+        if (cropperInstance) {
+            cropperInstance.destroy();
+            cropperInstance = null;
+        }
+    }
+
+    // Handle form submission
+    signatureForm.addEventListener('submit', function(e) {
+        if (signatureFileInput.files.length > 0 && !signatureCroppedInput.value) {
+            e.preventDefault();
+            alert('Please crop the image before submitting');
+            return;
+        }
+    });
+
+    // Close modal when clicking outside
+    signatureCropperModal.addEventListener('click', function(e) {
+        if (e.target === this) {
+            closeSignatureCropperModal();
+        }
+    });
+
+    // Close button handler
+    document.getElementById('close-signature-modal-btn').addEventListener('click', function() {
         window.history.back();
     });
     </script>
