@@ -272,7 +272,7 @@ if (isset($_POST['delete_quiz'])) {
 
             <!-- Konten -->
             <!-- ANALISTIK -->
-            <h2 class="text-2xl md:text-3xl my-auto font-semibold">Quiz : <?=$course['title']?></h2>
+            <h2 class="text-2xl md:text-3xl my-auto font-semibold">Course : <?=$course['title']?></h2>
 
             <div class="flex flex-col mt-5">
                 <div x-data="{ open: true }" class="bg-white shadow-md w-full rounded-lg overflow-hidden">
