@@ -153,8 +153,10 @@ if (isset($_POST['add_quiz'])) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
 
     <title>Mentor | Tambah Materi</title>
+
+
+
     <style>
-    /* Tambahkan gaya untuk transisi sidebar */
     .sidebar {
         transition: transform 0.3s ease;
     }
@@ -240,7 +242,7 @@ if (isset($_POST['add_quiz'])) {
                 </button>
 
                 <!-- MODAL WRAPPER -->
-                <div id="modal-wrapper" class="fixed z-30 inset-0 hidden">
+                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
                     <div
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
@@ -362,8 +364,8 @@ if (isset($_POST['add_quiz'])) {
                     </button>
 
 
-                    <!-- Modal edit -->
-                    <div id="modal-wrapper-course" class="fixed z-30 inset-0 hidden">
+                    <!-- Modal manage course-->
+                    <div id="modal-wrapper-course" class="fixed z-10 inset-0 hidden">
                         <div
                             class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                             <div
@@ -478,7 +480,7 @@ if (isset($_POST['add_quiz'])) {
                     </button>
 
                     <!-- Modal Section -->
-                    <div id="modal-wrapper-section" class="fixed z-30 inset-0 hidden" data-modal-type="information">
+                    <div id="modal-wrapper-section" class="fixed z-10 inset-0 hidden" data-modal-type="information">
                         <div
                             class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                             <div
@@ -621,11 +623,12 @@ if (isset($_POST['add_quiz'])) {
                                 </div>
                             </div>
 
-                            <!-- Modal Templates -->
+                            <!-- ------------------Modal Templates ------------------- -->
+
                             <!-- Information Modal -->
                             <template x-if="activeModal === 'information'">
-                                <div class="fixed z-30 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75"
-                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
@@ -651,11 +654,10 @@ if (isset($_POST['add_quiz'])) {
                                 </div>
                             </template>
 
-
                             <!-- Video Modal -->
                             <template x-if="activeModal === 'video'">
-                                <div class="fixed z-30 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75"
-                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
@@ -682,8 +684,8 @@ if (isset($_POST['add_quiz'])) {
 
                             <!-- Text Modal -->
                             <template x-if="activeModal === 'text'">
-                                <div class="fixed z-30 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75"
-                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
@@ -710,8 +712,8 @@ if (isset($_POST['add_quiz'])) {
 
                             <!-- File Modal -->
                             <template x-if="activeModal === 'file'">
-                                <div class="fixed z-30 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75"
-                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" enctype="multipart/form-data" class="space-y-4">
@@ -738,8 +740,8 @@ if (isset($_POST['add_quiz'])) {
 
                             <!-- Quiz Modal -->
                             <template x-if="activeModal === 'quiz'">
-                                <div class="fixed z-30 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75"
-                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
@@ -789,10 +791,9 @@ if (isset($_POST['add_quiz'])) {
 
                                 <!-- Modal -->
                                 <div id="modal-edit-information-<?= $info['id_information'] ?>"
-                                    class="modal-wrapper fixed z-30 inset-0 hidden">
-                                    <!-- Latar belakang shadow -->
-                                    <div class="fixed inset-0 z-50 bg-gray-500 bg-opacity-75 overflow-y-auto"
-                                        @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                    class="modal-wrapper fixed z-10 inset-0 hidden">
+                                    <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                        x-transition:enter="transition ease-out duration-300">
                                         <div class="flex items-center justify-center min-h-screen px-4">
                                             <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                                 <form method="post" enctype="multipart/form-data" class="space-y-4">
@@ -832,7 +833,6 @@ if (isset($_POST['add_quiz'])) {
                                         </div>
                                     </div>
                                 </div>
-
                                 <?php } ?>
                             </div>
                             <hr>
@@ -862,9 +862,9 @@ if (isset($_POST['add_quiz'])) {
 
                             <!-- Modal -->
                             <div id="modal-edit-video-<?= $vid['id_materi_video'] ?>"
-                                class="modal-wrapper fixed z-30 inset-0 hidden">
-                                <div class="fixed inset-0 z-50 bg-gray-500 bg-opacity-75 overflow-y-auto"
-                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                class="modal-wrapper fixed z-10 inset-0 hidden">
+                                <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
+                                    x-transition:enter="transition ease-out duration-300">
                                     <div class="flex items-center justify-center min-h-screen px-4">
                                         <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
                                             <form method="post" class="space-y-4">
@@ -942,9 +942,8 @@ if (isset($_POST['add_quiz'])) {
                                     </button>
 
                                     <div id="modal-edit-file-<?= $f['id_materi_file'] ?>"
-                                        class="modal-wrapper fixed z-30 inset-0 hidden">
-                                        <div class="fixed inset-0 z-50 bg-gray-500 bg-opacity-75 overflow-y-auto"
-                                            @click.self="closeModal"
+                                        class="modal-wrapper fixed z-10 inset-0 hidden">
+                                        <div class="fixed inset-0 z-50 overflow-y-auto" @click.self="closeModal"
                                             x-transition:enter="transition ease-out duration-300">
                                             <div class="flex items-center justify-center min-h-screen px-4">
                                                 <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
@@ -1036,23 +1035,10 @@ if (isset($_POST['add_quiz'])) {
 
 
                         </div>
+
                     </div>
                 </div>
                 <?php } ?>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
             </div>
         </div>

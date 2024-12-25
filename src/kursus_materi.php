@@ -299,17 +299,17 @@ if (isset($_POST['enroll_course'])) {
                         <form method="POST">
                             <input type="hidden" name="id_course" value="<?= $id_course ?>">
                             <button type="submit" id="openModal" class="text-white py-3 px-8 rounded-lg w-max font-poppins font-semibold tracking-wider text-lg 
-                bg-blue-600 border border-blue-600 shadow-lg shadow-blue-500/50 
-                transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-white 
-                hover:text-blue-600 hover:border-blue-600 cursor-pointer">
+                            bg-blue-600 border border-blue-600 shadow-lg shadow-blue-500/50 
+                            transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-white 
+                            hover:text-blue-600 hover:border-blue-600 cursor-pointer">
                                 Daftar Sekarang
                             </button>
                         </form>
                         <?php else: ?>
                         <a href="login.php" class="text-white py-3 px-8 rounded-lg w-max font-poppins font-semibold tracking-wider text-lg 
-            bg-blue-600 border border-blue-600 shadow-lg shadow-blue-500/50 
-            transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-white 
-            hover:text-blue-600 hover:border-blue-600 cursor-pointer">
+                            bg-blue-600 border border-blue-600 shadow-lg shadow-blue-500/50 
+                            transition-all duration-300 ease-in-out transform hover:scale-105 hover:bg-white 
+                            hover:text-blue-600 hover:border-blue-600 cursor-pointer">
                             Login untuk Daftar
                         </a>
                         <?php endif; ?>
@@ -318,7 +318,11 @@ if (isset($_POST['enroll_course'])) {
 
 
                     <div id="modal" class="fixed inset-0 bg-black/50 flex items-center justify-center hidden z-50">
-                        <div class="bg-white rounded-xl p-6 max-w-lg w-full shadow-xl transform transition-all scale-95 opacity-0"
+                        <!-- Latar belakang shadow -->
+                        <div class="bg-gray-500 bg-opacity-75 fixed inset-0 z-40" @click="closeModal"></div>
+
+                        <!-- Modal Konten -->
+                        <div class="bg-white rounded-xl p-6 max-w-lg w-full shadow-xl transform transition-all scale-95 opacity-0 z-50"
                             id="modal-content" onclick="event.stopPropagation()">
                             <div class="text-center">
                                 <h2 class="text-3xl font-bold text-blue-600 mb-4">Pendaftaran Course</h2>
@@ -329,8 +333,7 @@ if (isset($_POST['enroll_course'])) {
                                 </p>
                             </div>
 
-
-
+                            <!-- Langkah-langkah informasi -->
                             <div class="space-y-4">
                                 <div class="flex items-start gap-3">
                                     <div class="flex-shrink-0">
@@ -374,25 +377,24 @@ if (isset($_POST['enroll_course'])) {
                                 </div>
                             </div>
 
-
+                            <!-- Tombol untuk menutup modal atau mendaftar -->
                             <div class="mt-8 flex justify-end space-x-4">
                                 <form method="post" id="enrollForm">
                                     <button type="button" id="closeModal" class="px-5 py-2 rounded-lg bg-gray-200 text-gray-600 
-                                        transition-all duration-300 hover:bg-gray-300">
+                    transition-all duration-300 hover:bg-gray-300">
                                         Batal
                                     </button>
 
                                     <input type="hidden" value="<?=$kursus['id_course']?>" name="id_course">
                                     <button type="submit" name="enroll_course" class="px-5 py-2 rounded-lg bg-blue-600 text-white 
-                                        transition-all duration-300 hover:bg-blue-700">
+                    transition-all duration-300 hover:bg-blue-700">
                                         Daftar Sekarang
                                     </button>
                                 </form>
                             </div>
-
-
                         </div>
                     </div>
+
 
                 </div>
 

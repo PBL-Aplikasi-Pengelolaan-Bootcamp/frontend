@@ -403,46 +403,7 @@ if (isset($_POST['create_file'])) {
                     <img src="../foto_cover_course/<?= $course['course_picture'] ?>" alt="Cover Course"
                         class="w-full h-full object-cover object-center">
                 </div>
-                <link href="https://cdn.quilljs.com/1.3.7/quill.snow.css" rel="stylesheet">
 
-                <div class="space-y-2">
-                    <label for="editor-container">Content:</label>
-                    <div id="editor-container" class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32">
-                    </div>
-                </div>
-                <script src="https://cdn.quilljs.com/1.3.7/quill.min.js"></script>
-                <script>
-                // Inisialisasi Quill Editor
-                var quill = new Quill('#editor-container', {
-                    theme: 'snow', // Tema 'snow' adalah default
-                    placeholder: 'Enter text',
-                    modules: {
-                        toolbar: [
-                            [{
-                                header: [1, 2, false]
-                            }],
-                            ['bold', 'italic', 'underline'],
-                            [{
-                                list: 'ordered'
-                            }, {
-                                list: 'bullet'
-                            }],
-                            ['link', 'image'],
-                            ['clean']
-                        ]
-                    }
-                });
-
-                // Untuk mendapatkan konten editor Quill sebagai teks mentah
-                function getEditorContent() {
-                    return quill.getText();
-                }
-
-                // Untuk mendapatkan konten editor Quill dalam format HTML
-                function getEditorHTML() {
-                    return quill.root.innerHTML;
-                }
-                </script>
 
 
                 <div class="flex gap-2 text-sm flex-wrap font-bold font-poppins text-slate-800">

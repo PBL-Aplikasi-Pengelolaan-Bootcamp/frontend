@@ -8,7 +8,7 @@ include 'function.php';
 
 // Fungsi untuk mencari file tanda tangan dengan berbagai ekstensi
 function find_signature_file($folder, $filename_without_extension) {
-    $extensions = ['png', 'jpg', 'jpeg', 'gif']; // Daftar ekstensi yang didukung
+    $extensions = ['png','PNG','JPG', 'jpg', 'jpeg', 'gif']; // Daftar ekstensi yang didukung
     foreach ($extensions as $ext) {
         $file_path = $folder . '/' . $filename_without_extension . '.' . $ext;
         if (file_exists($file_path)) {
@@ -22,27 +22,23 @@ function find_signature_file($folder, $filename_without_extension) {
 $data_login = get_data_user_login();
 $kursus = get_course_by_slug();
 $participant_name = isset($data_login['name']) ? $data_login['name'] : 'Peserta Tidak Dikenal';
-$course = $kursus['title'] ?? '';
+$course = $kursus['title'] ?? 'Kursus Tidak Diketahui';
 $mentor = $kursus['name'] ?? 'Mentor Tidak Dikenal';
 $mentorsignature = $kursus['signature'];
 $mentor_filename_without_extension = pathinfo($mentorsignature, PATHINFO_FILENAME);
 
-
 // Nama file sertifikat
 $certificate_file = "Certificate_Course_{$course}.pdf";
-
-
 
 // Path tanda tangan director dan mentor
 $director_signature = "./foto_signature/ttd_nasyith.png"; 
 $mentor_signature = find_signature_file("./foto_signature", $mentor_filename_without_extension);  // Nama file tanpa ekstensi
 
-// Debugging: Cek apakah tanda tangan mentor ditemukan
+// Debugging: Log tanda tangan mentor (hanya untuk pengujian, hapus di produksi)
 if (!$mentor_signature) {
-    echo "Tanda tangan mentor tidak ditemukan!";
-    exit; // Hentikan script jika tidak ditemukan
+    error_log("Tanda tangan mentor tidak ditemukan!");
 } else {
-    echo "Tanda tangan mentor ditemukan: $mentor_signature"; // Tampilkan path file tanda tangan
+    error_log("Tanda tangan mentor ditemukan: $mentor_signature");
 }
 
 // Buat file PDF dengan FPDF
@@ -88,8 +84,8 @@ $pdf->Cell(0, 10, $course, 0, 1, 'C');
 
 $pdf->SetFont('Arial', '', 12);
 $pdf->SetTextColor(50, 50, 50);
-$start_date = date("d F Y", strtotime($kursus['start_date']));
-$end_date = date("d F Y", strtotime($kursus['end_date']));
+$start_date = date("d F Y", strtotime($kursus['start_date'] ?? ''));
+$end_date = date("d F Y", strtotime($kursus['end_date'] ?? ''));
 $pdf->MultiCell(0, 30, "Conducted from ". $start_date. " to ". $end_date, 0, 'C');
 
 // Bagian Tanda Tangan
@@ -113,7 +109,7 @@ $pdf->Cell(80, 7, "Director of Simplify", 0, 1, 'C');
 // Tanda Tangan Mentor
 $mentor_x = 190;
 $mentor_y = 150;
-if ($mentor_signature) {
+if ($mentor_signature && file_exists($mentor_signature)) {
     $pdf->Image($mentor_signature, $mentor_x, $mentor_y, 40, 0);
 } else {
     $pdf->SetXY($mentor_x, $mentor_y + 20);

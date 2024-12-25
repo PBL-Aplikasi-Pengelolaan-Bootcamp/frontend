@@ -46,6 +46,8 @@ if (isset($_POST['logout'])) {
 //total course si mentor
 $total_course_mentor = get_total_course_mentor();
 
+// total student si mentor
+$total_student_mentor = get_total_student_mentor();
 
 ?>
 <body class="bg-gray-100">
@@ -130,7 +132,7 @@ $total_course_mentor = get_total_course_mentor();
                 </button>
 
                 <!-- MODAL WRAPPER -->
-                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                <div id="modal-wrapper" class="fixed z-30 inset-0 hidden">
                     <div
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
@@ -268,7 +270,7 @@ $total_course_mentor = get_total_course_mentor();
                     <div class="flex flex-col">
                         <h1 class="font-semibold font-poppins text-gray-300 tracking-wide text-base">STUDENT</h1>
                         <h1 class="font-bold text-lg">Student Total</h1>
-                        <p class="text-xl">10</p>
+                        <p class="text-xl"><?=$total_student_mentor?></p>
                     </div>
                 </div>
                 <div

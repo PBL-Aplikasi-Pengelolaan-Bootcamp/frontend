@@ -326,7 +326,7 @@ if (isset($_POST['delete_quiz'])) {
                                 <div class="font-poppins my-auto">
                                     <h1 class="my-auto font-semibold text-md"><?=$data['title']?></h1>
                                 </div>
-                                <div class="flex gap-2 my-auto p-2">
+                                <!-- <div class="flex gap-2 my-auto p-2">
                                     <i
                                         class="fa-regular fa-pen-to-square bg-yellow-300 p-2 rounded-md group-hover:bg-yellow-400 cursor-pointer"></i>
                                     <form method="post">
@@ -336,7 +336,7 @@ if (isset($_POST['delete_quiz'])) {
                                                 class="fa-solid fa-trash-can bg-red-500 p-2 rounded-md group-hover:bg-red-600 cursor-pointer"></i>
                                         </button>
                                     </form>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </a>

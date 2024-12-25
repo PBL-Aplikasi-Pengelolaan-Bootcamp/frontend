@@ -289,26 +289,10 @@ function delete_course() {
     global $koneksi;
 
     $id_course= $_GET['id'];
-    // Hapus section yang terkait dengan course ini
-    $sql_section = mysqli_query($koneksi, "DELETE FROM section WHERE id_course = '$id_course'");
-
-    // Hapus information yang terkait dengan course ini
-    $sql_information = mysqli_query($koneksi, "DELETE FROM information WHERE id_course = '$id_course'");
-
-    // Hapus materi video yang terkait dengan course ini
-    $sql_video = mysqli_query($koneksi, "DELETE FROM materi_video WHERE id_course = '$id_course'");
-
-    // Hapus materi text yang terkait dengan course ini
-    $sql_text = mysqli_query($koneksi, "DELETE FROM materi_text WHERE id_course = '$id_course'");
-    
-    
-    // Hapus materi file yang terkait dengan course ini
-    $sql_file = mysqli_query($koneksi, "DELETE FROM materi_file WHERE id_course = '$id_course'");
-    
     // Hapus course itu sendiri
     $sql_course = mysqli_query($koneksi, "DELETE FROM course WHERE id_course = '$id_course'");
 
-    if ($sql_section && $sql_information && $sql_video && $sql_text && $sql_file && $sql_course) {
+    if ($sql_course) {
         echo "<script>alert('Course and related data deleted successfully!'); window.location.href='kursus.php';</script>";
     } else {
         echo "<script>alert('Failed to delete course and related data!');</script>";
@@ -362,6 +346,25 @@ function get_total_course_mentor(){
     $data = mysqli_fetch_assoc($sql);
 
     // Mengembalikan jumlah total course
+    return $data['total'];
+}
+
+function get_total_student_mentor(){
+    global $koneksi;
+    $id_mentor = $_SESSION['id_user'];
+
+    // Menjalankan query dengan COUNT(DISTINCT) untuk menghitung mahasiswa unik
+    $sql = mysqli_query($koneksi, "
+        SELECT COUNT(DISTINCT e.id_student) AS total 
+        FROM enroll e
+        JOIN course c ON e.id_course = c.id_course
+        WHERE c.id_mentor = '$id_mentor'
+    ");
+
+    // Mengambil hasil query
+    $data = mysqli_fetch_assoc($sql);
+
+    // Mengembalikan jumlah total mahasiswa yang unik
     return $data['total'];
 }
 

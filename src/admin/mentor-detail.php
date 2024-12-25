@@ -622,16 +622,16 @@ $course_mentor = get_mentor_course();
                 }
 
                 cropperInstance = new Cropper(signatureCropperImage, {
-                    viewMode: 2, // View mode for better control
-                    dragMode: 'move', // Allow moving the image inside the canvas
-                    autoCropArea: 1, // Default crop area
-                    restore: false, // Do not restore to the last crop
-                    guides: true, // Show crop guides
-                    center: true, // Center the crop box
-                    highlight: false, // Remove highlighting
-                    cropBoxMovable: true, // Allow the user to move the crop box
-                    cropBoxResizable: true, // Allow resizing the crop box
-                    toggleDragModeOnDblclick: false // Disable toggle drag on double-click
+                    viewMode: 2, 
+                    dragMode: 'move', 
+                    autoCropArea: 1,
+                    restore: false, 
+                    guides: true,
+                    center: true, 
+                    highlight: false, 
+                    cropBoxMovable: true,
+                    cropBoxResizable: true, 
+                    toggleDragModeOnDblclick: false
                 });
             };
             reader.readAsDataURL(file);

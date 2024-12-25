@@ -142,7 +142,7 @@ $course = get_course_by_mentor();
                 </button>
 
                 <!-- MODAL WRAPPER -->
-                <div id="modal-wrapper" class="fixed z-10 inset-0 hidden">
+                <div id="modal-wrapper" class="fixed z-30 inset-0 hidden">
                     <div
                         class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                         <!-- MODAL BOX -->
