@@ -199,8 +199,9 @@ $mentor = getAll_mentor();
             <div class=" flex flex-col gap-3 mt-5" id="tambah-mentor">
                 <!-- Search & Tambah Mentor -->
                 <div class="flex gap-2">
-                    <input type="search" class="w-36 md:w-56 shadow-sm px-2 py-1 rounded-md" placeholder="Cari mentor">
-                    <button type="" id="tambahMentor" class="bg-blue-700 p-2 rounded-md font-semibold text-white">Tambah
+                    <input type="search" id="searchMentor" class="w-36 md:w-56 shadow-sm px-2 py-1 rounded-md"
+                        placeholder="Cari mentor" oninput="searchMentors()"> <button type="" id="tambahMentor"
+                        class="bg-blue-700 p-2 rounded-md font-semibold text-white">Tambah
                         Mentor</button>
                     <!-- Modal Tambah Mentor -->
 
@@ -379,13 +380,12 @@ $mentor = getAll_mentor();
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4">
                     <?php foreach ($mentor as $data) { ?>
-                    <a href="mentor-detail.php?id=<?=$data['id_mentor']?>">
+                    <a href="mentor-detail.php?id=<?=$data['id_mentor']?>" class="mentor-card"
+                        data-mentor-name="<?= strtolower($data['name']) ?>">
                         <div class="flex gap-2 justify-between p-3 rounded-md bg-white shadow-md">
                             <div class="flex items-center gap-2 font-poppins">
-                                <!-- Foto Profil -->
                                 <img src="../foto_mentor/<?=$data['profil_picture']?>" alt="Foto Profil Mentor"
                                     class="w-16 h-16 object-cover rounded-full">
-                                <!-- Nama Mentor -->
                                 <h1 class="font-semibold text-xl"><?= $data['name']?></h1>
                             </div>
                         </div>
@@ -455,6 +455,23 @@ $mentor = getAll_mentor();
 
 
 
+    <!-- search -->
+    <script>
+    function searchMentors() {
+        const searchInput = document.getElementById('searchMentor');
+        const searchTerm = searchInput.value.toLowerCase();
+        const mentorCards = document.getElementsByClassName('mentor-card');
+
+        Array.from(mentorCards).forEach(card => {
+            const mentorName = card.getAttribute('data-mentor-name');
+            if (mentorName.includes(searchTerm)) {
+                card.style.display = '';
+            } else {
+                card.style.display = 'none';
+            }
+        });
+    }
+    </script>
 
     <!-- ----------------------------------------------------------Foto mentor -->
     <script>

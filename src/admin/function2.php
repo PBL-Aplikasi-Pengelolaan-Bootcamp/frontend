@@ -1,60 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/izitoast/dist/css/iziToast.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/izitoast/dist/js/iziToast.min.js"></script>
-    <title>Document</title>
-
-</head>
-
-<body>
-
 <?php
 
 session_start();
-
-function iziToastAlert($type, $message, $redirect = null) {
-    echo "<script>
-            iziToast.$type({
-                title: '',
-                message: '$message',
-                position: 'topRight',
-                timeout: 1500,
-                onClosing: function() {";
-    if ($redirect) {
-        echo "window.location.href = '$redirect';";
-    }
-    echo "}
-            });
-          </script>";
-}
-
-function iziToastAlertReload($type, $message) {
-    echo "<script>
-        if (!sessionStorage.getItem('hasReloaded')) {
-            iziToast.$type({
-                title: '',
-                message: '" . addslashes($message) . "',
-                position: 'topRight',
-                timeout: 1500,
-                onClosing: function() {
-                    sessionStorage.setItem('hasReloaded', 'true');
-                    window.location.reload();
-                }
-            });
-        } else {
-            sessionStorage.removeItem('hasReloaded'); // Reset flag setelah reload
-        }
-    </script>";
-}
-
-
-
-
-
 include dirname(__DIR__).'/koneksi.php';
 
 
@@ -100,9 +46,7 @@ function edit_profil($data, $id_user) {
     if ($isPasswordChanged) {
         // Validasi jika password lama tidak cocok
         if (!$user || !password_verify($old_password, $user['password'])) {
-            // echo "<script>alert('Password lama tidak sesuai!');</script>";
-            iziToastAlert('error', 'Password lama tidak sesuai!');
-
+            echo "<script>alert('Password lama tidak sesuai!');</script>";
             return false;
         }
 
@@ -126,14 +70,9 @@ function edit_profil($data, $id_user) {
     // Cek apakah update berhasil
     if ($updateUser) {
         $_SESSION['username'] = $username;
-        // echo "<script>alert('Profil berhasil diperbarui!'); window.location.href = window.location.href;</script>";
-        iziToastAlertReload('success', 'Profil berhasil diperbarui!');
-
+        echo "<script>alert('Profil berhasil diperbarui!'); window.location.href = window.location.href;</script>";
     } else {
-        // echo "<script>alert('Gagal memperbarui profil !');</script>";
-        iziToastAlert('error', 'Gagal memperbarui profil !');
-
-
+        echo "<script>alert('Gagal memperbarui profil.');</script>";
     }
 }
 
@@ -171,26 +110,20 @@ function create_mentor($data)
     // Cek apakah username sudah ada
     $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username';");
     if (mysqli_fetch_assoc($cek_username)) {
-        // echo "<script>alert('Username Tidak Tersedia');</script>";
-        iziToastAlert('error', 'Username Tidak Tersedia !');
-
+        echo "<script>alert('Username Tidak Tersedia');</script>";
         return false;
     }
 
     // Cek apakah email sudah ada
     $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email';");
     if (mysqli_fetch_assoc($cek_email)) {
-        // echo "<script>alert('Email Sudah Terdaftar');</script>";
-        iziToastAlert('error', 'Email Sudah Terdaftar !');
-
+        echo "<script>alert('Email Sudah Terdaftar');</script>";
         return false;
     }
 
     // Cek konfirmasi password
     if ($password !== $password2) {
-        // echo "<script>alert('Mohon konfirmasikan password dengan benar')</script>";
-        iziToastAlert('warning', 'Mohon konfirmasikan password dengan benar !');
-
+        echo "<script>alert('Mohon konfirmasikan password dengan benar')</script>";
         return false;
     }
 
@@ -201,9 +134,7 @@ function create_mentor($data)
     // 1. Ke tabel user
     $ke_user = mysqli_query($koneksi, "INSERT INTO user (id_user, username, email, password, role) VALUES (NULL, '$username', '$email', '$password', '$role')");
     if (!$ke_user) {
-        // echo "<script>alert('Gagal menambahkan ke tabel user');</script>";
-        iziToastAlert('error', 'Gagal menambahkan ke tabel user !');
-
+        echo "<script>alert('Gagal menambahkan ke tabel user');</script>";
         return false;
     }
 
@@ -214,23 +145,17 @@ function create_mentor($data)
     if (move_uploaded_file($tmpname_picture, $folder_picture) && move_uploaded_file($tmpname_signature, $folder_signature)) {
         $sql = mysqli_query($koneksi, "INSERT INTO mentor (id_mentor, name, bio, expertise, telp, profil_picture, signature) VALUES ('$id_dari_user', '$name', '$bio', '$expertise', '$telp', '$profil_picture', '$signature')");
         if (!$sql) {
-            // echo "<script>alert('Gagal menambahkan ke tabel mentor');</script>";
-            iziToastAlert('error', 'Gagal menambahkan ke tabel mentor !');
-
+            echo "<script>alert('Gagal menambahkan ke tabel mentor');</script>";
             return false;
         }
     } else {
         // Jika gagal mengupload file
-        // echo "<script>alert('Gagal mengupload file');</script>";
-        iziToastAlert('error', 'Gagal mengupload file !');
-
+        echo "<script>alert('Gagal mengupload file');</script>";
         return false;
     }
 
     // Jika semua berhasil
-    // echo "<script>alert('Register Berhasil!'); window.location.href='mentor.php';</script>";
-    iziToastAlert('success', 'Register Berhasil !', 'mentor.php');
-
+    echo "<script>alert('Register Berhasil!'); window.location.href='mentor.php';</script>";
     return true;
 }
 
@@ -254,18 +179,14 @@ function edit_mentor($data)
     // Validasi username
     $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username' AND id_user != '$id_mentor'");
     if (mysqli_fetch_assoc($cek_username)) {
-        // echo "<script>alert('Username sudah digunakan oleh pengguna lain');</script>";
-        iziToastAlert('error', 'Username tidak tersedia !');
-
+        echo "<script>alert('Username sudah digunakan oleh pengguna lain');</script>";
         return false;
     }
 
     // Validasi email
     $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email' AND id_user != '$id_mentor'");
     if (mysqli_fetch_assoc($cek_email)) {
-        // echo "<script>alert('Email sudah digunakan oleh pengguna lain');</script>";
-        iziToastAlert('error', 'Email tidak tersedia !');
-
+        echo "<script>alert('Email sudah digunakan oleh pengguna lain');</script>";
         return false;
     }
 
@@ -286,15 +207,11 @@ function edit_mentor($data)
             // Update password di tabel user
             $update_password = mysqli_query($koneksi, "UPDATE user SET password = '$new_password_hash' WHERE id_user = '$id_mentor'");
             if (!$update_password) {
-                // echo "<script>alert('Gagal memperbarui password');</script>";
-                iziToastAlert('error', 'Gagal memperbarui password !');
-
+                echo "<script>alert('Gagal memperbarui password');</script>";
                 return false;
             }
         } else {
-            // echo "<script>alert('Password lama tidak cocok');</script>";
-            iziToastAlert('error', 'Password lama tidak cocok !');
-
+            echo "<script>alert('Password lama tidak cocok');</script>";
             return false;
         }
     }
@@ -312,9 +229,7 @@ function edit_mentor($data)
     // Update data pada tabel user
     $update_user = mysqli_query($koneksi, "UPDATE user SET username = '$username', email = '$email' WHERE id_user = '$id_mentor'");
     if (!$update_user) {
-        // echo "<script>alert('Gagal memperbarui data user');</script>";
-        iziToastAlert('error', 'Gagal memperbarui data user !');
-
+        echo "<script>alert('Gagal memperbarui data user');</script>";
         return false;
     }
 
@@ -322,15 +237,11 @@ function edit_mentor($data)
     if (!empty($profil_picture) || !empty($signature)) {
         // Jika ada file baru, pindahkan file dan perbarui kolom terkait
         if (!empty($profil_picture) && !move_uploaded_file($tmpname, $folder)) {
-            // echo "<script>alert('Gagal mengupload file profil baru');</script>";
-            iziToastAlert('error', 'Gagal mengupload file profil baru !');
-
+            echo "<script>alert('Gagal mengupload file profil baru');</script>";
             return false;
         }
         if (!empty($signature) && !move_uploaded_file($tmpname_signature, $folder_signature)) {
-            // echo "<script>alert('Gagal mengupload file signature baru');</script>";
-            iziToastAlert('error', 'Gagal mengupload file signature baru !');
-
+            echo "<script>alert('Gagal mengupload file signature baru');</script>";
             return false;
         }
     
@@ -342,26 +253,20 @@ function edit_mentor($data)
     
         $update_mentor = mysqli_query($koneksi, $query);
         if (!$update_mentor) {
-            // echo "<script>alert('Gagal memperbarui data mentor');</script>";
-            iziToastAlert('error', 'Gagal memperbarui data mentor !');
-
+            echo "<script>alert('Gagal memperbarui data mentor');</script>";
             return false;
         }
     } else {
         // Jika tidak ada file baru, perbarui data lainnya
         $update_mentor = mysqli_query($koneksi, "UPDATE mentor SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp' WHERE id_mentor = '$id_mentor'");
         if (!$update_mentor) {
-            // echo "<script>alert('Gagal memperbarui data mentor');</script>";
-            iziToastAlert('error', 'Gagal memperbarui data mentor !');
-
+            echo "<script>alert('Gagal memperbarui data mentor');</script>";
             return false;
         }
     }
     
 
-    // echo "<script>alert('Data mentor berhasil diperbarui!'); window.location.href=location.href;</script>";
-    iziToastAlertReload('success', 'Data mentor berhasil diperbarui !');
-
+    echo "<script>alert('Data mentor berhasil diperbarui!'); window.location.href=location.href;</script>";
     return true;
 }
 
@@ -376,14 +281,11 @@ function delete_mentor() {
 
     // Periksa apakah ada baris yang terpengaruh
     if (mysqli_affected_rows($koneksi) > 0) {
-        echo "<script>alert('Mentor berhasil dihapus'); window.location.href='mentor.php';</script>";
-        // iziToastAlert('success', 'Mentor berhasil dihapus !', 'mentor.php');
-
+        echo "<script>alert('Mentor dihapus'); window.location.href='mentor.php';</script>";
         return true;
     } else {
         mysqli_rollback($koneksi);
-        // echo "<script>alert('Gagal menghapus mentor'); window.location.href='mentor.php';</script>";
-        iziToastAlert('error', 'Gagal menghapus mentor !', 'mentor.php');
+        echo "<script>alert('Gagal menghapus mentor'); window.location.href='mentor.php';</script>";
         return false;
     }
 }
@@ -491,18 +393,14 @@ function edit_student($data)
     // Validasi username
     $cek_username = mysqli_query($koneksi, "SELECT * FROM user WHERE username = '$username' AND id_user != '$id_student'");
     if (mysqli_fetch_assoc($cek_username)) {
-        // echo "<script>alert('Username sudah digunakan oleh pengguna lain');</script>";
-        iziToastAlert('error', 'Username tidak tersedia !');
-
+        echo "<script>alert('Username sudah digunakan oleh pengguna lain');</script>";
         return false;
     }
 
     // Validasi email
     $cek_email = mysqli_query($koneksi, "SELECT * FROM user WHERE email = '$email' AND id_user != '$id_student'");
     if (mysqli_fetch_assoc($cek_email)) {
-        // echo "<script>alert('Email sudah digunakan oleh pengguna lain');</script>";
-        iziToastAlert('error', 'Email tidak tersedia !');
-
+        echo "<script>alert('Email sudah digunakan oleh pengguna lain');</script>";
         return false;
     }
 
@@ -523,15 +421,11 @@ function edit_student($data)
             // Update password di tabel user
             $update_password = mysqli_query($koneksi, "UPDATE user SET password = '$new_password_hash' WHERE id_user = '$id_student'");
             if (!$update_password) {
-                // echo "<script>alert('Gagal memperbarui password');</script>";
-                iziToastAlert('error', 'Gagal memperbarui password !');
-
+                echo "<script>alert('Gagal memperbarui password');</script>";
                 return false;
             }
         } else {
-            // echo "<script>alert('Password lama tidak cocok');</script>";
-            iziToastAlert('error', 'Password lama tidak cocok !');
-
+            echo "<script>alert('Password lama tidak cocok');</script>";
             return false;
         }
     }
@@ -544,9 +438,7 @@ function edit_student($data)
     // Update data pada tabel user
     $update_user = mysqli_query($koneksi, "UPDATE user SET username = '$username', email = '$email' WHERE id_user = '$id_student'");
     if (!$update_user) {
-        // echo "<script>alert('Gagal memperbarui data user');</script>";
-        iziToastAlert('error', 'Gagal memperbarui data user !');
-
+        echo "<script>alert('Gagal memperbarui data user');</script>";
         return false;
     }
 
@@ -556,32 +448,23 @@ function edit_student($data)
         if (move_uploaded_file($tmpname, $folder)) {
             $update_student = mysqli_query($koneksi, "UPDATE student SET name = '$name', birth = '$birth', telp = '$telp', profil_picture = '$profil_picture' WHERE id_student = '$id_student'");
             if (!$update_student) {
-                // echo "<script>alert('Gagal memperbarui data student');</script>";
-                iziToastAlert('error', 'Gagal memperbarui data student !');
-
+                echo "<script>alert('Gagal memperbarui data student');</script>";
                 return false;
             }
         } else {
-            // echo "<script>alert('Gagal mengupload file profil baru');</script>";
-            iziToastAlert('error', 'Gagal mengupload file profil baru !');
-
-
+            echo "<script>alert('Gagal mengupload file profil baru');</script>";
             return false;
         }
     } else {
         // Jika tidak ada file profil baru, hanya perbarui data lainnya
         $update_student = mysqli_query($koneksi, "UPDATE student SET name = '$name', birth = '$birth', telp = '$telp' WHERE id_student = '$id_student'");
         if (!$update_student) {
-            // echo "<script>alert('Gagal memperbarui data student');</script>";
-            iziToastAlert('error', 'Gagal memperbarui data student !');
-
+            echo "<script>alert('Gagal memperbarui data student');</script>";
             return false;
         }
     }
 
-    // echo "<script>alert('Data student berhasil diperbarui!'); window.location.href=location.href;</script>";
-    iziToastAlertReload('success', 'Data student berhasil diperbarui !');
-
+    echo "<script>alert('Data student berhasil diperbarui!'); window.location.href=location.href;</script>";
     return true;
 }
 
@@ -614,11 +497,7 @@ function logout(){
 
 
 
+
+
+
 ?>
-
-
-
-
-</body>
-
-</html>

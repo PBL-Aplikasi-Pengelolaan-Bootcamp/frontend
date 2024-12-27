@@ -1,6 +1,6 @@
 <?php
 
-include 'function.php';
+include 'function2.php';
 
 $login = get_data_user_login();
 

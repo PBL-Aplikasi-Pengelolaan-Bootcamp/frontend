@@ -39,6 +39,25 @@ function iziToastAlert($type, $message, $redirect = null) {
           </script>";
 }
 
+function iziToastAlertReload($type, $message) {
+    echo "<script>
+        if (!sessionStorage.getItem('hasReloaded')) {
+            iziToast.$type({
+                title: '',
+                message: '" . addslashes($message) . "',
+                position: 'topRight',
+                timeout: 1500,
+                onClosing: function() {
+                    sessionStorage.setItem('hasReloaded', 'true');
+                    window.location.reload();
+                }
+            });
+        } else {
+            sessionStorage.removeItem('hasReloaded'); // Reset flag setelah reload
+        }
+    </script>";
+}
+
 
 
 // register function
@@ -115,7 +134,9 @@ function edit_profil($data, $id_user) {
     $checkUsernameResult = mysqli_query($koneksi, $checkUsernameQuery);
 
     if (mysqli_num_rows($checkUsernameResult) > 0) {
-        echo "<script>alert('Username tidak tersedia!');</script>";
+        // echo "<script>alert('Username tidak tersedia!');</script>";
+        iziToastAlert('error', 'Username tidak tersedia!');
+
         return false;
     }
 
@@ -124,7 +145,9 @@ function edit_profil($data, $id_user) {
     $checkEmailResult = mysqli_query($koneksi, $checkEmailQuery);
 
     if (mysqli_num_rows($checkEmailResult) > 0) {
-        echo "<script>alert('Email tidak tersedia!');</script>";
+        // echo "<script>alert('Email tidak tersedia!');</script>";
+        iziToastAlert('error', 'Email tidak tersedia!');
+
         return false;
     }
 
@@ -142,7 +165,9 @@ function edit_profil($data, $id_user) {
 
         // Validasi password lama
         if (!$user || !password_verify($old_password, $user['password'])) {
-            echo "<script>alert('Password lama tidak sesuai!');</script>";
+            // echo "<script>alert('Password lama tidak sesuai!');</script>";
+            iziToastAlert('error', 'Password lama tidak sesuai!');
+
             return false;
         }
 
@@ -158,7 +183,10 @@ function edit_profil($data, $id_user) {
                  SET name = '$name', birth = '$birth', telp = '$telp', profil_picture = '$img' 
                  WHERE id_student = '$id_user'");
         } else {
-            echo "<script>alert('Gagal upload foto.');</script>";
+            // echo "<script>alert('Gagal upload foto.');</script>";
+            iziToastAlert('error', 'Gagal upload foto!');
+
+            
             return false;
         }
     } else {
@@ -180,7 +208,9 @@ function edit_profil($data, $id_user) {
     // Cek apakah update berhasil
     if ($updateUser && $updateStudent) {
         $_SESSION['username'] = $username;
-        echo "<script>alert('Account updated successfully!'); window.location.href = window.location.href;</script>";
+        // echo "<script>alert('Account updated successfully!'); window.location.href = window.location.href;</script>";
+        iziToastAlertReload('success', 'Account updated successfully!');
+
     } else {
         echo "<script>alert('Failed to update account.');</script>";
     }
@@ -400,7 +430,9 @@ function enroll() {
         empty($data_login['name']) || empty($data_login['telp']) || 
         empty($data_login['birth'])
     ) {
-        echo "<script>alert('Lengkapi profil Anda terlebih dahulu');</script>";
+        // echo "<script>alert('Lengkapi profil Anda terlebih dahulu');</script>";
+        iziToastAlert('warning', 'Lengkapi profil Anda terlebih dahulu!');
+
         return;
     }
 
@@ -418,7 +450,9 @@ function enroll() {
         $quota = $course_data['quota'];
 
         if ($total_enroll >= $quota) {
-            echo "<script>alert('Kuota kursus sudah penuh.');</script>";
+            // echo "<script>alert('Kuota kursus sudah penuh.');</script>";
+            iziToastAlert('warning', 'Kuota kursus sudah penuh!');
+
             return;
         }
 
@@ -434,7 +468,9 @@ function enroll() {
         );
 
         if ($sql) {
-            echo "<script>alert('Enrollment berhasil'); window.location.href=window.location.href;</script>";
+            // echo "<script>alert('Enrollment berhasil'); window.location.href=window.location.href;</script>";
+            iziToastAlertReload('success', 'Enrollment berhasil!');
+
         } else {
             echo "Gagal melakukan enrollment: " . mysqli_error($koneksi);
         }
@@ -746,10 +782,13 @@ function quiz_answer($answer_data) {
     }
 
     // Redirect setelah berhasil
-    echo "<script>
-        alert('Berhasil mengirim jawaban!');
-        window.location.href = 'kursus_materi.php?kursus=$slug';
-    </script>";
+    // echo "<script>
+    //     alert('Berhasil mengirim jawaban!');
+    //     window.location.href = 'kursus_materi.php?kursus=$slug';
+    // </script>";
+
+    iziToastAlert('success', 'Berhasil mengirim jawaban!', "kursus_materi.php?kursus=$slug");
+
 }
 
 
@@ -833,7 +872,7 @@ function is_all_quiz_submitted_by_enroll() {
 
     // Jika semua quiz sudah dikumpulkan, update status menjadi 'complete'
     if ($total_submission === $total_quiz) {
-        $update_query = "UPDATE enroll SET status = 'complete' WHERE id_enroll = '$id_enroll' AND id_course = '$id_course'";
+        $update_query = "UPDATE enroll SET status = 'complete' WHERE id_enroll = '$id_enroll' AND id_course = '$id_course' AND status = 'On going'";
         mysqli_query($koneksi, $update_query);
         return true;
     }
@@ -843,8 +882,34 @@ function is_all_quiz_submitted_by_enroll() {
 
 
 
+function updateExpiredEnrolls() {
+    global $koneksi; // Gunakan koneksi global
 
+    // Query untuk mendapatkan semua enroll yang masih "On going" beserta detail course-nya
+    $query = "SELECT e.id_enroll, c.end_date
+              FROM enroll e
+              JOIN course c ON e.id_course = c.id_course
+              WHERE e.status = 'On going'";
 
+    $result = mysqli_query($koneksi, $query);
+
+    if (!$result) {
+        die("Query failed: " . mysqli_error($koneksi));
+    }
+
+    // Iterasi setiap record untuk memeriksa apakah tanggal end_date sudah lewat
+    while ($row = mysqli_fetch_assoc($result)) {
+        $id_enroll = $row['id_enroll'];
+        $end_date = $row['end_date'];
+
+        // Cek apakah end_date sudah lewat hari ini
+        if (strtotime($end_date) < time()) {
+            // Jika end_date sudah lewat, update status menjadi "Expired"
+            $updateQuery = "UPDATE enroll SET status = 'Expired' WHERE id_enroll = $id_enroll";
+            mysqli_query($koneksi, $updateQuery);
+        }
+    }
+}
 
 //cek apakah enroll course ini?
 function isEnrolled($id_student, $id_course) {

@@ -244,7 +244,7 @@ $course_mentor = get_mentor_course();
                             <div
                                 class="flex items-center justify-center min-h-screen bg-gray-500 bg-opacity-75 transition-all inset-1">
                                 <div
-                                    class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[80vh] overflow-y-auto">
+                                    class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[80vh] overflow-y-auto text-start">
                                     <form method="post" method="post" enctype="multipart/form-data"
                                         class="flex flex-col gap-5 my-2 w-full">
                                         <h1 class="my-auto text-2xl font-bold font-poppins">Profil</h1>
@@ -378,7 +378,7 @@ $course_mentor = get_mentor_course();
 
                     </div>
 
-                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins">Birth : <?=$student['birth']?>
+                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins text-start">Birth : <?=$student['birth']?>
                     </p>
                     
                     <div class="flex flex-col sm:flex-row md:flex-col sm:gap-5 gap-2">

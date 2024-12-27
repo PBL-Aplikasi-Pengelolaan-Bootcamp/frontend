@@ -38,8 +38,6 @@ $quiz = get_quiz_byId();
             <div class="flex gap-2 m-auto">
                 <a href="quiz.php?id=<?=$quiz['id_quiz']?>" class="border-blue-600 rounded-md px-7 py-2 border hover:bg-white
                     hover:text-black font-semibold bg-blue-600 text-white">Mulai</a>
-                <button class="border-blue-600 rounded-md px-7 py-2 border hover:bg-white
-                    hover:text-black font-semibold  bg-blue-600 text-white">History</button>
             </div>
         </div>
 

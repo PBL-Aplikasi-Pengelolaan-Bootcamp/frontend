@@ -24,7 +24,7 @@ $section = get_section_byCourseId();
 
 //buat quiz
 if (isset($_POST['add_quiz'])) {
-    add_quiz($_POST);
+    add_quiz2($_POST);
 }
 
 //delete quiz

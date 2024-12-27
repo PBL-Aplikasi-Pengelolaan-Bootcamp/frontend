@@ -298,10 +298,9 @@
                 <?php foreach ($enrolledCourses as $data) { ?>
 
                 <div class="w-full md:w-1/3 bg-white rounded-lg shadow-md p-5">
-                    <h2 class="font-semibold text-lg mb-2"><?=$data['title']?></h2>
-                    <p class="text-sm text-gray-600">
-                        <?= strlen($data['description']) > 108 ? substr($data['description'], 0, 108) . '...' : $data['description'] ?>
-                    </p>
+                    <h2 class="font-semibold text-lg mb-2">
+                        <?= strlen($data['title']) > 60 ? substr($data['title'], 0, 60) . '...' : $data['title'] ?>
+                    </h2>
                     <div class="flex justify-between items-center mt-4">
                         <span class="text-sm text-gray-500">Status: <strong><?=$data['status']?></strong></span>
                         <a href="<?= 'kursus_materi.php?kursus=' . $data['slug']; ?>"><button
@@ -427,135 +426,135 @@
 
 <!-- Cropper foto -->
 <script>
-    let cropper = null;
-    const profileForm = document.getElementById('profileForm');
-    const fileInput = document.getElementById('profil_picture');
-    const previewImage = document.getElementById('preview-image');
-    const cropperModal = document.getElementById('cropperModal');
-    const cropperImage = document.getElementById('cropperImage');
-    const croppedImageInput = document.getElementById('cropped_image');
+let cropper = null;
+const profileForm = document.getElementById('profileForm');
+const fileInput = document.getElementById('profil_picture');
+const previewImage = document.getElementById('preview-image');
+const cropperModal = document.getElementById('cropperModal');
+const cropperImage = document.getElementById('cropperImage');
+const croppedImageInput = document.getElementById('cropped_image');
 
-    // File input change handler
-    fileInput.addEventListener('change', function(e) {
-        const file = e.target.files[0];
-        if (file) {
-            if (!file.type.startsWith('image/')) {
-                alert('Please select an image file');
-                return;
-            }
-
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                // Initialize cropper
-                cropperImage.src = e.target.result;
-                cropperModal.classList.remove('hidden');
-
-                if (cropper) {
-                    cropper.destroy();
-                }
-
-                cropper = new Cropper(cropperImage, {
-                    aspectRatio: 1,
-                    viewMode: 2,
-                    dragMode: 'move',
-                    autoCropArea: 1,
-                    restore: false,
-                    guides: true,
-                    center: true,
-                    highlight: false,
-                    cropBoxMovable: true,
-                    cropBoxResizable: true,
-                    toggleDragModeOnDblclick: false,
-                    initialAspectRatio: 1,
-                });
-            };
-            reader.readAsDataURL(file);
-        }
-    });
-
-    // Apply crop function
-    function applyCrop() {
-        if (!cropper) return;
-
-        // Get cropped canvas
-        const canvas = cropper.getCroppedCanvas({
-            width: 300,
-            height: 300,
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: 'high',
-        });
-
-        // Convert to blob
-        canvas.toBlob(function(blob) {
-            // Create file from blob
-            const fileName = fileInput.files[0].name;
-            const croppedFile = new File([blob], fileName, {
-                type: 'image/jpeg'
-            });
-
-            // Create FileList object
-            const dataTransfer = new DataTransfer();
-            dataTransfer.items.add(croppedFile);
-            fileInput.files = dataTransfer.files;
-
-            // Update preview
-            previewImage.src = canvas.toDataURL('image/jpeg');
-
-            // Store base64 in hidden input
-            croppedImageInput.value = canvas.toDataURL('image/jpeg');
-
-            // Close modal
-            closeCropperModal();
-        }, 'image/jpeg', 0.9);
-    }
-
-    function closeCropperModal() {
-        cropperModal.classList.add('hidden');
-        if (cropper) {
-            cropper.destroy();
-            cropper = null;
-        }
-    }
-
-    // Handle form submission
-    profileForm.addEventListener('submit', function(e) {
-        if (fileInput.files.length > 0 && !croppedImageInput.value) {
-            e.preventDefault();
-            alert('Please crop the image before submitting');
+// File input change handler
+fileInput.addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
+        if (!file.type.startsWith('image/')) {
+            alert('Please select an image file');
             return;
         }
+
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            // Initialize cropper
+            cropperImage.src = e.target.result;
+            cropperModal.classList.remove('hidden');
+
+            if (cropper) {
+                cropper.destroy();
+            }
+
+            cropper = new Cropper(cropperImage, {
+                aspectRatio: 1,
+                viewMode: 2,
+                dragMode: 'move',
+                autoCropArea: 1,
+                restore: false,
+                guides: true,
+                center: true,
+                highlight: false,
+                cropBoxMovable: true,
+                cropBoxResizable: true,
+                toggleDragModeOnDblclick: false,
+                initialAspectRatio: 1,
+            });
+        };
+        reader.readAsDataURL(file);
+    }
+});
+
+// Apply crop function
+function applyCrop() {
+    if (!cropper) return;
+
+    // Get cropped canvas
+    const canvas = cropper.getCroppedCanvas({
+        width: 300,
+        height: 300,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
     });
 
-    // Close modal when clicking outside
-    cropperModal.addEventListener('click', function(e) {
-        if (e.target === this) {
-            closeCropperModal();
-        }
-    });
+    // Convert to blob
+    canvas.toBlob(function(blob) {
+        // Create file from blob
+        const fileName = fileInput.files[0].name;
+        const croppedFile = new File([blob], fileName, {
+            type: 'image/jpeg'
+        });
 
-    // Close button handler
-    document.getElementById('close-modal-btn').addEventListener('click', function() {
-        window.history.back();
-    });
+        // Create FileList object
+        const dataTransfer = new DataTransfer();
+        dataTransfer.items.add(croppedFile);
+        fileInput.files = dataTransfer.files;
+
+        // Update preview
+        previewImage.src = canvas.toDataURL('image/jpeg');
+
+        // Store base64 in hidden input
+        croppedImageInput.value = canvas.toDataURL('image/jpeg');
+
+        // Close modal
+        closeCropperModal();
+    }, 'image/jpeg', 0.9);
+}
+
+function closeCropperModal() {
+    cropperModal.classList.add('hidden');
+    if (cropper) {
+        cropper.destroy();
+        cropper = null;
+    }
+}
+
+// Handle form submission
+profileForm.addEventListener('submit', function(e) {
+    if (fileInput.files.length > 0 && !croppedImageInput.value) {
+        e.preventDefault();
+        alert('Please crop the image before submitting');
+        return;
+    }
+});
+
+// Close modal when clicking outside
+cropperModal.addEventListener('click', function(e) {
+    if (e.target === this) {
+        closeCropperModal();
+    }
+});
+
+// Close button handler
+document.getElementById('close-modal-btn').addEventListener('click', function() {
+    window.history.back();
+});
 </script>
 
 <!-- ganti pw -->
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const changePasswordBtn = document.getElementById("change-password-btn");
-        const passwordChangeFields = document.getElementById("password-change-fields");
+document.addEventListener("DOMContentLoaded", function() {
+    const changePasswordBtn = document.getElementById("change-password-btn");
+    const passwordChangeFields = document.getElementById("password-change-fields");
 
-        changePasswordBtn.addEventListener("click", function() {
-            // Toggle visibility
-            if (passwordChangeFields.classList.contains("hidden")) {
-                passwordChangeFields.classList.remove("hidden");
-                changePasswordBtn.innerText = "Batal Ganti Password";
-            } else {
-                passwordChangeFields.classList.add("hidden");
-                changePasswordBtn.innerText = "Ganti Password";
-            }
-        });
+    changePasswordBtn.addEventListener("click", function() {
+        // Toggle visibility
+        if (passwordChangeFields.classList.contains("hidden")) {
+            passwordChangeFields.classList.remove("hidden");
+            changePasswordBtn.innerText = "Batal Ganti Password";
+        } else {
+            passwordChangeFields.classList.add("hidden");
+            changePasswordBtn.innerText = "Ganti Password";
+        }
     });
+});
 </script>
 
 <script>

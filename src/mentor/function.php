@@ -34,6 +34,24 @@ function iziToastAlert($type, $message, $redirect = null) {
             });
           </script>";
 }
+function iziToastAlertReload($type, $message) {
+    echo "<script>
+        if (!sessionStorage.getItem('hasReloaded')) {
+            iziToast.$type({
+                title: '',
+                message: '" . addslashes($message) . "',
+                position: 'topRight',
+                timeout: 1500,
+                onClosing: function() {
+                    sessionStorage.setItem('hasReloaded', 'true');
+                    window.location.reload();
+                }
+            });
+        } else {
+            sessionStorage.removeItem('hasReloaded'); // Reset flag setelah reload
+        }
+    </script>";
+}
 
 
 
@@ -76,7 +94,8 @@ function edit_profil($data, $id_user) {
 
         // Validasi password lama
         if (!$user || !password_verify($old_password, $user['password'])) {
-            echo "<script>alert('Password lama tidak sesuai!');</script>";
+            iziToastAlert('error', 'Password lama tidak sesuai!');
+
             return false;
         }
 
@@ -92,7 +111,8 @@ function edit_profil($data, $id_user) {
                  SET name = '$name', bio = '$bio', expertise = '$expertise', telp = '$telp', profil_picture = '$img' 
                  WHERE id_mentor = '$id_user'");
         } else {
-            echo "<script>alert('Gagal upload foto.');</script>";
+            iziToastAlert('error', 'Gagal upload foto!');
+
             return false;
         }
     } else {
@@ -114,7 +134,9 @@ function edit_profil($data, $id_user) {
     // Cek apakah update berhasil
     if ($updateUser && $updateMentor) {
         $_SESSION['username'] = $username;
-        echo "<script>alert('Account updated successfully!'); window.location.href = window.location.href;</script>";
+        // echo "<script>alert('Account updated successfully!'); window.location.href = window.location.href;</script>";
+        iziToastAlertReload('success', 'Account updated successfully!');
+
     } else {
         echo "<script>alert('Failed to update account.');</script>";
     }
@@ -196,14 +218,19 @@ function create_course($data){
     if  (move_uploaded_file($tmpname, $folder)) {
         $sql = mysqli_query($koneksi, "INSERT INTO course (id_course, id_mentor, title, slug, description, start_date, end_date, course_type, quota, course_picture) VALUES ('', '$id_mentor', '$title', '$slug', '$description', '$start_date', '$end_date', '$course_type', '$quota', '$course_picture')");
         if ($sql) {
-            echo "<script>alert('Kursus Berhasil Dibuat!'); window.location.href='kursus.php';</script>";
+            // echo "<script>alert('Kursus Berhasil Dibuat!'); window.location.href='kursus.php';</script>";
+            iziToastAlert('success', 'Kursus Berhasil Dibuat!', 'kursus.php');
+
         } else {
-            echo "<script>alert('gagal')</script>";
+            iziToastAlert('error', 'Kursus Gagal Dibuat!');
+
         }
 
     } else {
         // Jika gagal mengupload file
-        echo "<script>alert('Gagal mengupload file');</script>";
+        // echo "<script>alert('Gagal mengupload file');</script>";
+        iziToastAlert('error', 'Gagal mengupload file!');
+
     }
 }
 
@@ -259,7 +286,9 @@ function edit_course($data) {
                 course_picture = '$course_picture'
                 WHERE id_course = '$id_course'");
         } else {
-            echo "<script>alert('Gagal mengupload file baru');</script>";
+            // echo "<script>alert('Gagal mengupload file baru');</script>";
+            iziToastAlert('error', 'Gagal mengupload file baru!');
+
             return false;
         }
     } else {
@@ -276,10 +305,14 @@ function edit_course($data) {
     }
 
     if ($sql) {
-        echo "<script>alert('Kursus Berhasil Diubah!'); window.location.href=location.href;</script>";
+        // echo "<script>alert('Kursus Berhasil Diubah!'); window.location.href=location.href;</script>";
+        iziToastAlertReload('success', 'Kursus Berhasil Diubah!');
+
         return true;
     } else {
-        echo "<script>alert('Gagal mengupdate course');</script>";
+        // echo "<script>alert('Gagal mengupdate course');</script>";
+        iziToastAlert('error', 'Gagal mengubah course!');
+
         return false;
     }
 }
@@ -293,9 +326,13 @@ function delete_course() {
     $sql_course = mysqli_query($koneksi, "DELETE FROM course WHERE id_course = '$id_course'");
 
     if ($sql_course) {
-        echo "<script>alert('Course and related data deleted successfully!'); window.location.href='kursus.php';</script>";
+        // echo "<script>alert('Course and related data deleted successfully!'); window.location.href='kursus.php';</script>";
+        iziToastAlert('success', 'Course and related data deleted successfully!', 'kursus.php');
+
     } else {
-        echo "<script>alert('Failed to delete course and related data!');</script>";
+        // echo "<script>alert('Failed to delete course and related data!');</script>";
+        iziToastAlert('error', 'Failed to delete course and related data!');
+
     }
 
     return mysqli_affected_rows($koneksi);
@@ -384,8 +421,10 @@ function create_section($data){
     //insert ke db section
     $sql = mysqli_query($koneksi, "INSERT INTO section (id_course, title) VALUES ('$id_course', '$section')");
     if ($sql) {
-        echo "<script>alert('Berhasil Menambah Section!'); window.location.href = window.location.href; // Mengarahkan kembali ke halaman yang sama
-            </script>";
+        // echo "<script>alert('Berhasil Menambah Section!'); window.location.href = window.location.href; // Mengarahkan kembali ke halaman yang sama
+        //     </script>";
+        iziToastAlert('success', 'Berhasil Menambah Section!');
+
         
     }
     return mysqli_affected_rows($koneksi);
@@ -398,7 +437,9 @@ function edit_section($data) {
 
     $sql = mysqli_query($koneksi, "UPDATE section SET title = '$section' WHERE id_section = '$id_section'");
     if ($sql) {
-        echo "<script>alert('Berhasil Merubah Section!'); window.location.href=location.href</script>";
+        // echo "<script>alert('Berhasil Merubah Section!'); window.location.href=location.href</script>";
+        iziToastAlertReload('success', 'Berhasil Merubah Section!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -408,10 +449,26 @@ function delete_section($data) {
     $id_section = $data['id_section'];
     $sql = mysqli_query($koneksi, "DELETE FROM section WHERE id_section = '$id_section'");
     if ($sql) {
-        echo "<script>alert('Section Berhasil Dihapus!'); window.location.href=location.href;</script>";
+        // echo "<script>alert('Section Berhasil Dihapus!'); window.location.href=location.href;</script>";
+        iziToastAlertReload('success', 'Section Berhasil Dihapus!');
     }
     return mysqli_affected_rows($koneksi);
 }
+
+function get_section_byCourseId(){
+    global $koneksi;
+
+    $course = $_GET["id"];  
+    $sql = mysqli_query($koneksi,"SELECT * FROM section WHERE id_course = '$course'");
+    $section = [];
+    while ($row = mysqli_fetch_assoc($sql)) {
+        $section[] = $row;
+    }
+    return $section;
+}
+
+
+
 
 
 // ------------------------------------------------------------------INFORMATION
@@ -422,7 +479,9 @@ function create_information($data) {
     
     $sql = mysqli_query($koneksi, "INSERT INTO information (id_section, information) VALUES ('$id_section', '$information')");
     if ($sql) {
-        echo "<script>alert('Information Created!');</script>";
+        // echo "<script>alert('Information Created!');</script>";
+        iziToastAlert('success', 'Information Created!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -439,7 +498,6 @@ function get_information_bySection($id_section) {
     return $information;
 }
 
-
 function edit_information($data) {
     global $koneksi;
     $id_information = $data['id_information'];
@@ -447,7 +505,9 @@ function edit_information($data) {
 
     $sql = mysqli_query($koneksi, "UPDATE information SET information = '$information' WHERE id_information = '$id_information'");
     if ($sql) {
-        echo "<script>alert('Information Updated!');</script>";
+        // echo "<script>alert('Information Updated!');</script>";
+        iziToastAlertReload('success', 'Information Updated!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -457,11 +517,11 @@ function delete_information($data) {
     $id_information = $data['id_information'];
     $sql = mysqli_query($koneksi, "DELETE FROM information WHERE id_information = '$id_information'");
     if ($sql) {
-        echo "<script>alert('Information Deleted!');</script>";
+        // echo "<script>alert('Information Deleted!');</script>";
+        iziToastAlertReload('success', 'Information Deleted!');
     }
     return mysqli_affected_rows($koneksi);
 }
-
 
 
 
@@ -477,7 +537,9 @@ function create_video($data) {
     
     $sql = mysqli_query($koneksi, "INSERT INTO materi_video (id_section, url) VALUES ('$id_section', '$url')");
     if ($sql) {
-        echo "<script>alert('Video Created!');</script>";
+        // echo "<script>alert('Video Created!');</script>";
+        iziToastAlert('success', 'Video Created!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -501,7 +563,9 @@ function edit_video($data) {
 
     $sql = mysqli_query($koneksi, "UPDATE materi_video SET url = '$url' WHERE id_materi_video = '$id_materi_video'");
     if ($sql) {
-        echo "<script>alert('Video Updated!');</script>";
+        // echo "<script>alert('Video Updated!');</script>";
+        iziToastAlertReload('success', 'Video Updated!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -511,20 +575,12 @@ function delete_video($data) {
     $id_materi_video = $data['id_materi_video'];
     $sql = mysqli_query($koneksi, "DELETE FROM materi_video WHERE id_materi_video = '$id_materi_video'");
     if ($sql) {
-        echo "<script>alert('Video Deleted!');</script>";
+        // echo "<script>alert('Video Deleted!');</script>";
+        iziToastAlertReload('success', 'Video Deleted!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -540,10 +596,13 @@ function create_text($data) {
     
     $sql = mysqli_query($koneksi, "INSERT INTO materi_text (id_section, content) VALUES ('$id_section', '$content')");
     if ($sql) {
-        echo "<script>alert('text Created!');</script>";
+        // echo "<script>alert('text Created!');</script>";
+        iziToastAlert('success', 'Text Created!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
+
 function get_text_bySection($id_section) {
     global $koneksi;
     $sql = "SELECT * FROM materi_text WHERE id_section = '$id_section'";
@@ -557,7 +616,37 @@ function get_text_bySection($id_section) {
 }
 
 
-//--------------------------------------------------create file
+function edit_text($data) {
+    global $koneksi;
+    $id_materi_text = $data['id_materi_text'];
+    $content = $data['text'];
+
+    $sql = mysqli_query($koneksi, "UPDATE materi_text SET content = '$content' WHERE id_materi_text = '$id_materi_text'");
+    if ($sql) {
+        // echo "<script>alert('Information Updated!');</script>";
+        iziToastAlertReload('success', 'Text Updated!');
+
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+function delete_text($data) {
+    global $koneksi;
+    $id_materi_text = $data['id_materi_text'];
+    $sql = mysqli_query($koneksi, "DELETE FROM materi_text WHERE id_materi_text = '$id_materi_text'");
+    if ($sql) {
+        // echo "<script>alert('Information Deleted!');</script>";
+        iziToastAlertReload('success', 'Text Deleted!');
+    }
+    return mysqli_affected_rows($koneksi);
+}
+
+
+
+
+
+
+//--------------------------------------------------FILE MATERIAL
 function create_file($data) {
     global $koneksi;
 
@@ -572,7 +661,9 @@ function create_file($data) {
     $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
     
     if (!in_array($file_extension, $allowed_extensions)) {
-        echo "<script>alert('Format file tidak diizinkan!');</script>";
+        // echo "<script>alert('Format file tidak diizinkan!');</script>";
+        iziToastAlert('error', 'Format file tidak diizinkan!');
+
         return;
     }
 
@@ -581,12 +672,18 @@ function create_file($data) {
         // Simpan informasi file ke database
         $sql = mysqli_query($koneksi, "INSERT INTO materi_file (id_section, file) VALUES ('$id_section', '$file_name')");
         if ($sql) {
-            echo "<script>alert('File uploaded successfully!');</script>";
+            // echo "<script>alert('File uploaded successfully!');</script>";
+            iziToastAlert('success', 'File uploaded successfully!');
+
         } else {
-            echo "<script>alert('Database insertion failed!');</script>";
+            // echo "<script>alert('Database insertion failed!');</script>";
+            iziToastAlert('error', 'Database insertion failed!');
+
         }
     } else {
-        echo "<script>alert('Gagal mengupload file');</script>";
+        // echo "<script>alert('Gagal mengupload file');</script>";
+        iziToastAlert('error', 'Gagal mengupload file!');
+
     }
 }
 
@@ -614,7 +711,9 @@ function edit_file($data) {
         $file_extension = pathinfo($file_name, PATHINFO_EXTENSION);
 
         if (!in_array($file_extension, $allowed_extensions)) {
-            echo "<script>alert('Format file tidak diizinkan!');</script>";
+            // echo "<script>alert('Format file tidak diizinkan!');</script>";
+            iziToastAlert('error', 'Format file tidak diizinkan!');
+
             return;
         }
 
@@ -633,15 +732,23 @@ function edit_file($data) {
         if (move_uploaded_file($tmpname, $folder)) {
             $sql = mysqli_query($koneksi, "UPDATE materi_file SET file = '$file_name' WHERE id_materi_file = '$id_materi_file'");
             if ($sql) {
-                echo "<script>alert('File updated successfully!');</script>";
+                // echo "<script>alert('File updated successfully!');</script>";
+                iziToastAlert('success', 'File updated successfully!');
+
             } else {
-                echo "<script>alert('Failed to update file in database!');</script>";
+                // echo "<script>alert('Failed to update file in database!');</script>";
+                iziToastAlert('error', 'Failed to update file in database!');
+
             }
         } else {
-            echo "<script>alert('Failed to upload new file!');</script>";
+            // echo "<script>alert('Failed to upload new file!');</script>";
+            iziToastAlert('error', 'Failed to upload new file!');
+
         }
     } else {
-        echo "<script>alert('No new file uploaded.');</script>";
+        // echo "<script>alert('No new file uploaded.');</script>";
+        iziToastAlert('info', 'No new file uploaded!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -651,7 +758,9 @@ function delete_file($data) {
     $id_materi_file = $data['id_materi_file'];
     $sql = mysqli_query($koneksi, "DELETE FROM materi_file WHERE id_materi_file = '$id_materi_file'");
     if ($sql) {
-        echo "<script>alert('File Deleted!');</script>";
+        // echo "<script>alert('File Deleted!');</script>";
+        iziToastAlert('success', 'File Deleted!');
+
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -661,7 +770,7 @@ function delete_file($data) {
 
 
 
-// ----------------------------------------------QUIZ
+// ---------------------------------------------- QUIZ
 function get_quiz_bySection($id_section) {
     global $koneksi;
     $sql = "SELECT * FROM quiz WHERE id_section = '$id_section'";
@@ -676,72 +785,6 @@ function get_quiz_bySection($id_section) {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-// create material
-function create_material($data){
-    global $koneksi;
-
-    $course = $_GET['id'];
-    $sql = mysqli_query($koneksi, "SELECT * FROM course WHERE id = '$course'");
-    $take = mysqli_fetch_assoc($sql);
-
-    $id_course = $take["id_course"];
-
-    $section = $data['section']; //section title
-    $video = $data['materi_video']; //materi video
-    $text = $data['materi_text']; //materi text
-
-
-    //insert ke db section
-    $sql = mysqli_query($koneksi, "INSERT INTO section (id_course, title) VALUES ('$id_course', '$title')");
-    mysqli_affected_rows($koneksi);
-
-
-    //insert ke db materi video
-    $sql = mysqli_query($koneksi, "INSERT INTO materi_video (id_section, link_youtube) VALUES ('$id_section', '$video')");
-    mysqli_affected_rows($koneksi);
-
-
-}
-
-
-//create materi video
-function create_materi_video($data){
-    global $koneksi;
-
-    $link_youtube = $data["link_youtube"];
-    $deskripsi = $data["deskripsi"];
-    $id_section = 
-
-    mysqli_query($koneksi,"INSERT INTO materi_video (link_youtube, deskripsi) VALUES ('$link_youtube', '$deskripsi')");
-
-    return mysqli_affected_rows($koneksi);
-} 
-
-
-
-// get section by courseId 
-function get_section_byCourseId(){
-    global $koneksi;
-
-    $course = $_GET["id"];  
-    $sql = mysqli_query($koneksi,"SELECT * FROM section WHERE id_course = '$course'");
-    $section = [];
-    while ($row = mysqli_fetch_assoc($sql)) {
-        $section[] = $row;
-    }
-    return $section;
-}
 
 
 
@@ -783,6 +826,7 @@ function get_students_by_course($id_course) {
 
 // -----------------------------------------------------QUIZ----------------------------------------------
 
+// Dari kursus detail
 function add_quiz($data){
     global $koneksi;
 
@@ -792,14 +836,45 @@ function add_quiz($data){
     $sql = mysqli_query($koneksi,"INSERT INTO quiz (id_section, title) VALUES ('$id_section', '$title')");
 
     if ($sql) {
-        echo "
-        <script>
-            alert('Berhasil');
-            window.location.href = location.href;        
-        </script>
-        ";
+        // echo "
+        // <script>
+        //     alert('Berhasil');
+        //     window.location.href = location.href;        
+        // </script>
+        // ";
+
+        iziToastAlert('success', 'Quiz Created!');
+
     } else {
         echo "<script>alert('Gagal')</script>";
+        iziToastAlert('error', 'Gagal!');
+
+    }
+} 
+
+// Dari halaman quiz
+function add_quiz2($data){
+    global $koneksi;
+    $id_course = $_GET['id'];
+    $id_section = $data["section"];
+    $title = $data["title"];
+
+    $sql = mysqli_query($koneksi,"INSERT INTO quiz (id_section, title) VALUES ('$id_section', '$title')");
+
+    if ($sql) {
+        // echo "
+        // <script>
+        //     alert('Berhasil');
+        //     window.location.href = location.href;        
+        // </script>
+        // ";
+
+        iziToastAlert('success', 'Quiz Created!', "add-quiz.php?id=$id_course");
+
+    } else {
+        echo "<script>alert('Gagal')</script>";
+        iziToastAlert('error', 'Gagal!');
+
     }
 } 
 
@@ -886,15 +961,24 @@ function add_question($data){
         }
 
         if ($sql_option) {
-            echo "<script>
-                alert('Berhasil');
-                window.location.href = location.href;
-            </script>";
+            // echo "<script>
+            //     alert('Berhasil');
+            //     window.location.href = location.href;
+            // </script>";
+
+            iziToastAlert('success', 'Question Added!', "quiz-question.php?id=$id_quiz");
+
+
+
+
         } else {
             echo "<script>alert('Gagal Menambahkan Options')</script>";
+            iziToastAlert('error', 'Gagal Menambahkan Options!');
+
         }
     } else {
-        echo "<script>alert('Gagal Menambahkan Question')</script>";
+        iziToastAlert('error', 'Gagal Menambahkan Question!');
+
     }
 }
 
@@ -905,7 +989,8 @@ function edit_quiz($data) {
 
     $sql = mysqli_query($koneksi, "UPDATE quiz SET title = '$title' WHERE id_quiz = '$id_quiz'");
     if ($sql) {
-        echo "<script>alert('Quiz Updated!'); window.location.href=location.href</script>";
+        // echo "<script>alert('Quiz Updated!'); window.location.href=location.href</script>";
+        iziToastAlert('success', 'Question Updated!', "quiz-question.php?id=$id_quiz");
     }
     return mysqli_affected_rows($koneksi);
 }
@@ -927,7 +1012,7 @@ function get_option_byQuestion($id_question){
 
 function edit_question($data) {
     global $koneksi;
-
+    $id_quiz = $_GET['id'];
     // Filter input data
     $id_question = $data['id_question'];
     $question = mysqli_real_escape_string($koneksi, htmlspecialchars($data['username'], ENT_QUOTES)); // Soal yang diupdate
@@ -960,13 +1045,18 @@ function edit_question($data) {
             }
         }
 
-        echo "<script>
-            alert('Berhasil memperbarui soal dan opsi');
-            window.location.href = location.href; 
-        </script>";
+        // echo "<script>
+        //     alert('Berhasil memperbarui soal dan opsi');
+        //     window.location.href = location.href; 
+        // </script>";
+
+        iziToastAlert('success', 'Berhasil memperbarui soal dan opsi!', "quiz-question.php?id=$id_quiz");
+
         return true;
     } else {
         echo "<script>alert('Gagal memperbarui soal: " . mysqli_error($koneksi) . "');</script>";
+        iziToastAlert('error', 'Gagal memperbarui soal!');
+
         return false;
     }
 }
@@ -975,34 +1065,20 @@ function delete_question($data) {
     global $koneksi;
     $id_question = $data['id_question'];
 
-    // Hapus opsi terkait
-    $delete_options = mysqli_query($koneksi, "DELETE FROM quiz_option WHERE id_question = '$id_question'");
-    if (!$delete_options) {
-        // Jika gagal menghapus opsi, tampilkan alert
-        echo "<script>
-                alert('Gagal menghapus opsi. Silakan coba lagi.');
-                window.location.href = window.location.href; // Reload halaman
-              </script>";
-        return false;
+    $sql = mysqli_query($koneksi, "DELETE FROM question WHERE id_question = '$id_question'");
+
+    if ($sql) {
+        // echo "<script>alert('Course and related data deleted successfully!'); window.location.href='kursus.php';</script>";
+        iziToastAlertReload('success', 'Question and option data deleted successfully!');
+
+    } else {
+        // echo "<script>alert('Failed to delete course and related data!');</script>";
+        iziToastAlert('error', 'Failed to delete question and option data!');
+
     }
 
-    // Hapus pertanyaan
-    $delete_question = mysqli_query($koneksi, "DELETE FROM question WHERE id_question = '$id_question'");
-    if ($delete_question) {
-        // Jika berhasil menghapus soal dan opsi, tampilkan alert
-        echo "<script>
-                alert('Soal dan opsi berhasil dihapus!');
-                window.location.href = window.location.href; // Reload halaman setelah berhasil
-              </script>";
-        return true; // Berhasil
-    } else {
-        // Jika gagal menghapus soal, tampilkan alert
-        echo "<script>
-                alert('Gagal menghapus soal. Silakan coba lagi.');
-                window.location.href = window.location.href; // Reload halaman
-              </script>";
-        return false; // Gagal
-    }
+    return mysqli_affected_rows($koneksi);
+
 }
 
 
@@ -1011,62 +1087,20 @@ function delete_quiz($data) {
     global $koneksi;
     $id_quiz = $data['id_quiz'];
 
-    // Pertama, hapus semua opsi terkait dengan quiz ini berdasarkan id_quiz
-    // Langkah 1: Ambil semua id_question yang terkait dengan quiz ini
-    $sql_get_questions = mysqli_query($koneksi, "SELECT id_question FROM question WHERE id_quiz = '$id_quiz'");
-    if (!$sql_get_questions) {
-        echo "<script>
-                alert('Gagal mengambil data pertanyaan!');
-                window.location.href = window.location.href; // Reload halaman
-              </script>";
-        return false; // Gagal mengambil data pertanyaan
-    }
+    $sql = mysqli_query($koneksi, "DELETE FROM quiz WHERE id_quiz = '$id_quiz'");
 
-    $question_ids = [];
-    while ($row = mysqli_fetch_assoc($sql_get_questions)) {
-        $question_ids[] = $row['id_question'];
-    }
+    if ($sql) {
+        // echo "<script>alert('Course and related data deleted successfully!'); window.location.href='kursus.php';</script>";
+        iziToastAlert('success', 'Quiz and related data deleted successfully!', 'quiz.php');
 
-    // Langkah 2: Hapus opsi yang terkait dengan id_question
-    if (!empty($question_ids)) {
-        $question_ids_str = implode(",", $question_ids); // Gabungkan id_question menjadi satu string
-        $delete_options = mysqli_query($koneksi, "DELETE FROM quiz_option WHERE id_question IN ($question_ids_str)");
-        if (!$delete_options) {
-            echo "<script>
-                    alert('Gagal menghapus opsi terkait!');
-                    window.location.href = window.location.href; // Reload halaman
-                  </script>";
-            return false; // Gagal menghapus opsi
-        }
-    }
-
-    // Langkah 3: Hapus pertanyaan terkait dengan quiz ini
-    $delete_questions = mysqli_query($koneksi, "DELETE FROM question WHERE id_quiz = '$id_quiz'");
-    if (!$delete_questions) {
-        echo "<script>
-                alert('Gagal menghapus pertanyaan terkait quiz!');
-                window.location.href = window.location.href; // Reload halaman
-              </script>";
-        return false; // Gagal menghapus pertanyaan
-    }
-
-    // Langkah 4: Hapus quiz itu sendiri
-    $delete_quiz = mysqli_query($koneksi, "DELETE FROM quiz WHERE id_quiz = '$id_quiz'");
-    if ($delete_quiz) {
-        // Berhasil menghapus quiz dan semua pertanyaan serta opsi terkait
-        echo "<script>
-                alert('Quiz beserta soal dan opsi berhasil dihapus!');
-                window.location.href = window.location.href; // Reload halaman
-              </script>";
-        return true; // Berhasil
     } else {
-        // Gagal menghapus quiz
-        echo "<script>
-                alert('Gagal menghapus quiz!');
-                window.location.href = window.location.href; // Reload halaman
-              </script>";
-        return false; // Gagal
+        // echo "<script>alert('Failed to delete course and related data!');</script>";
+        iziToastAlert('error', 'Failed to delete quiz and related data!');
+
     }
+
+    return mysqli_affected_rows($koneksi);
+
 }
 
 

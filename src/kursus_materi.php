@@ -32,6 +32,7 @@ if ($isEnrolled) {
     $jumlah_quiz = count_quiz_by_course();
     $jumlah_submission = count_submission_by_course_and_enroll();
     $cek_kelulusan = is_all_quiz_submitted_by_enroll();
+    updateExpiredEnrolls();
 } 
 
 
@@ -39,6 +40,8 @@ if ($isEnrolled) {
 if (isset($_POST['enroll_course'])) {
     enroll();  // Panggil fungsi enroll
 }
+
+
 
 ?>
 
@@ -109,8 +112,8 @@ if (isset($_POST['enroll_course'])) {
                 <ul class="gap-4 hidden md:flex font-semibold relative my-auto">
                     <li><a href="index.php" class="hover:text-blue-700">Beranda</a></li>
                     <li><a href="kursus.php" class="hover:text-blue-700">Kursus</a></li>
-                    <li><a href="#about" class="hover:text-blue-700">Tentang</a></li>
-                    <li><a href="#kontak" class="hover:text-blue-700">Kontak</a></li>
+                    <li><a href="index.php#about" class="hover:text-blue-700">Tentang</a></li>
+                    <li><a href="index.php#kontak" class="hover:text-blue-700">Kontak</a></li>
                     <?php if (isset($_SESSION['id_user'])) : ?>
                     <li><a href="course_anda.php" class="hover:text-blue-700">Kursus Anda</a></li>
                     <?php endif ?>

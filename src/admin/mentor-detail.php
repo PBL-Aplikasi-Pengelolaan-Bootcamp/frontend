@@ -247,10 +247,10 @@ $course_mentor = get_mentor_course();
                                     class="flex flex-col items-center justify-between bg-white p-3 md:p-10 gap-5 rounded-xl w-full md:w-2/3 max-h-[80vh] overflow-y-auto">
                                     <form method="post" method="post" enctype="multipart/form-data"
                                         class="flex flex-col gap-5 my-2 w-full">
-                                        <h1 class="my-auto text-2xl font-bold font-poppins">Profil</h1>
+                                        <h1 class="my-auto text-2xl font-bold font-poppins text-start">Profil</h1>
 
-                                        <div class="flex flex-col gap-2">
-                                            <label for="profil_picture">Foto Profil</label>
+                                        <div class="flex flex-col gap-2 text-start">
+                                            <label for="profil_picture ">Foto Profil</label>
                                             <input type="file" accept="image/*" name="profil_picture"
                                                 id="profil_picture" value="<?=$mentor['profil_picture']?>"
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
@@ -263,21 +263,22 @@ $course_mentor = get_mentor_course();
                                         </div>
 
 
-                                        <div class="flex flex-col gap-2">
+                                        <div class="flex flex-col gap-2 text-start">
                                             <label for="signature-input">Signature</label>
-                                            <input type="file" accept="image/*" name="signature" id="signature-input" value="<?=$mentor['profil_picture']?>"
-                                                class="shadow appearance-none border rounded w-full py-2 px-3
-                                        text-gray-700 leading-tight focus:outline-none focus:shadow-outline" required>
+                                            <input type="file" accept="image/*" name="signature" id="signature-input"
+                                                value="<?=$mentor['profil_picture']?>" class="shadow appearance-none border rounded w-full py-2 px-3
+                                        text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                                             <!-- Hidden input untuk menyimpan base64 gambar yang sudah di-crop -->
                                             <input type="hidden" name="cropped-signature" id="cropped-signature">
                                             <div class="relative w-24">
-                                                <img src="../foto_signature/<?=$mentor['signature']?>" alt="Preview Signature"
-                                                    id="preview-signature" class="w-24 object-contain rounded">
+                                                <img src="../foto_signature/<?=$mentor['signature']?>"
+                                                    alt="Preview Signature" id="preview-signature"
+                                                    class="w-24 object-contain rounded">
                                             </div>
                                         </div>
 
 
-                                        <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-2 text-start">
                                             <div class="flex flex-col gap-2 w-full">
                                                 <label for="start-date">Name</label>
                                                 <input
@@ -285,7 +286,7 @@ $course_mentor = get_mentor_course();
                                                     id="start-date" name="name" type="text"
                                                     value="<?=$mentor['name']?>">
                                             </div>
-                                            <div class="flex flex-col gap-2 w-full">
+                                            <div class="flex flex-col gap-2 w-full text-start">
                                                 <label for="end-date">Expertise</label>
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -293,13 +294,13 @@ $course_mentor = get_mentor_course();
                                                     value="<?=$mentor['expertise']?>">
                                             </div>
                                         </div>
-                                        <div class="flex flex-col gap-2">
+                                        <div class="flex flex-col gap-2 text-start">
                                             <label for="title">Bio</label>
                                             <textarea
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                 name="bio" id=""><?=$mentor['bio']?></textarea>
                                         </div>
-                                        <div class="flex items-center gap-2">
+                                        <div class="flex items-center gap-2 text-start">
                                             <div class="flex flex-col gap-2 w-full">
                                                 <label for="start-date">Phone</label>
                                                 <input
@@ -307,7 +308,7 @@ $course_mentor = get_mentor_course();
                                                     id="start-date" name="phone" type="text"
                                                     value="<?=$mentor['telp']?>">
                                             </div>
-                                            <div class="flex flex-col gap-2 w-full">
+                                            <div class="flex flex-col gap-2 w-full text-start">
                                                 <label for="end-date">Email</label>
                                                 <input
                                                     class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -316,15 +317,15 @@ $course_mentor = get_mentor_course();
                                             </div>
                                         </div>
 
-                                        <h1 class="my-auto text-2xl font-bold font-poppins mt-12">Akun</h1>
-                                        <div class="flex flex-col gap-2">
+                                        <h1 class="my-auto text-2xl font-bold font-poppins mt-12 text-start">Akun</h1>
+                                        <div class="flex flex-col gap-2 text-start">
                                             <label for="nama-mentor">Username</label>
                                             <input
                                                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                                 id="nama-mentor" type="text" placeholder="Enter your name"
                                                 name="username" value="<?=$mentor['username']?>">
                                         </div>
-                                        <div class="flex flex-col gap-2">
+                                        <div class="flex flex-col gap-2 text-start">
                                             <div class="flex justify-between items-center">
                                                 <button type="button" id="change-password-btn-mentor"
                                                     class="ml-2 text-blue-500 hover:underline">Ganti Password</button>
@@ -332,7 +333,7 @@ $course_mentor = get_mentor_course();
                                         </div>
 
                                         <!-- Div untuk input password lama dan baru, default disembunyikan -->
-                                        <div id="password-change-fields-mentor" class="hidden flex flex-col gap-2">
+                                        <div id="password-change-fields-mentor" class="hidden flex flex-col gap-2 text-start">
                                             <label for="old-password">Password Lama</label>
                                             <input type="password" id="old-password" name="old_password"
                                                 placeholder="Masukkan password lama"
@@ -393,32 +394,32 @@ $course_mentor = get_mentor_course();
                                     </div>
 
                                     <div id="signatureCropperModal"
-                                    class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-                                    <div class="bg-white rounded-lg max-w-2xl w-full">
-                                        <div class="flex justify-between items-center p-4 border-b">
-                                            <h3 class="text-lg font-semibold">Crop Image</h3>
-                                            <button type="button" onclick="closeSignatureCropperModal()"
-                                                class="text-gray-500 hover:text-gray-700">
-                                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
-                                                    viewBox="0 0 24 24" stroke="currentColor">
-                                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                                        stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                                                </svg>
-                                            </button>
-                                        </div>
-                                        <div class="p-4">
-                                            <div class="max-h-[60vh] overflow-hidden">
-                                                <img id="signatureCropperImage" class="max-w-full">
-                                            </div>
-                                            <div class="mt-4 flex justify-end gap-2">
-                                                <button type="button" onclick="applySignatureCrop()"
-                                                    class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
-                                                    Apply Crop
+                                        class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+                                        <div class="bg-white rounded-lg max-w-2xl w-full">
+                                            <div class="flex justify-between items-center p-4 border-b">
+                                                <h3 class="text-lg font-semibold">Crop Image</h3>
+                                                <button type="button" onclick="closeSignatureCropperModal()"
+                                                    class="text-gray-500 hover:text-gray-700">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                                        viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                                            stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
                                                 </button>
+                                            </div>
+                                            <div class="p-4">
+                                                <div class="max-h-[60vh] overflow-hidden">
+                                                    <img id="signatureCropperImage" class="max-w-full">
+                                                </div>
+                                                <div class="mt-4 flex justify-end gap-2">
+                                                    <button type="button" onclick="applySignatureCrop()"
+                                                        class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                                                        Apply Crop
+                                                    </button>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
 
                                 </div>
                             </div>
@@ -427,9 +428,10 @@ $course_mentor = get_mentor_course();
 
                     </div>
 
-                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins"><?=$mentor['expertise']?>
+                    <p class="text-sm md:text-base font-semibold text-gray-400 font-poppins text-left">
+                        <?=$mentor['expertise']?>
                     </p>
-                    <p class="text-sm md:text-base font-poppins">
+                    <p class="text-sm md:text-base font-poppins text-left">
                         <?=$mentor['bio']?>
                     </p>
 
@@ -593,7 +595,7 @@ $course_mentor = get_mentor_course();
     </script>
 
 
-<script>
+    <script>
     let cropperInstance = null;
     const signatureForm = document.getElementById('signatureForm');
     const signatureFileInput = document.getElementById('signature-input');
@@ -622,15 +624,15 @@ $course_mentor = get_mentor_course();
                 }
 
                 cropperInstance = new Cropper(signatureCropperImage, {
-                    viewMode: 2, 
-                    dragMode: 'move', 
+                    viewMode: 2,
+                    dragMode: 'move',
                     autoCropArea: 1,
-                    restore: false, 
+                    restore: false,
                     guides: true,
-                    center: true, 
-                    highlight: false, 
+                    center: true,
+                    highlight: false,
                     cropBoxMovable: true,
-                    cropBoxResizable: true, 
+                    cropBoxResizable: true,
                     toggleDragModeOnDblclick: false
                 });
             };

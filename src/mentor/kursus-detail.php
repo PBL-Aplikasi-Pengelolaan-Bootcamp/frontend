@@ -91,7 +91,14 @@ if (isset($_POST['delete_video'])) {
 if (isset($_POST['create_text'])) {
     create_text($_POST);
 }
-
+// edit text
+if (isset($_POST['edit_text'])) {
+    edit_text($_POST);
+}
+//delete text
+if (isset($_POST['delete_text'])) {
+    delete_text($_POST);
+}
 
 
 
@@ -583,8 +590,6 @@ if (isset($_POST['add_quiz'])) {
                         </div>
                     </div>
 
-
-
                     <!-- Section Content -->
                     <div x-show="open" x-transition:enter="transition ease-out duration-200"
                         x-transition:enter-start="opacity-0 transform -translate-y-2"
@@ -651,7 +656,6 @@ if (isset($_POST['add_quiz'])) {
                                 </div>
                             </template>
 
-
                             <!-- Video Modal -->
                             <template x-if="activeModal === 'video'">
                                 <div class="fixed z-30 inset-0 overflow-y-auto bg-gray-500 bg-opacity-75"
@@ -693,8 +697,18 @@ if (isset($_POST['add_quiz'])) {
                                                     value="<?= $section['id_section'] ?>" hidden>
                                                 <div class="space-y-2">
                                                     <label for="text">Content:</label>
-                                                    <textarea name="text" placeholder="Enter text"
-                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2 h-32"></textarea>
+                                                    <div class="">
+                                                        <textarea name="text" id="editor"
+                                                            class="w-full p-2 border border-gray-300 rounded-md">
+                                                        </textarea>
+                                                        <script>
+                                                        ClassicEditor
+                                                            .create(document.querySelector('#editor'))
+                                                            .catch(error => {
+                                                                console.error(error);
+                                                            });
+                                                        </script>
+                                                    </div>
                                                 </div>
                                                 <div class="flex justify-end space-x-2">
                                                     <button type="button" @click="closeModal"
@@ -770,7 +784,7 @@ if (isset($_POST['add_quiz'])) {
                         <div class="mt-4 space-y-6">
 
                             <!-- Information Display -->
-                            <?php $information = get_information_bySection( $section['id_section']); ?>
+                            <?php $information = get_information_bySection($section['id_section']); ?>
                             <?php if (!empty($information)) { ?>
                             <div class="space-y-4">
                                 <h2 class="text-2xl font-semibold">Information</h2>
@@ -910,12 +924,72 @@ if (isset($_POST['add_quiz'])) {
                             <?php $text = get_text_bySection($section['id_section']); ?>
                             <?php if (!empty($text)) { ?>
                             <?php foreach ($text as $txt) { ?>
-                            <div class="prose max-w-none">
-                                <p><?= $txt['content'] ?></p>
+                            <div class="flex items-start justify-between w-full">
+                                <!-- Teks Informasi -->
+                                <div class="p-5 max-w-full block text-justify leading-relaxed break-words">
+                                    <p class="text-gray-700 text-left flex-1"><?= $txt['content'] ?></p>
+                                </div>
+                                <!-- Tombol Edit -->
+                                <button data-modal-target="modal-edit-text-<?= $txt['id_materi_text'] ?>"
+                                    class="open-modal-btn-edit-text px-2 py-1 text-xs text-gray-700 hover:bg-gray-100 flex items-center ml-4">
+                                    <i class="fa-solid fa-pen-to-square text-lg"></i>
+                                </button>
                             </div>
+
+
+                            <!-- Modal -->
+                            <div id="modal-edit-text-<?= $txt['id_materi_text'] ?>"
+                                class="modal-wrapper fixed z-30 inset-0 hidden">
+                                <!-- Latar belakang shadow -->
+                                <div class="fixed inset-0 z-50 bg-gray-500 bg-opacity-75 overflow-y-auto"
+                                    @click.self="closeModal" x-transition:enter="transition ease-out duration-300">
+                                    <div class="flex items-center justify-center min-h-screen px-4">
+                                        <div class="bg-white rounded-xl w-full md:w-2/3 p-6">
+                                            <form method="post" enctype="multipart/form-data" class="space-y-4">
+                                                <input type="text" value="<?= $section['title'] ?>" readonly
+                                                    class="w-full p-2 bg-gray-200 rounded border">
+                                                <input type="number" name="id_materi_text"
+                                                    value="<?= $txt['id_materi_text'] ?>" hidden>
+
+                                                <div class="space-y-2">
+                                                    <label for="text">Content:</label>
+                                                    <input type="text" name="text"
+                                                        value="<?=$txt['content']?>"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                </div>
+
+                                                <!-- Tombol untuk menghapus text -->
+                                                <div class="flex flex-col gap-2">
+                                                    <button type="submit" name="delete_text"
+                                                        class="px-4 py-2 h-max my-auto text-red-500 bg-none font-semibold w-max text-center rounded-md hover:text-red-400 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2">
+                                                        DELETE TEXT
+                                                    </button>
+                                                </div>
+
+                                                <!-- Tombol untuk menyimpan perubahan -->
+                                                <div class="flex justify-end space-x-2">
+                                                    <button type="button"
+                                                        class="close-modal-btn-edit-text px-4 py-2 text-red-500 border rounded hover:bg-gray-50">
+                                                        Close
+                                                    </button>
+                                                    <button type="submit" name="edit_text"
+                                                        class="px-4 py-2 text-white bg-blue-700 rounded hover:bg-blue-800">
+                                                        Save
+                                                    </button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                             <?php } ?>
                             <hr>
                             <?php } ?>
+
+
+
+
 
                             <!-- File Display -->
                             <?php $file = get_file_bySection($section['id_section']); ?>
@@ -1001,11 +1075,11 @@ if (isset($_POST['add_quiz'])) {
 
 
 
-                            <?php $quiz = get_quiz_bySection($section['id_section']);?>
+                            <?php $quiz = get_quiz_bySection($section['id_section']); ?>
                             <?php if (!empty($quiz)) { ?>
                             <?php foreach ($quiz as $quizz) { ?>
                             <?php $total_question = total_question_byQuiz($quizz['id_quiz']); ?>
-                            <a href="quiz-question.php?id=<?=$quizz['id_quiz']?>" class="block">
+                            <a href="quiz-question.php?id=<?= $quizz['id_quiz'] ?>" class="block">
                                 <div class="flex items-center w-80 bg-gray-100 p-4 rounded-lg">
                                     <!-- Icon Quiz -->
                                     <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
@@ -1019,9 +1093,9 @@ if (isset($_POST['add_quiz'])) {
 
                                     <!-- Konten Kanan (Judul dan Keterangan) -->
                                     <div class="ml-4">
-                                        <h3 class="text-blue-600 font-medium"><?=$quizz['title']?></h3>
+                                        <h3 class="text-blue-600 font-medium"><?= $quizz['title'] ?></h3>
                                         <div class="text-gray-500 text-sm space-y-1">
-                                            <p>Soal: <?=$total_question?></p>
+                                            <p>Soal: <?= $total_question ?></p>
                                         </div>
                                     </div>
                                 </div>
@@ -1231,16 +1305,24 @@ if (isset($_POST['add_quiz'])) {
         });
     });
 
-
-
-
-
-
     ClassicEditor
         .create(document.querySelector('#editor'))
         .catch(error => {
             console.error(error);
         });
+
+    const editorElement = document.querySelector('#editor');
+
+    if (editorElement) {
+        console.log('Element with ID "editor" found:', editorElement);
+        ClassicEditor
+            .create(editorElement)
+            .catch(error => {
+                console.error(error);
+            });
+    } else {
+        console.error('Element with ID "editor" not found');
+    }
     </script>
 
 
@@ -1366,6 +1448,29 @@ if (isset($_POST['add_quiz'])) {
             });
         });
         document.querySelectorAll('.close-modal-btn-edit-video').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault(); // Prevent action default (opsional)
+                const modalWrapper = btn.closest('.modal-wrapper'); // Cari modal terdekat
+                if (modalWrapper) {
+                    modalWrapper.classList.add('hidden'); // Sembunyikan modal
+                }
+            });
+        });
+
+        //edit text    
+        document.querySelectorAll('.open-modal-btn-edit-text').forEach(btn => {
+            btn.addEventListener('click', (event) => {
+                event.preventDefault();
+                const modalId = btn.getAttribute(
+                    'data-modal-target'); // Ambil ID modal dari data attribute
+                const modalWrapper = document.getElementById(
+                    modalId); // Cari modal berdasarkan ID
+                if (modalWrapper) {
+                    modalWrapper.classList.remove('hidden'); // Tampilkan modal
+                }
+            });
+        });
+        document.querySelectorAll('.close-modal-btn-edit-text').forEach(btn => {
             btn.addEventListener('click', (event) => {
                 event.preventDefault(); // Prevent action default (opsional)
                 const modalWrapper = btn.closest('.modal-wrapper'); // Cari modal terdekat

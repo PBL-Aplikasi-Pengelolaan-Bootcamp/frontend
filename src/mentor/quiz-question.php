@@ -17,9 +17,15 @@ if (isset($_POST['logout'])) {
 
 // get quiz
 $quiz = get_quiz_byId();
+
 //edit_quiz
 if (isset($_POST['edit_quiz'])) {
     edit_quiz($_POST);
+}
+
+//delete quiz
+if (isset($_POST['delete_quiz'])) {
+    delete_quiz($_POST);
 }
 
 //get question
