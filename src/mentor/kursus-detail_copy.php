@@ -957,8 +957,19 @@ if (isset($_POST['add_quiz'])) {
 
                                                 <div class="space-y-2">
                                                     <label for="text">Content:</label>
-                                                    <input type="text" name="text" value="<?=$txt['content']?>"
-                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2">
+                                                    <!-- <input type="text" name="text" value="<?=$txt['content']?>"
+                                                        class="w-full p-2 border rounded focus:outline-none focus:ring-2"> -->
+                                                    <textarea name="text" id="editorEdit<?=$txt['id_materi_text']?>"
+                                                        class="w-full p-2 border border-gray-300 rounded-md"><?=$txt['content']?>
+                                                        </textarea>
+                                                    <script>
+                                                    ClassicEditor
+                                                        .create(document.querySelector(
+                                                            '#editorEdit<?=$txt['id_materi_text']?>'))
+                                                        .catch(error => {
+                                                            console.error(error);
+                                                        });
+                                                    </script>
                                                 </div>
 
                                                 <!-- Tombol untuk menghapus text -->
@@ -1087,10 +1098,10 @@ if (isset($_POST['add_quiz'])) {
                                     <!-- Icon Quiz -->
                                     <div class="bg-blue-100 text-blue-600 p-3 rounded-full">
                                         <!-- Icon Quiz (Contoh: Icon question mark atau similar) -->
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                            fill="currentColor" class="bi bi-book" viewBox="0 0 16 16">
-                                            <path
-                                                d="M1 2.828c.885-.37 2.154-.769 3.388-.893 1.33-.134 2.458.063 3.112.752v9.746c-.935-.53-2.12-.603-3.213-.493-1.18.12-2.37.461-3.287.811zm7.5-.141c.654-.689 1.782-.886 3.112-.752 1.234.124 2.503.523 3.388.893v9.923c-.918-.35-2.107-.692-3.287-.81-1.094-.111-2.278-.039-3.213.492zM8 1.783C7.015.936 5.587.81 4.287.94c-1.514.153-3.042.672-3.994 1.105A.5.5 0 0 0 0 2.5v11a.5.5 0 0 0 .707.455c.882-.4 2.303-.881 3.68-1.02 1.409-.142 2.59.087 3.223.877a.5.5 0 0 0 .78 0c.633-.79 1.814-1.019 3.222-.877 1.378.139 2.8.62 3.681 1.02A.5.5 0 0 0 16 13.5v-11a.5.5 0 0 0-.293-.455c-.952-.433-2.48-.952-3.994-1.105C10.413.809 8.985.936 8 1.783" />
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none"
+                                            viewBox="0 0 24 24" stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
                                         </svg>
                                     </div>
 
@@ -1307,14 +1318,17 @@ if (isset($_POST['add_quiz'])) {
             modal.classList.add('hidden'); // Sembunyikan modal
         });
     });
+    </script>
 
+    <script>
+    <?php foreach ($text as $txt) { ?>
     ClassicEditor
-        .create(document.querySelector('#editor'))
+        .create(document.querySelector('#editorEdit<?=$txt['id_materi_text']?>'))
         .catch(error => {
             console.error(error);
         });
 
-    const editorElement = document.querySelector('#editor');
+    const editorElement = document.querySelector('#editorEdit<?=$txt['id_materi_text']?>');
 
     if (editorElement) {
         console.log('Element with ID "editor" found:', editorElement);
@@ -1326,8 +1340,8 @@ if (isset($_POST['add_quiz'])) {
     } else {
         console.error('Element with ID "editor" not found');
     }
+    <?php }?>
     </script>
-
 
 
     <!-- Setup Section -->

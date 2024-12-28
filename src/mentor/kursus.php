@@ -2,8 +2,14 @@
 
 include 'function.php';
 
+if (!isset($_SESSION['id_user'])) {
+    echo "<script>window.location.href = '../login.php'</script>";
+}
+
+
 // get data mentor logged in
 $mentor = get_data_user_login();
+
 
 //edit profil
 if (isset($_POST['edit_profil'])) {

@@ -30,6 +30,11 @@
 <?php 
 include 'function.php';
 
+if (!isset($_SESSION['id_user'])) {
+    echo "<script>window.location.href = '../login.php'</script>";
+}
+
+
 // get data mentor logged in
 $mentor = get_data_user_login();
 
@@ -48,6 +53,7 @@ $total_course_mentor = get_total_course_mentor();
 
 // total student si mentor
 $total_student_mentor = get_total_student_mentor();
+
 
 ?>
 <body class="bg-gray-100">
